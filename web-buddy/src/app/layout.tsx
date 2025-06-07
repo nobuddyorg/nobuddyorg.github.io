@@ -8,7 +8,7 @@ const inter = Inter({
 });
 
 export const metadata = {
-  title: "Buddy Compendium",
+  title: "nobuddy",
   description: "A growing collection of experimental tools with personality",
 };
 
