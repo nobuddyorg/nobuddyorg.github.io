@@ -4,21 +4,20 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { tools } from "./tools";
 
-function Header() {
+import Link from "next/link";
+
+export default function Header() {
   return (
-    <header className="fixed top-0 w-full bg-white/80 backdrop-blur-sm border-b border-gray-200 z-50">
-      <nav className="max-w-7xl mx-auto px-6 sm:px-8 flex items-center justify-between h-16">
+    <header className="fixed top-0 left-0 w-full z-50 bg-white/80 backdrop-blur-sm border-b border-gray-200">
+      <nav className="max-w-7xl mx-auto px-4 sm:px-6 flex items-center justify-between h-16 overflow-hidden">
         <Link href="/" className="text-2xl font-extrabold tracking-tight text-black">
           nobuddy
         </Link>
-        <div className="flex space-x-6">
+        <div className="flex flex-wrap items-center space-x-4 sm:space-x-6">
           <Link href="#tools" className="text-gray-700 hover:text-black font-semibold transition">
             Tools
           </Link>
-          <Link
-            href="/contact"
-            className="text-gray-700 hover:text-black font-semibold transition"
-          >
+          <Link href="/contact" className="text-gray-700 hover:text-black font-semibold transition">
             Contact
           </Link>
           <a

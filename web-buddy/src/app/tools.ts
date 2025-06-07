@@ -3,19 +3,21 @@ export const tools = [
     slug: "procrastinationbuddy",
     name: "ProcrastinationBuddy",
     description:
-      "Turn your procrastination into planned chaos — with gentle reminders and strategic guilt trips.",
-    logo: "/logos/procrastinationbuddy.svg", // update later
-    tags: ["Productivity", "Humor"],
+      "An anti-productivity companion that helps you avoid real work with AI-generated, delightfully useless tasks. Built with Streamlit, Flask, Docker, and Ollama.",
+    logo: "/logos/procrastinationbuddy.svg",
+    tags: ["Productivity", "Humor", "AI"],
     github: "https://github.com/nobuddyorg/ProcrastinationBuddy",
+    status: "ready",
   },
   {
     slug: "thrashbuddy",
     name: "ThrashBuddy",
     description:
-      "Keep your digital trash organized and maybe even enjoy it. Metal music optional.",
+      "A cloud-native, scalable framework for distributed performance testing using k6, InfluxDB, Grafana, Docker, and AWS EKS. Fully IaC-powered.",
     logo: "/logos/thrashbuddy.svg",
-    tags: ["Utilities", "AI", "Fun"],
+    tags: ["DevOps", "Testing", "Cloud", "Kubernetes", "k6", "Grafana"],
     github: "https://github.com/nobuddyorg/ThrashBuddy",
+    status: "in_dev",
   },
   {
     slug: "fairbuddy",
@@ -23,7 +25,8 @@ export const tools = [
     description:
       "Split expenses, not friendships. Like Splitwise, but way more Buddy.",
     logo: "/logos/fairbuddy.svg",
-    tags: ["Finance", "Social", "Sharing"],
+    tags: ["Finance", "Social", "Sharing", "Database"],
     github: "https://github.com/nobuddyorg/FairBuddy",
+    status: "coming_soon",
   },
 ];
