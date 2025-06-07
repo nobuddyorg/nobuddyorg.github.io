@@ -30,13 +30,9 @@ jobs:
 
       - name: Build Next.js application
         run: npm run build
-        env:
-          NEXT_PUBLIC_BASE_PATH: ""
 
       - name: Start Next.js application
-        run: npm run start &
-        env:
-          NEXT_PUBLIC_BASE_PATH: ""
+        run: npx serve@latest out -l 3000 &
 
       - name: Wait for application to start
         run: |
@@ -45,8 +41,6 @@ jobs:
 
       - name: Run Playwright tests
         run: npx playwright test
-        env:
-          NEXT_PUBLIC_BASE_PATH: ""
 
       - name: Upload Playwright report if tests fail
         if: failure()
