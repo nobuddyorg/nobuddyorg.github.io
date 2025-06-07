@@ -26,7 +26,7 @@ test.describe('NoBuddy main page - cards section', () => {
     await expect(firstDisabledCard).toHaveClass(/cursor-not-allowed/);
 
     const urlBefore = page.url();
-    await firstDisabledCard.click({ timeout: 1000 }).catch(() => {});
+    await firstDisabledCard.click({ timeout: 1000 }).catch(() => { });
     await expect(page).toHaveURL(urlBefore);
   });
 
