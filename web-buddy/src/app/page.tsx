@@ -4,34 +4,9 @@ import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { tools } from "./tools";
+import Header from "./components/Header";
+import Footer from "./components/Footer";
 
-function Header() {
-  return (
-    <header className="fixed top-0 left-0 w-full z-50 bg-white/80 dark:bg-black/80 backdrop-blur-sm border-b border-gray-200 dark:border-gray-900">
-      <nav className="max-w-7xl mx-auto px-4 sm:px-6 flex items-center justify-between h-16 overflow-hidden">
-        <Link href="/" className="text-2xl font-extrabold tracking-tight text-black dark:text-white">
-          nobuddy
-        </Link>
-        <div className="flex flex-wrap items-center space-x-4 sm:space-x-6">
-          <Link href="#tools" className="text-gray-700 dark:text-gray-300 hover:text-black dark:hover:text-white font-semibold transition">
-            Tools
-          </Link>
-          <Link href="/contact" className="text-gray-700 dark:text-gray-300 hover:text-black dark:hover:text-white font-semibold transition">
-            Contact
-          </Link>
-          <a
-            href="https://github.com/nobuddyorg"
-            target="_blank"
-            rel="noreferrer"
-            className="text-gray-700 dark:text-gray-300 hover:text-black dark:hover:text-white font-semibold transition"
-          >
-            GitHub
-          </a>
-        </div>
-      </nav>
-    </header>
-  );
-}
 
 function Hero() {
   return (
@@ -49,17 +24,17 @@ function Hero() {
         <circle cx="170" cy="319" r="139" fill="#CABFFD" />
       </svg>
       <svg
-  className="absolute -top-20 left-1/2 -translate-x-1/2 w-[40rem] h-[40rem] opacity-100 pointer-events-none hidden dark:block"
-  viewBox="0 0 528 560"
-  fill="none"
-  xmlns="http://www.w3.org/2000/svg"
->
-  <circle cx="71" cy="61" r="111" fill="#1e1b4b" />
-  <circle cx="244" cy="106" r="139" fill="#312e81" />
-  <circle cx="400" cy="150" r="139" fill="#3730a3" />
-  <circle cx="316" cy="305" r="139" fill="#4f46e5" />
-  <circle cx="170" cy="319" r="139" fill="#6366f1" />
-</svg>
+        className="absolute -top-20 left-1/2 -translate-x-1/2 w-[40rem] h-[40rem] opacity-100 pointer-events-none hidden dark:block"
+        viewBox="0 0 528 560"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <circle cx="71" cy="61" r="111" fill="#1e1b4b" />
+        <circle cx="244" cy="106" r="139" fill="#312e81" />
+        <circle cx="400" cy="150" r="139" fill="#3730a3" />
+        <circle cx="316" cy="305" r="139" fill="#4f46e5" />
+        <circle cx="170" cy="319" r="139" fill="#6366f1" />
+      </svg>
 
 
       <h1 className="relative z-10 text-5xl sm:text-6xl font-extrabold tracking-tight leading-tight mb-6 text-black dark:text-white">
@@ -149,33 +124,6 @@ function ToolGrid() {
         );
       })}
     </section>
-  );
-}
-
-function Footer() {
-  return (
-    <footer className="fixed bottom-0 left-0 w-full z-50 bg-white/80 dark:bg-black/80 backdrop-blur-sm border-t border-gray-200 dark:border-gray-800 py-6 text-center text-sm text-gray-400 dark:text-gray-600 px-4 sm:px-6">
-      <p>
-        Crafted with ♥️ by{" "}
-        <a
-          href="https://nobuddy.org"
-          target="_blank"
-          rel="noreferrer"
-          className="underline hover:text-black transition"
-        >
-          nobuddy
-        </a>{" "}
-        • Open source on{" "}
-        <a
-          href="https://github.com/nobuddyorg"
-          target="_blank"
-          rel="noreferrer"
-          className="underline hover:text-black transition"
-        >
-          GitHub
-        </a>
-      </p>
-    </footer>
   );
 }
 
