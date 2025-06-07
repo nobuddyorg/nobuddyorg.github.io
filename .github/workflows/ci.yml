@@ -7,17 +7,53 @@ on:
     branches: [ main ]
 
 jobs:
-  build:
+  build_and_test:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./web-buddy
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Set up Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: '22.x'
           cache: 'npm'
           cache-dependency-path: web-buddy/package-lock.json
 
-      - name: Run build script
-        run: bash build.sh
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps chromium
+
+      - name: Build Next.js application
+        run: npm run build
+
+      - name: Start Next.js application
+        run: npx serve@latest out -l 3000 &
+
+      - name: Wait for application to start
+        run: |
+          timeout 30s bash -c 'until curl -sSf http://localhost:3000 > /dev/null; do echo "Waiting for app to start..."; sleep 1; done'
+          curl -I http://localhost:3000
+
+      - name: Run Playwright tests
+        run: npx playwright test
+
+      - name: Upload Playwright report if tests fail
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: web-buddy/playwright-report/
+          retention-days: 30
+
+      - name: Upload Playwright traces if tests fail
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-traces
+          path: web-buddy/test-results/
+          retention-days: 30
