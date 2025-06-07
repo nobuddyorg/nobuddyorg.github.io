@@ -71,8 +71,8 @@ function ToolGrid() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: index * 0.05, duration: 0.4 }}
             className={`group block rounded-2xl p-6 border ${isReady
-                ? "bg-white dark:bg-black border-gray-200 dark:border-gray-800 hover:border-black dark:hover:border-white shadow-sm dark:shadow-[0_2px_8px_rgba(255,255,255,0.05)] hover:shadow-md dark:hover:shadow-[0_4px_12px_rgba(255,255,255,0.15)] transition-all duration-300 hover:-translate-y-1 cursor-pointer"
-                : "bg-gray-100 dark:bg-neutral-900 border-gray-200 dark:border-neutral-950 opacity-60 cursor-not-allowed"
+              ? "bg-white dark:bg-black border-gray-200 dark:border-gray-800 hover:border-black dark:hover:border-white shadow-sm dark:shadow-[0_2px_8px_rgba(255,255,255,0.05)] hover:shadow-md dark:hover:shadow-[0_4px_12px_rgba(255,255,255,0.15)] transition-all duration-300 hover:-translate-y-1 cursor-pointer"
+              : "bg-gray-100 dark:bg-neutral-900 border-gray-200 dark:border-neutral-950 opacity-60 cursor-not-allowed"
               }`}
           >
             <div className="flex items-center gap-4 mb-4">
