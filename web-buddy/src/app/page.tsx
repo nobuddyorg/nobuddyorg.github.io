@@ -4,10 +4,10 @@ import ClientHome from "./client";
 
 export const metadata = {
   title: "The Buddy Compendium",
-  description: "Blending quirky charm with real-world usefulness for everybuddy.",
+  description: "Blending quirky charm with real-world usefulness.",
   openGraph: {
     title: "The Buddy Compendium",
-    description: "Blending quirky charm with real-world usefulness for everybuddy.",
+    description: "Blending quirky charm with real-world usefulness.",
     url: "https://nobuddy.org",
     siteName: "The Buddy Compendium",
     images: [
@@ -24,8 +24,8 @@ export const metadata = {
   twitter: {
     card: "summary_large_image",
     title: "The Buddy Compendium",
-    description: "Blending quirky charm with real-world usefulness for everybuddy.",
-    images: ["https://nobuddy.org/nobuddy_logo_preview.png"],
+    description: "Blending quirky charm with real-world usefulness",
+    image: "https://nobuddy.org/nobuddy_logo_preview.png",
   },
 };
 
