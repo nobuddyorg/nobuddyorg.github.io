@@ -1,5 +1,6 @@
 "use client";
 
+import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
@@ -127,14 +128,34 @@ function ToolGrid() {
 }
 
 export default function HomePage() {
+  const siteUrl = "https://nobuddy.org";
+  const previewImage = `${siteUrl}/nobuddy_logo_preview.png`;
+
   return (
     <>
+      <Head>
+        <title>The Buddy Compendium</title>
+
+        {/* Open Graph */}
+        <meta property="og:title" content="The Buddy Compendium" />
+        <meta property="og:description" content="Blending quirky charm with real-world usefulness for everybuddy." />
+        <meta property="og:image" content={previewImage} />
+        <meta property="og:url" content={siteUrl} />
+        <meta property="og:type" content="website" />
+
+        {/* Twitter Card */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="The Buddy Compendium" />
+        <meta name="twitter:description" content="Blending quirky charm with real-world usefulness for everybuddy." />
+        <meta name="twitter:image" content={previewImage} />
+      </Head>
+
       <Header />
       <main>
         <Hero />
         <ToolGrid />
-        <Footer />
       </main>
+      <Footer />
     </>
   );
 }
