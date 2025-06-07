@@ -41,11 +41,7 @@ function Hero() {
         The Buddy Compendium
       </h1>
       <p className="relative z-10 max-w-2xl mx-auto text-lg sm:text-xl text-gray-600 dark:text-gray-200 mb-8">
-<<<<<<< HEAD
         Blending quirky charm with real-world usefulness for everybuddy.
-=======
-        A growing collection of delightfully weird tools — for &lsquo;everybuddy&rsquo;.
->>>>>>> dde35ba (small improvement)
       </p>
       <Link
         href="https://github.com/nobuddyorg"
