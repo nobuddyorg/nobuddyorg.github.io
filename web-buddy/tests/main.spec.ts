@@ -5,8 +5,9 @@ test.describe('NoBuddy main page - cards section', () => {
     await page.goto('/');
   });
 
-  test('has at least 1 enabled card in #tools', async ({ page }) => {
+  test('has exactly 1 enabled card in #tools', async ({ page }) => {
     const enabledCards = page.locator('#tools a[href^="/tools/"] > div.group.block.rounded-2xl');
+    await expect(enabledCards).toHaveCount(1);
     await expect(enabledCards.first()).toBeVisible();
   });
 
@@ -18,15 +19,15 @@ test.describe('NoBuddy main page - cards section', () => {
 
   test('disabled cards exist and are not clickable', async ({ page }) => {
     const disabledCards = page.locator('#tools > div > div.cursor-not-allowed');
-    expect(await disabledCards.count()).toBeGreaterThan(0);
+    const count = await disabledCards.count();
+    await expect(disabledCards).toHaveCount(2);
 
     const firstDisabledCard = disabledCards.first();
     await expect(firstDisabledCard).toHaveClass(/cursor-not-allowed/);
 
     const urlBefore = page.url();
     await firstDisabledCard.click({ timeout: 1000 }).catch(() => {});
-    const urlAfter = page.url();
-    expect(urlAfter).toBe(urlBefore);
+    await expect(page).toHaveURL(urlBefore);
   });
 
   test('clicking the first enabled card navigates and shows content', async ({ page }) => {
