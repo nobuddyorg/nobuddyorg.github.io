@@ -32,37 +32,26 @@ export default function ProcrastinationBuddyPage() {
           </motion.div>
 
           {/* Description Section */}
-          <section className="grid grid-cols-1 md:grid-cols-2 gap-8 text-sm leading-relaxed text-gray-700 dark:text-gray-300">
-            <div className="space-y-4">
-              <p>
-                Meet <strong>Procrastination Buddy</strong>, the app that gently encourages you to do absolutely nothing important.
-                Instead of pushing you to focus, it invites you to take a breath, relax, and enjoy the art of doing less.
-              </p>
-              <p>
-                With soothing visuals and light distractions, it creates the perfect space to pause, linger, and drift.
-                It is your companion for peaceful avoidance, thoughtful delay, and guilt-free breaks.
-              </p>
-            </div>
-
-            <div className="space-y-4">
-              <p>
-                Whether you are sipping tea, avoiding your inbox, or just staring into the void, Procrastination Buddy is here to keep you company.
-              </p>
-              <p>
-                Feel like slowing down for no good reason? You are in the right place.
-              </p>
-              <p>
-                🔗{" "}
-                <a
-                  href="https://github.com/nobuddyorg/ProcrastinationBuddy"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="underline hover:text-black dark:hover:text-white"
-                >
-                  View the repository on GitHub and try it out on your machine
-                </a>
-              </p>
-            </div>
+          <section className="text-sm leading-relaxed text-gray-700 dark:text-gray-300">
+            <p>
+              Meet <strong>Procrastination Buddy</strong>, the app that gently encourages you to do absolutely nothing important.
+              Instead of pushing you to focus, it invites you to take a breath, relax, and enjoy the art of doing less.
+            </p>
+            <p>
+              Feel like slowing down for no good reason? You are in the right place.
+            </p>
+            <br />
+            <p>
+              🔗{" "}
+              <a
+                href="https://github.com/nobuddyorg/ProcrastinationBuddy"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="underline hover:text-black dark:hover:text-white"
+              >
+                View the repository on GitHub and try it out on your machine
+              </a>
+            </p>
           </section>
 
           {/* Screenshots Section */}
