@@ -3,11 +3,11 @@ import Footer from "./components/Footer";
 import ClientHome from "./client";
 
 export const metadata = {
-  title: "The Buddy Compendium",
-  description: "Blending quirky charm with real-world usefulness.",
+  title: "The Buddy Compendium - by nobuddy",
+  description: "Blending quirky charm with real-world usefulness for everybuddy.",
   openGraph: {
-    title: "The Buddy Compendium",
-    description: "Blending quirky charm with real-world usefulness.",
+    title: "The Buddy Compendium - by nobuddy",
+    description: "Blending quirky charm with real-world usefulness for everybuddy.",
     url: "https://nobuddy.org",
     siteName: "The Buddy Compendium",
     images: [
@@ -23,8 +23,8 @@ export const metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "The Buddy Compendium",
-    description: "Blending quirky charm with real-world usefulness",
+    title: "The Buddy Compendium - by nobuddy",
+    description: "Blending quirky charm with real-world usefulness for everybuddy.",
     image: "https://nobuddy.org/nobuddy_logo_preview.png",
   },
 };
