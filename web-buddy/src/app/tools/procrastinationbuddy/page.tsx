@@ -59,7 +59,7 @@ export default function ProcrastinationBuddyPage() {
                   rel="noopener noreferrer"
                   className="underline hover:text-black dark:hover:text-white"
                 >
-                  View the repository on GitHub
+                  View the repository on GitHub and try it out on your machine
                 </a>
               </p>
             </div>
