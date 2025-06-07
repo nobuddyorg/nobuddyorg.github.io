@@ -1,7 +1,36 @@
 "use client";
 
+import { Metadata } from 'next';
+
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+
+export const metadata: Metadata = {
+  title: "About nobuddy.org | Impressum",
+  description: "Information about nobuddy.org, including contact details and legal disclaimer (Impressum).",
+  openGraph: {
+    title: "About nobuddy.org | Impressum",
+    description: "Information about nobuddy.org, including contact details and legal disclaimer.",
+    url: "https://nobuddy.org/about",
+    siteName: "The Buddy Compendium",
+    images: [
+      {
+        url: "https://nobuddy.org/nobuddy_logo_preview.png",
+        width: 1280,
+        height: 640,
+        alt: "nobuddy.org Logo"
+      }
+    ],
+    locale: "en_US",
+    type: "website"
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "About nobuddy.org | Impressum",
+    description: "Information about nobuddy.org, including contact details and legal disclaimer.",
+    image: "https://nobuddy.org/nobuddy_logo_preview.png"
+  }
+};
 
 export default function AboutPage() {
   return (
