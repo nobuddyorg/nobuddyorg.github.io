@@ -8,7 +8,7 @@ export default function Footer() {
                 <a
                     href="https://nobuddy.org"
                     target="_blank"
-                    rel="noreferrer"
+                    rel="noopener"
                     className="underline hover:text-black transition"
                 >
                     nobuddy
