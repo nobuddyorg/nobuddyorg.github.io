@@ -1,63 +1,87 @@
 'use client';
 
-import { useEffect, useState, JSX } from "react";
+import { useEffect, useRef } from 'react';
 
+type Particle = {
+  baseX: number;
+  baseY: number;
+  emoji: string;
+  phase: number;
+  floatRange: number;
+  speed: number;
+};
 
-export default function EmojiBackground() {
-  const [elements, setElements] = useState<JSX.Element[]>([]);
+export default function EmojiGridCanvas() {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
+    const canvas = canvasRef.current!;
+    const ctx = canvas.getContext('2d')!;
     const emojis = [
       "🧸", "🎈", "🎉", "🌈", "🪄", "✨", "👾", "🤖", "🧠", "🧃", "🕹️",
       "📦", "🧪", "🎨", "📡", "🚀", "🛸", "🔮", "🗺️", "🍄", "🐙", "🎧",
-      "🪩", "🐸", "📎", "📚", "💡", "🫧", "🐻", "🐤", "🫶"
+      "🪩", "🐸", "📎", "📚", "💡", "🫧", "🐻", "🐤", "🫶", "⏰", "🤷"
     ];
 
-    const items = Array.from({ length: 1000 }).map((_, i) => {
-      const emoji = emojis[Math.floor(Math.random() * emojis.length)];
-      const delay = (Math.random() * 5).toFixed(2);
-      const duration = (5 + Math.random() * 5).toFixed(2);
+    let width = canvas.width = window.innerWidth;
+    let height = canvas.height = window.innerHeight;
 
-      return (
-        <span
-          key={i}
-          className="flex items-center justify-center h-[50px] w-full"
-          style={{
-            animation: `float ${duration}s ease-in-out infinite`,
-            animationDelay: `${delay}s`,
-          }}
-        >
-          {emoji}
-        </span>
-      );
-    });
+    const cellSize = 64;
+    const cols = Math.floor(width / cellSize);
+    const rows = Math.floor(height / cellSize);
 
-    setElements(items);
+    const particles: Particle[] = [];
+
+    for (let y = 0; y < rows; y++) {
+      for (let x = 0; x < cols; x++) {
+        particles.push({
+          baseX: x * cellSize,
+          baseY: y * cellSize,
+          emoji: emojis[Math.floor(Math.random() * emojis.length)],
+          phase: Math.random() * Math.PI * 2,
+          floatRange: 6 + Math.random() * 3,
+          speed: 0.0005 + Math.random() * 0.00075,
+        });
+      }
+    }
+
+    function draw() {
+      ctx.clearRect(0, 0, width, height);
+      const t = Date.now();
+
+      for (const p of particles) {
+        const offset = Math.sin(t * p.speed + p.phase) * p.floatRange;
+        const offsetX = offset;
+        const offsetY = -offset;
+
+        ctx.font = "28px serif";
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+        ctx.fillText(
+          p.emoji,
+          p.baseX + cellSize / 2 + offsetX,
+          p.baseY + cellSize / 2 + offsetY
+        );
+      }
+
+      requestAnimationFrame(draw);
+    }
+
+    draw();
+
+    const handleResize = () => {
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
   }, []);
 
   return (
-    <>
-      <style>{`
-        @keyframes float {
-          0% { transform: translate(0px, 0px) rotate(0deg); }
-          50% { transform: translate(8px, -12px) rotate(3deg); }
-          100% { transform: translate(0px, 0px) rotate(0deg); }
-        }
-      `}</style>
-
-      <div
-        aria-hidden="true"
-        className="fixed inset-0 z-0 pointer-events-none select-none opacity-10 grayscale"
-        style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(auto-fill, minmax(50px, 1fr))",
-          lineHeight: "1",
-          fontSize: "28px",
-          fontFamily: "'Apple Color Emoji','Segoe UI Emoji','Noto Color Emoji',sans-serif",
-        }}
-      >
-        {elements}
-      </div>
-    </>
+    <canvas
+      ref={canvasRef}
+      className="fixed inset-0 z-0 pointer-events-none opacity-10 grayscale"
+    />
   );
 }
