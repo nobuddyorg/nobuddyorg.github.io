@@ -3,8 +3,8 @@
 pushd web-buddy
 npm ci
 npm run build
-rm -f out
+rm -rf out
 touch out/.nojekyll
-rm -f ../docs
+rm -rf ../docs
 cp -a out/. ../docs
 popd
