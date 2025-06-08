@@ -12,7 +12,7 @@ export const metadata = {
     siteName: "The Buddy Compendium",
     images: [
       {
-        url: "https://nobuddy.org/nobuddy_logo_preview.png",
+        url: "https://nobuddy.org/nobuddy_logo_preview.webp",
         width: 1280,
         height: 640,
         alt: "The Buddy Compendium Logo",
@@ -25,7 +25,7 @@ export const metadata = {
     card: "summary_large_image",
     title: "The Buddy Compendium - by nobuddy",
     description: "Blending quirky charm with real-world usefulness for everybuddy.",
-    image: "https://nobuddy.org/nobuddy_logo_preview.png",
+    image: "https://nobuddy.org/nobuddy_logo_preview.webp",
   },
 };
 
