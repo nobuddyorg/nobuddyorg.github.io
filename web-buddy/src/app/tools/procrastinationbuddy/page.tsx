@@ -62,22 +62,22 @@ export default function ProcrastinationBuddyPage() {
 
             {[
               {
-                src: "frontend-light.png",
+                src: "frontend-light.webp",
                 alt: "Frontend Light",
                 text: "A calm and sunny interface that feels just productive enough to make you feel like you are doing something. Ideal for morning procrastination.",
               },
               {
-                src: "frontend-dark.png",
+                src: "frontend-dark.webp",
                 alt: "Frontend Dark",
                 text: "Soft and moody for those quiet moments when you want to avoid everything while pretending to be focused.",
               },
               {
-                src: "settings-light.png",
+                src: "settings-light.webp",
                 alt: "Settings",
                 text: "Play around with switches and sliders. Nothing urgent, nothing life changing, just something to tinker with while avoiding the real stuff.",
               },
               {
-                src: "help-light.png",
+                src: "help-light.webp",
                 alt: "Help",
                 text: "Explore the help section to feel like you are making progress. It may not solve anything, but it feels like a step in the right direction.",
               },
