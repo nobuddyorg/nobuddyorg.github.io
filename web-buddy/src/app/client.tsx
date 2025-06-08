@@ -5,6 +5,8 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { tools } from "./tools";
 
+const MotionLink = motion(Link); 
+
 function Hero() {
     return (
         <section className="relative pt-36 pb-20 max-w-4xl mx-auto px-4 sm:px-6 text-center overflow-hidden">
@@ -14,23 +16,11 @@ function Hero() {
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
             >
-                <circle cx="71" cy="61" r="111" fill="#FCFAFF" />
-                <circle cx="244" cy="106" r="139" fill="#F9F0FF" />
-                <circle cx="400" cy="150" r="139" fill="#EEE4FE" />
-                <circle cx="316" cy="305" r="139" fill="#DDD6FE" />
-                <circle cx="170" cy="319" r="139" fill="#CABFFD" />
-            </svg>
-            <svg
-                className="absolute -top-20 left-1/2 -translate-x-1/2 w-[40rem] h-[40rem] opacity-100 pointer-events-none hidden dark:block"
-                viewBox="0 0 528 560"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-            >
-                <circle cx="71" cy="61" r="111" fill="#1e1b4b" />
-                <circle cx="244" cy="106" r="139" fill="#312e81" />
-                <circle cx="400" cy="150" r="139" fill="#3730a3" />
-                <circle cx="316" cy="305" r="139" fill="#4f46e5" />
-                <circle cx="170" cy="319" r="139" fill="#6366f1" />
+                <circle cx="71" cy="61" r="111" className="fill-[#FCFAFF] dark:fill-[#1e1b4b]" />
+                <circle cx="244" cy="106" r="139" className="fill-[#F9F0FF] dark:fill-[#312e81]" />
+                <circle cx="400" cy="150" r="139" className="fill-[#EEE4FE] dark:fill-[#3730a3]" />
+                <circle cx="316" cy="305" r="139" className="fill-[#DDD6FE] dark:fill-[#4f46e5]" />
+                <circle cx="170" cy="319" r="139" className="fill-[#CABFFD] dark:fill-[#6366f1]" />
             </svg>
 
             <h1 className="relative z-10 text-5xl sm:text-6xl font-extrabold tracking-tight leading-tight mb-6 text-black dark:text-white">
@@ -60,17 +50,14 @@ function ToolGrid() {
             {tools.map((tool, index) => {
                 const isReady = tool.status === "ready";
 
-                const CardContent = (
-                    <motion.div
-                        key={tool.slug}
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: index * 0.05, duration: 0.4 }}
-                        className={`group block rounded-2xl p-6 border ${isReady
-                                ? "bg-white dark:bg-black border-gray-200 dark:border-gray-800 hover:border-black dark:hover:border-white shadow-sm dark:shadow-[0_2px_8px_rgba(255,255,255,0.05)] hover:shadow-md dark:hover:shadow-[0_4px_12px_rgba(255,255,255,0.15)] transition-all duration-300 hover:-translate-y-1 cursor-pointer"
-                                : "bg-gray-100 dark:bg-neutral-900 border-gray-200 dark:border-neutral-950 opacity-60 cursor-not-allowed"
-                            }`}
-                    >
+                const cardClasses = `group block rounded-2xl p-6 border ${
+                    isReady
+                        ? "bg-white dark:bg-black border-gray-200 dark:border-gray-800 hover:border-black dark:hover:border-white shadow-sm dark:shadow-[0_2px_8px_rgba(255,255,255,0.05)] hover:shadow-md dark:hover:shadow-[0_4px_12px_rgba(255,255,255,0.15)] transition-all duration-300 hover:-translate-y-1 cursor-pointer"
+                        : "bg-gray-100 dark:bg-neutral-900 border-gray-200 dark:border-neutral-950 opacity-60 cursor-not-allowed"
+                }`;
+
+                const cardInner = (
+                    <>
                         <div className="flex items-center gap-4 mb-4">
                             <div className="w-12 h-12 bg-gray-50 rounded-full flex items-center justify-center shadow-inner">
                                 {tool.logo ? (
@@ -106,15 +93,34 @@ function ToolGrid() {
                                 </span>
                             ))}
                         </div>
-                    </motion.div>
+                    </>
                 );
 
-                return isReady ? (
-                    <Link key={tool.slug} href={`/tools/${tool.slug}`}>
-                        {CardContent}
-                    </Link>
-                ) : (
-                    <div key={tool.slug}>{CardContent}</div>
+                if (isReady) {
+                    return (
+                        <motion.div
+                            key={tool.slug}
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: index * 0.05, duration: 0.4 }}
+                        >
+                            <MotionLink href={`/tools/${tool.slug}`} className={cardClasses}>
+                                {cardInner}
+                            </MotionLink>
+                        </motion.div>
+                    );
+                }
+
+                return (
+                    <motion.div
+                        key={tool.slug}
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: index * 0.05, duration: 0.4 }}
+                        className={cardClasses}
+                    >
+                        {cardInner}
+                    </motion.div>
                 );
             })}
         </section>
