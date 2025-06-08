@@ -1,37 +1,9 @@
 "use client";
 
-import { Metadata } from 'next';
 import Image from "next/image";
 import { motion } from "framer-motion";
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
-
-export const metadata: Metadata = {
-  title: "Procrastination Buddy - Do Nothing, Productively | nobuddy.org",
-  description: "Meet Procrastination Buddy, the app that encourages you to relax and enjoy doing less. Perfect for when you need a break from productivity.",
-  openGraph: {
-    title: "Procrastination Buddy - Do Nothing, Productively",
-    description: "The app that gently encourages you to do absolutely nothing important. Take a breath, relax, and enjoy the art of doing less.",
-    url: "https://nobuddy.org/tools/procrastinationbuddy",
-    siteName: "The Buddy Compendium",
-    images: [
-      {
-        url: "https://nobuddy.org/images/procrastination-buddy/buddy-preview.gif",
-        width: 1200,
-        height: 600,
-        alt: "Procrastination Buddy animated preview"
-      }
-    ],
-    locale: "en_US",
-    type: "website"
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Procrastination Buddy - Do Nothing, Productively | nobuddy.org",
-    description: "The app that gently encourages you to do absolutely nothing important. Relax and enjoy doing less.",
-    image: "https://nobuddy.org/images/procrastination-buddy/buddy-preview.gif"
-  }
-};
 
 export default function ProcrastinationBuddyPage() {
   return (
