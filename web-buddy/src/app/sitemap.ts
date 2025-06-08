@@ -1,5 +1,7 @@
 import { MetadataRoute } from 'next';
 
+export const dynamic = 'force-static';
+
 export default function sitemap(): MetadataRoute.Sitemap {
   const lastModified = new Date().toISOString();
   const tools = ['procrastinationbuddy']; // Add other tool slugs here if more are created
