@@ -10,6 +10,10 @@ const inter = Inter({
 export const metadata = {
   title: "nobuddy",
   description: "A growing collection of experimental tools with personality",
+  metadataBase: new URL("https://nobuddy.org"),
+  alternates: {
+    canonical: "/",
+  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
