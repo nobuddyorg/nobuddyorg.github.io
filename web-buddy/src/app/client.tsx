@@ -58,7 +58,7 @@ function ToolGrid() {
 
                 const cardInner = (
                     <>
-                        <div className="flex items-center gap-4 mb-4">
+                        <div className="flex items-center gap-4 mb-4" data-testid={tool.status}>
                             <div className="w-12 h-12 bg-gray-50 rounded-full flex items-center justify-center shadow-inner">
                                 {tool.logo ? (
                                     <Image

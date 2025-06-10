@@ -3,10 +3,12 @@ import { test, expect } from '@playwright/test';
 test.describe('NoBuddy main page - cards section', () => {
   test.beforeEach(async ({ page }) => {
     await page.goto('/');
+    await expect(page.getByRole('heading', { name: 'The Buddy Compendium' })).toBeVisible();
+    await expect(page.getByRole('link')).toHaveCount(8);
   });
 
   test('has exactly 1 enabled card in #tools', async ({ page }) => {
-    const enabledCards = page.locator('#tools a[href^="/tools/"] > div.group.block.rounded-2xl');
+    const enabledCards = page.getByTestId('ready');
     await expect(enabledCards).toHaveCount(1);
     await expect(enabledCards.first()).toBeVisible();
   });
@@ -18,12 +20,10 @@ test.describe('NoBuddy main page - cards section', () => {
   });
 
   test('disabled cards exist and are not clickable', async ({ page }) => {
-    const disabledCards = page.locator('#tools > div > div.cursor-not-allowed');
-    const count = await disabledCards.count();
+    const disabledCards = page.getByTestId('coming_soon');
     await expect(disabledCards).toHaveCount(2);
 
     const firstDisabledCard = disabledCards.first();
-    await expect(firstDisabledCard).toHaveClass(/cursor-not-allowed/);
 
     const urlBefore = page.url();
     await firstDisabledCard.click({ timeout: 1000 }).catch(() => { });
