@@ -56,7 +56,7 @@ export default function EmojiGridCanvas() {
               emoji: emojis[Math.floor(Math.random() * emojis.length)],
               phase: Math.random() * Math.PI * 2,
               floatRange: 6 + Math.random() * 3,
-              speed: 0.0003 + Math.random() * 0.00065,
+              speed: 0.0005 + Math.random() * 0.0005,
             });
           }
         }
