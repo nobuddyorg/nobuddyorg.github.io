@@ -26,9 +26,9 @@ function Hero() {
             <h1 className="relative z-10 text-5xl sm:text-6xl font-extrabold tracking-tight leading-tight mb-6 text-black dark:text-white">
                 The Buddy Compendium
             </h1>
-            <p className="relative z-10 max-w-2xl mx-auto text-lg sm:text-xl text-gray-600 dark:text-gray-200 mb-8">
+            <h2 className="relative z-10 max-w-2xl mx-auto text-lg sm:text-xl text-gray-600 dark:text-gray-200 mb-8">
                 Blending quirky charm with real-world usefulness for {'\'everybuddy\''}
-            </p>
+            </h2>
             <Link
                 href="https://github.com/nobuddyorg"
                 target="_blank"
