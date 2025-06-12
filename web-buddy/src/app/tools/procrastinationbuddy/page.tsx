@@ -1,7 +1,7 @@
 import { createMetadata } from "../../metadata";
 import { tools } from "../../tools";
 import ProcrastinationBuddyClient from "./client";
-import Script from "next/script";
+import PageWrapper from "../../components/PageWrapper";
 
 const slug = "procrastinationbuddy";
 const path = `/tools/${slug}`;
@@ -17,7 +17,7 @@ const image = tool?.logo;
 const url = `https://nobuddy.org${path}`;
 const authorName = "Matthias Eggert";
 
-export const metadata = createMetadata({
+const metadata = createMetadata({
   title,
   description,
   slug: path,
@@ -37,15 +37,14 @@ const jsonLd = {
   ...(image ? { image } : {}),
 };
 
+export { metadata };
+
 export default function ProcrastinationBuddyPage() {
   return (
-    <>
-      <Script
-        id="procrastinationbuddy-jsonld"
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-      />
-      <ProcrastinationBuddyClient />
-    </>
+    <PageWrapper
+      metadata={metadata}
+      jsonLd={jsonLd}
+      ClientComponent={ProcrastinationBuddyClient}
+    />
   );
 }

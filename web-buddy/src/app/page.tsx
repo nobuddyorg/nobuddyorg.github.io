@@ -3,7 +3,7 @@ import Footer from "./components/Footer";
 import ClientHome from "./client";
 import { createMetadata } from "./metadata";
 import { tools } from "./tools";
-import Script from "next/script";
+import PageWrapper from "./components/PageWrapper";
 
 const title = "The Buddy Compendium";
 const slug = "/";
@@ -33,15 +33,12 @@ const jsonLd = {
 export default function HomePage() {
   return (
     <>
-      <Script
-        id="homepage-jsonld"
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-      />
       <Header />
-      <main>
-        <ClientHome />
-      </main>
+      <PageWrapper
+        metadata={metadata}
+        jsonLd={jsonLd}
+        ClientComponent={ClientHome}
+      />
       <Footer />
     </>
   );

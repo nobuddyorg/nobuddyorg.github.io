@@ -1,6 +1,6 @@
 import { createMetadata } from "../metadata";
 import AboutClient from "./client";
-import Script from "next/script";
+import PageWrapper from "../components/PageWrapper";
 
 const title = "About / Impressum";
 const description =
@@ -9,7 +9,7 @@ const slug = "/about";
 const url = `https://nobuddy.org${slug}`;
 const authorName = "Matthias Eggert";
 
-export const metadata = createMetadata({
+const metadata = createMetadata({
   title,
   description,
   slug,
@@ -27,15 +27,14 @@ const jsonLd = {
   },
 };
 
+export { metadata };
+
 export default function AboutPage() {
   return (
-    <>
-      <Script
-        id="about-jsonld"
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-      />
-      <AboutClient />
-    </>
+    <PageWrapper
+      metadata={metadata}
+      jsonLd={jsonLd}
+      ClientComponent={AboutClient}
+    />
   );
 }
