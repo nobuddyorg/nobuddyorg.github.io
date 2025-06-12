@@ -35,7 +35,7 @@ const jsonLd = {
     "@type": "Person",
     name: authorName,
   },
-  ...(image ? { previewImage } : {}),
+  ...(previewImage ? { image: previewImage } : {}),
 };
 
 export default function ProcrastinationBuddyPage() {

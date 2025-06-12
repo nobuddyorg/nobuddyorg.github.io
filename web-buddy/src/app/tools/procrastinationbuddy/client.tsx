@@ -104,7 +104,7 @@ function ScreenshotsSection() {
               <h3 className="text-xl font-semibold mb-2 text-black dark:text-white">
                 {alt}
               </h3>
-              <p>{text}</p>
+              <p className="text-sm leading-relaxed text-gray-700 dark:text-gray-300">{text}</p>
             </div>
           </motion.div>
         );
