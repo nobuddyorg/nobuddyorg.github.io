@@ -13,8 +13,7 @@ const tool = tools.find((t) => t.slug === slug);
 
 const title = tool?.name ?? "";
 const description = tool?.description ?? "";
-const image = tool?.logo;
-const previewImage = tool?.previewImage;
+const image = tool?.previewImage;
 const url = `${SITE_URL}${path}`;
 const authorName = AUTHOR_NAME;
 
@@ -35,7 +34,7 @@ const jsonLd = {
     "@type": "Person",
     name: authorName,
   },
-  ...(previewImage ? { image: previewImage } : {}),
+  ...(image ? { image: image } : {}),
 };
 
 export default function ProcrastinationBuddyPage() {
