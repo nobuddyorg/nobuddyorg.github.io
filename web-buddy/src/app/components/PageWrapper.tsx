@@ -4,14 +4,9 @@ import type { Metadata } from "next";
 interface PageWrapperProps {
   metadata: Metadata;
   jsonLd: object;
-  ClientComponent: React.ComponentType;
 }
 
-export default function PageWrapper({
-  metadata,
-  jsonLd,
-  ClientComponent,
-}: PageWrapperProps) {
+export default function PageWrapper({ metadata, jsonLd }: PageWrapperProps) {
   const rawTitle = metadata.title ?? "page";
 
   const titleString =
@@ -30,7 +25,6 @@ export default function PageWrapper({
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      <ClientComponent />
     </>
   );
 }

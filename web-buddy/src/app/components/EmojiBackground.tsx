@@ -1,6 +1,6 @@
-'use client';
+"use client";
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef } from "react";
 
 type Particle = {
   baseX: number;
@@ -12,9 +12,39 @@ type Particle = {
 };
 
 const emojis = [
-  "🧸", "🎈", "🎉", "🌈", "🪄", "✨", "👾", "🤖", "🧠", "🧃", "🕹️",
-  "📦", "🧪", "🎨", "📡", "🚀", "🛸", "🔮", "🗺️", "🍄", "🐙", "🎧",
-  "🪩", "🐸", "📎", "📚", "💡", "🫧", "🐻", "🐤", "🫶", "⏰", "🤷"
+  "🧸",
+  "🎈",
+  "🎉",
+  "🌈",
+  "🪄",
+  "✨",
+  "👾",
+  "🤖",
+  "🧠",
+  "🧃",
+  "🕹️",
+  "📦",
+  "🧪",
+  "🎨",
+  "📡",
+  "🚀",
+  "🛸",
+  "🔮",
+  "🗺️",
+  "🍄",
+  "🐙",
+  "🎧",
+  "🪩",
+  "🐸",
+  "📎",
+  "📚",
+  "💡",
+  "🫧",
+  "🐻",
+  "🐤",
+  "🫶",
+  "⏰",
+  "🤷",
 ];
 
 const cellSize = 64;
@@ -28,7 +58,7 @@ export default function EmojiGridCanvas() {
 
   useEffect(() => {
     const canvas = canvasRef.current!;
-    const ctx = canvas.getContext('2d')!;
+    const ctx = canvas.getContext("2d")!;
 
     const getCanvasDimensions = () => ({
       width: window.innerWidth,
@@ -99,8 +129,8 @@ export default function EmojiGridCanvas() {
     };
 
     draw();
-    window.addEventListener('resize', resizeCanvasIfNeeded);
-    return () => window.removeEventListener('resize', resizeCanvasIfNeeded);
+    window.addEventListener("resize", resizeCanvasIfNeeded);
+    return () => window.removeEventListener("resize", resizeCanvasIfNeeded);
   }, []);
 
   return (

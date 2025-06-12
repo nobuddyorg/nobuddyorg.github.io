@@ -1,7 +1,5 @@
 import type { Metadata } from "next";
-
-const siteName = "The Buddy Compendium";
-const siteUrl = "https://nobuddy.org";
+import { SITE_URL, SITE_NAME, AUTHOR_NAME } from "./globals";
 
 export function createMetadata({
   title,
@@ -14,14 +12,16 @@ export function createMetadata({
   slug?: string;
   image?: string;
 }): Metadata {
-  const url = `${siteUrl}${slug}`;
-  const fullTitle = `${title} - by nobuddy`;
-  const absoluteImage = image.startsWith("http") ? image : `${siteUrl}${image}`;
+  const url = `${SITE_URL}${slug}`;
+  const fullTitle = `${title} - by ${AUTHOR_NAME}`;
+  const absoluteImage = image.startsWith("http")
+    ? image
+    : `${SITE_URL}${image}`;
 
   return {
     title: fullTitle,
     description,
-    metadataBase: new URL(siteUrl),
+    metadataBase: new URL(SITE_URL),
     alternates: {
       canonical: url,
     },
@@ -29,7 +29,7 @@ export function createMetadata({
       title: fullTitle,
       description,
       url,
-      siteName,
+      siteName: SITE_NAME,
       images: [
         {
           url: absoluteImage,
@@ -46,6 +46,8 @@ export function createMetadata({
       title: fullTitle,
       description,
       images: [absoluteImage],
+      site: `@${AUTHOR_NAME}`,
+      creator: `@${AUTHOR_NAME}`,
     },
   };
 }

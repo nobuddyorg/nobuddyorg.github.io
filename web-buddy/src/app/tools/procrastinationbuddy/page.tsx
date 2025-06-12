@@ -1,23 +1,23 @@
+import { SITE_URL, AUTHOR_NAME } from "../../globals";
 import { createMetadata } from "../../metadata";
 import { tools } from "../../tools";
 import ProcrastinationBuddyClient from "./client";
 import PageWrapper from "../../components/PageWrapper";
+import Header from "../../components/Header";
+import Footer from "../../components/Footer";
 
 const slug = "procrastinationbuddy";
 const path = `/tools/${slug}`;
-const defaultTitle = "Procrastination Buddy";
-const defaultDescription =
-  "A fun and quirky productivity tool to help you procrastinate with style.";
 
 const tool = tools.find((t) => t.slug === slug);
 
-const title = tool?.name ?? defaultTitle;
-const description = tool?.description ?? defaultDescription;
+const title = tool?.name ?? "";
+const description = tool?.description ?? "";
 const image = tool?.logo;
-const url = `https://nobuddy.org${path}`;
-const authorName = "Matthias Eggert";
+const url = `${SITE_URL}${path}`;
+const authorName = AUTHOR_NAME;
 
-const metadata = createMetadata({
+export const metadata = createMetadata({
   title,
   description,
   slug: path,
@@ -37,14 +37,13 @@ const jsonLd = {
   ...(image ? { image } : {}),
 };
 
-export { metadata };
-
 export default function ProcrastinationBuddyPage() {
   return (
-    <PageWrapper
-      metadata={metadata}
-      jsonLd={jsonLd}
-      ClientComponent={ProcrastinationBuddyClient}
-    />
+    <>
+      <PageWrapper metadata={metadata} jsonLd={jsonLd} />
+      <Header />
+      <ProcrastinationBuddyClient title={title} />
+      <Footer />
+    </>
   );
 }

@@ -1,3 +1,5 @@
+import { GITHUB_URL } from "./globals"; // adjust path as needed
+
 export const tools = [
   {
     slug: "procrastinationbuddy",
@@ -5,8 +7,8 @@ export const tools = [
     description:
       "Avoid productivity with delightfully useless tasks. Built using Streamlit, Ollama AI, and Docker. Perfect for professional procrastinators.",
     logo: "/logos/procrastination.webp",
-    tags: ["Productivity", "Humor", "AI", "Docker", "Python"],
-    github: "https://github.com/nobuddyorg/ProcrastinationBuddy",
+    tags: ["Productivity", "Humor", "AI", "Docker", "Streamlit", "Python"],
+    github: `${GITHUB_URL}/ProcrastinationBuddy`,
     status: "ready",
   },
   {
@@ -15,8 +17,8 @@ export const tools = [
     description:
       "Load-test your apps at scale using k6, Grafana, InfluxDB, and AWS EKS. Fully cloud-native and containerized with Docker and Helm.",
     logo: "/logos/thrash.webp",
-    tags: ["DevOps", "Testing", "Cloud", "Kubernetes", "Groovy"],
-    github: "https://github.com/nobuddyorg/ThrashBuddy",
+    tags: ["DevOps", "Testing", "Cloud", "Kubernetes", "Groovy", "k6"],
+    github: `${GITHUB_URL}/ThrashBuddy`,
     status: "coming_soon",
   },
   {
@@ -25,8 +27,16 @@ export const tools = [
     description:
       "Effortlessly split costs with friends. A social-friendly app for fair finance, powered by DynamoDB and designed for group sharing.",
     logo: "/logos/split.webp",
-    tags: ["Finance", "Social", "Sharing", "Friends", "Groups", "Java"],
-    github: "https://github.com/nobuddyorg/FairBuddy",
+    tags: [
+      "Finance",
+      "Social",
+      "Sharing",
+      "Groups",
+      "Java",
+      "Serverless",
+      "Mobile",
+    ],
+    github: `${GITHUB_URL}/FairBuddy`,
     status: "coming_soon",
   },
 ];
