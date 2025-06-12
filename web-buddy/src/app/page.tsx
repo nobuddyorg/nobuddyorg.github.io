@@ -1,33 +1,19 @@
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import ClientHome from "./client";
+import { createMetadata } from "./metadata";
+import { tools } from "./tools";
 
-export const metadata = {
-  title: "The Buddy Compendium - by nobuddy",
-  description: "Blending quirky charm with real-world usefulness for everybuddy.",
-  openGraph: {
-    title: "The Buddy Compendium - by nobuddy",
-    description: "Blending quirky charm with real-world usefulness for everybuddy.",
-    url: "https://nobuddy.org",
-    siteName: "The Buddy Compendium",
-    images: [
-      {
-        url: "https://nobuddy.org/nobuddy_logo_preview.webp",
-        width: 1280,
-        height: 640,
-        alt: "The Buddy Compendium Logo",
-      },
-    ],
-    locale: "en_US",
-    type: "website",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "The Buddy Compendium - by nobuddy",
-    description: "Blending quirky charm with real-world usefulness for everybuddy.",
-    image: "https://nobuddy.org/nobuddy_logo_preview.webp",
-  },
-};
+function generateDescription() {
+  const toolNames = tools.map((tool) => tool.name).join(", ");
+  return `A growing collection of useful web tools with unique personality and practical features for creative problem-solving, including ${toolNames}.`;
+}
+
+export const metadata = createMetadata({
+  title: "The Buddy Compendium",
+  description: generateDescription(),
+  slug: "/",
+});
 
 export default function HomePage() {
   return (

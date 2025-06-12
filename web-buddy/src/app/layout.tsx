@@ -7,16 +7,11 @@ const inter = Inter({
   variable: "--font-inter",
 });
 
-export const metadata = {
-  title: "nobuddy",
-  description: "A growing collection of experimental tools with personality",
-  metadataBase: new URL("https://nobuddy.org"),
-  alternates: {
-    canonical: "/",
-  },
-};
-
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <html lang="en" className={inter.variable}>
       <body className="font-sans bg-white text-black relative overflow-hidden">
