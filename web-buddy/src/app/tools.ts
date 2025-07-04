@@ -21,7 +21,7 @@ export const tools = [
     previewImage: "/logos/thrash_preview.png",
     tags: ["DevOps", "Testing", "Cloud", "Kubernetes", "Groovy", "k6"],
     github: `${GITHUB_URL}/ThrashBuddy`,
-    status: "coming_soon",
+    status: "ready",
   },
   {
     slug: "fairbuddy",

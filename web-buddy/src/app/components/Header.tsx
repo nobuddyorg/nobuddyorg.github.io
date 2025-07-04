@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { AUTHOR_NAME, GITHUB_URL } from "../globals";
 
@@ -7,9 +8,16 @@ export default function Header() {
       <nav className="max-w-7xl mx-auto px-4 sm:px-6 flex items-center justify-between h-16 overflow-hidden">
         <Link
           href="/"
-          className="text-2xl font-extrabold tracking-tight text-black dark:text-white"
+          className="flex space-x-2 text-2xl font-extrabold tracking-tight text-black dark:text-white"
         >
-          {AUTHOR_NAME}
+          <Image
+            src="small-logo.webp"
+            alt="nobudy icon"
+            width={30}
+            height={30}
+            className="object-contain"
+          />
+          <span>{AUTHOR_NAME}</span>
         </Link>
         <div className="flex flex-wrap items-center space-x-4 sm:space-x-6">
           <Link
