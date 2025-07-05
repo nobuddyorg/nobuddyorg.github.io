@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { AUTHOR_NAME, GITHUB_URL } from "../globals";
 
 export default function Header() {
@@ -9,6 +10,13 @@ export default function Header() {
           href="/"
           className="text-2xl font-extrabold tracking-tight text-black dark:text-white"
         >
+          <Image
+            src="/logo-header.webp"
+            alt="Web Buddy Logo"
+            width={25}
+            height={25}
+            className="inline-block mr-2"
+          />
           {AUTHOR_NAME}
         </Link>
         <div className="flex flex-wrap items-center space-x-4 sm:space-x-6">

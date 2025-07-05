@@ -42,4 +42,59 @@ export const tools = [
     github: `${GITHUB_URL}/FairBuddy`,
     status: "coming_soon",
   },
+  {
+    slug: "qrbuddy",
+    name: "QR Buddy",
+    description:
+      "Read QR-codes from images on your phone or PC, using a simple web app. You don't need camera access, this is local storage only.",
+    logo: "/logos/qr.webp",
+    previewImage: "",
+    tags: [
+      "Kotlin",
+      "Mobile",
+      "Image Processing",
+      "Camera",
+      "Files",
+      "Local",
+    ],
+    github: `${GITHUB_URL}/FairBuddy`,
+    status: "coming_soon",
+  },
+  {
+    slug: "karmabudddy",
+    name: "Karma Buddy",
+    description:
+      "Track your karma points with a fun and engaging app. Compete with friends and see who has the highest karma score.",
+    logo: "/logos/karma.webp",
+    previewImage: "",
+    tags: [
+      "Social",
+      "Java",
+      "AI",
+      "Hugging Face",
+      "Mobile",
+      "Humor",
+      "Gamification",
+    ],
+    github: `${GITHUB_URL}/KarmaBuddy`,
+    status: "coming_soon",
+  },
+  {
+    slug: "peekbuddy",
+    name: "Peek Buddy",
+    description:
+      "Silently watches your folders and logs every change in real time. This way you detect all changes on your system.",
+    logo: "/logos/peek.webp",
+    previewImage: "",
+    tags: [
+      "Electron",
+      "Desktop",
+      "Filesystem",
+      "Monitoring",
+      "JavaScript",
+      "Tools"
+    ],
+    github: `${GITHUB_URL}/PeekBuddy`,
+    status: "coming_soon",
+  }
 ];
