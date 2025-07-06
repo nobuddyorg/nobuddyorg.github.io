@@ -1,4 +1,4 @@
-import { GITHUB_URL } from "./globals"; // adjust path as needed
+import { GITHUB_URL } from "./globals";
 
 export const tools = [
   {
@@ -24,12 +24,30 @@ export const tools = [
     status: "ready",
   },
   {
+    slug: "gamegallerybuddy",
+    name: "Game Gallery Buddy",
+    description:
+      "Generates a wallpaper using all board games from a BoardGameGeek user's collection. Customizable layout with many options.",
+    logo: "/logos/gamegallery.webp",
+    previewImage: "/logos/gamegallery_preview.png",
+    tags: [
+      "Games",
+      "BoardGameGeek",
+      "Wallpapers",
+      "Groovy",
+      "Spring Boot",
+      "Tools",
+    ],
+    github: `${GITHUB_URL}/GameGalleryBuddy`,
+    status: "ready",
+  },
+  {
     slug: "fairbuddy",
     name: "Fair Buddy",
     description:
       "Effortlessly split costs with friends. A social-friendly app for fair finance, powered by DynamoDB and designed for group sharing.",
-    logo: "/logos/split.webp",
-    previewImage: "/logos/split_preview.png",
+    logo: "/logos/fair.webp",
+    previewImage: "/logos/fair_preview.png",
     tags: [
       "Finance",
       "Social",
@@ -49,14 +67,7 @@ export const tools = [
       "Read QR-codes from images on your phone or PC, using a simple web app. You don't need camera access, this is local storage only.",
     logo: "/logos/qr.webp",
     previewImage: "",
-    tags: [
-      "Kotlin",
-      "Mobile",
-      "Image Processing",
-      "Camera",
-      "Files",
-      "Local",
-    ],
+    tags: ["Kotlin", "Mobile", "Image Processing", "Camera", "Files", "Local"],
     github: `${GITHUB_URL}/FairBuddy`,
     status: "coming_soon",
   },
@@ -92,9 +103,38 @@ export const tools = [
       "Filesystem",
       "Monitoring",
       "JavaScript",
-      "Tools"
+      "Tools",
     ],
     github: `${GITHUB_URL}/PeekBuddy`,
     status: "coming_soon",
-  }
+  },
+  {
+    slug: "powertrailbuddy",
+    name: "Power Trail Buddy",
+    description:
+      "Find and visualize geocaching power trails with ease. Designed for efficiency-focused cachers who love long trails and rapid finds.",
+    logo: "/logos/powertrail.webp",
+    previewImage: "/logos/powertrail_preview.png",
+    tags: [
+      "Geocaching",
+      "Maps",
+      "Navigation",
+      "Trails",
+      "Next.js",
+      "Outdoor",
+    ],
+    github: `${GITHUB_URL}/PowerTrailBuddy`,
+    status: "coming_soon",
+  },
+  {
+    slug: "ridemergebuddy",
+    name: "Ride Merge Buddy",
+    description:
+      "Merge GPX tracks from multiple cycling sessions. Ideal for Strava users, activity aggregators, and route cleanup enthusiasts.",
+    logo: "/logos/ridemerge.webp",
+    previewImage: "/logos/ridemerge_preview.png",
+    tags: ["Cycling", "GPX", "Strava", "Tracking", "Angular", "Tools"],
+    github: `${GITHUB_URL}/RideMergeBuddy`,
+    status: "coming_soon",
+  },
 ];
