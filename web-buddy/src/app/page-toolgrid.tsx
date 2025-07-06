@@ -54,8 +54,17 @@ export default function ToolGrid() {
                   </span>
                 )}
               </div>
-              <h3 className="text-lg font-semibold transition group-hover:text-black dark:group-hover:text-white">
+              <h3 className="text-lg font-semibold transition group-hover:text-black dark:group-hover:text-white flex items-center gap-1">
                 {tool.name}
+                {tool.status !== "ready" && (
+                  <span
+                    className="grayscale text-lg"
+                    role="img"
+                    aria-label="under construction"
+                  >
+                    🏗️🚧
+                  </span>
+                )}
               </h3>
             </div>
 

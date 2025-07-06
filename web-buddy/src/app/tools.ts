@@ -61,6 +61,35 @@ export const tools = [
     status: "coming_soon",
   },
   {
+    slug: "ridemergebuddy",
+    name: "Ride Merge Buddy",
+    description:
+      "Merge GPX tracks from multiple cycling sessions. Ideal for Strava users, activity aggregators, and route cleanup enthusiasts.",
+    logo: "/logos/ridemerge.webp",
+    previewImage: "/logos/ridemerge_preview.png",
+    tags: ["Cycling", "GPX", "Strava", "Tracking", "Angular", "Tools"],
+    github: `${GITHUB_URL}/RideMergeBuddy`,
+    status: "coming_soon",
+  },
+  {
+    slug: "powertrailbuddy",
+    name: "Power Trail Buddy",
+    description:
+      "Find and visualize geocaching power trails with ease. Designed for efficiency-focused cachers who love long trails and rapid finds.",
+    logo: "/logos/powertrail.webp",
+    previewImage: "/logos/powertrail_preview.png",
+    tags: [
+      "Geocaching",
+      "Maps",
+      "Navigation",
+      "Trails",
+      "Next.js",
+      "Outdoor",
+    ],
+    github: `${GITHUB_URL}/PowerTrailBuddy`,
+    status: "coming_soon",
+  },
+  {
     slug: "qrbuddy",
     name: "QR Buddy",
     description:
@@ -106,35 +135,6 @@ export const tools = [
       "Tools",
     ],
     github: `${GITHUB_URL}/PeekBuddy`,
-    status: "coming_soon",
-  },
-  {
-    slug: "powertrailbuddy",
-    name: "Power Trail Buddy",
-    description:
-      "Find and visualize geocaching power trails with ease. Designed for efficiency-focused cachers who love long trails and rapid finds.",
-    logo: "/logos/powertrail.webp",
-    previewImage: "/logos/powertrail_preview.png",
-    tags: [
-      "Geocaching",
-      "Maps",
-      "Navigation",
-      "Trails",
-      "Next.js",
-      "Outdoor",
-    ],
-    github: `${GITHUB_URL}/PowerTrailBuddy`,
-    status: "coming_soon",
-  },
-  {
-    slug: "ridemergebuddy",
-    name: "Ride Merge Buddy",
-    description:
-      "Merge GPX tracks from multiple cycling sessions. Ideal for Strava users, activity aggregators, and route cleanup enthusiasts.",
-    logo: "/logos/ridemerge.webp",
-    previewImage: "/logos/ridemerge_preview.png",
-    tags: ["Cycling", "GPX", "Strava", "Tracking", "Angular", "Tools"],
-    github: `${GITHUB_URL}/RideMergeBuddy`,
     status: "coming_soon",
   },
 ];
