@@ -4,16 +4,27 @@ import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { tools } from "./tools";
+import { useState } from "react";
+
+const ITEMS_PER_PAGE = 6;
 
 const MotionLink = motion(Link);
 
 export default function ToolGrid() {
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const totalPages = Math.ceil(tools.length / ITEMS_PER_PAGE);
+  const paginatedTools = tools.slice(
+    (currentPage - 1) * ITEMS_PER_PAGE,
+    currentPage * ITEMS_PER_PAGE
+  );
+
   return (
     <section
       id="tools"
       className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto px-4 sm:px-6 mb-28"
     >
-      {tools.map((tool, index) => {
+      {paginatedTools.map((tool, index) => {
         const isReady = tool.status === "ready";
 
         const cardClasses = `group block rounded-2xl p-6 border ${
@@ -43,8 +54,17 @@ export default function ToolGrid() {
                   </span>
                 )}
               </div>
-              <h3 className="text-lg font-semibold transition group-hover:text-black dark:group-hover:text-white">
+              <h3 className="text-lg font-semibold transition group-hover:text-black dark:group-hover:text-white flex items-center gap-1">
                 {tool.name}
+                {tool.status !== "ready" && (
+                  <span
+                    className="grayscale text-lg"
+                    role="img"
+                    aria-label="under construction"
+                  >
+                    🏗️🚧
+                  </span>
+                )}
               </h3>
             </div>
 
@@ -92,6 +112,41 @@ export default function ToolGrid() {
           </motion.div>
         );
       })}
+      <div className="col-span-full">
+        <div className="w-fit mx-auto mt-0 rounded-2xl p-4 border bg-white/60 dark:bg-black/60 border-gray-200 dark:border-gray-800 shadow-sm dark:shadow-[0_2px_8px_rgba(255,255,255,0.05)] backdrop-blur-sm">
+          <div className="flex justify-center gap-2 items-center text-sm">
+            <button
+              onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
+              disabled={currentPage === 1}
+              className="px-2 py-1 rounded hover:bg-gray-200 dark:hover:bg-gray-700 disabled:opacity-40"
+            >
+              ◀
+            </button>
+
+            {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+              <button
+                key={page}
+                onClick={() => setCurrentPage(page)}
+                className={`px-3 py-1 rounded-full transition ${
+                  page === currentPage
+                    ? "bg-gray-900 text-white dark:bg-gray-100 dark:text-black ring-2 ring-black dark:ring-white"
+                    : "hover:bg-gray-200 dark:hover:bg-gray-700"
+                }`}
+              >
+                {page}
+              </button>
+            ))}
+
+            <button
+              onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
+              disabled={currentPage === totalPages}
+              className="px-2 py-1 rounded hover:bg-gray-200 dark:hover:bg-gray-700 disabled:opacity-40"
+            >
+              ▶
+            </button>
+          </div>
+        </div>
+      </div>
     </section>
   );
 }
