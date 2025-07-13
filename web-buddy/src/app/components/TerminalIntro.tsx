@@ -64,7 +64,7 @@ type Phase = "lines" | "loading" | "wait";
 function Hero() {
   return (
     <section
-      className="relative pt-23 pb-20 max-w-4xl mx-auto px-4 sm:px-6 text-center"
+      className="relative pt-23 pb-20 max-w-full mx-auto px-4 sm:px-6 text-center"
       aria-label="Introduction section"
     >
       <h1 className="relative z-10 text-5xl sm:text-6xl font-extrabold tracking-tight leading-tight mb-6 text-black dark:text-white">
