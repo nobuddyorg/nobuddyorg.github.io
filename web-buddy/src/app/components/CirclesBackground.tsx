@@ -6,7 +6,7 @@ export default function CirclesBackground({
   topOffset?: string;
 }) {
   return (
-    <div className="w-full relative -z-10 pointer-events-none">
+    <div className="w-full relative -z-10 pointer-events-none overflow-hidden">
       <svg
         className="absolute left-1/2 -translate-x-1/2 w-[80rem] h-[80rem] opacity-100"
         style={{ top: topOffset }}
