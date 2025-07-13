@@ -11,7 +11,6 @@ import CirclesBackground from "./components/CirclesBackground";
 const title = SITE_NAME;
 const slug = "/";
 const url = `${SITE_URL}${slug}`;
-
 const description = `A growing collection of useful web tools with unique personality and practical features for creative problem-solving, including ${tools
   .map((tool) => tool.name)
   .join(", ")}.`;
