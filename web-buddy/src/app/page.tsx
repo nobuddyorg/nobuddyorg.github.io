@@ -35,13 +35,15 @@ export default function HomePage() {
     <>
       <PageWrapper metadata={metadata} jsonLd={jsonLd} />
       <Header />
-      <main className="h-screen overflow-y-scroll snap-y snap-mandatory scroll-smooth text-black dark:text-white">
-        <section className="snap-start h-screen">
-          <CirclesBackground />
-          <TerminalIntro />
-        </section>
-        <ManifestoScroll />
-      </main>
+      <div className="overflow-x-hidden">
+        <main className="h-screen overflow-y-scroll snap-y snap-mandatory scroll-smooth text-black dark:text-white">
+          <section className="snap-start h-screen">
+            <CirclesBackground />
+            <TerminalIntro />
+          </section>
+          <ManifestoScroll />
+        </main>
+      </div>
       <Footer />
     </>
   );
