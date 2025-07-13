@@ -24,6 +24,12 @@ export default function Header() {
             href="/"
             className="text-gray-700 dark:text-gray-300 hover:text-black dark:hover:text-white font-semibold transition"
           >
+            Home
+          </Link>
+          <Link
+            href="/tools"
+            className="text-gray-700 dark:text-gray-300 hover:text-black dark:hover:text-white font-semibold transition"
+          >
             Tools
           </Link>
           <Link

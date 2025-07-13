@@ -14,9 +14,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={inter.variable}>
-      <body className="font-sans bg-white text-black relative overflow-hidden">
+      <body className="relative overflow-x-hidden">
         <EmojiBackground />
-        <div className="relative z-10">{children}</div>
+        <div className="relative">
+          <div className="relative z-10">{children}</div>
+        </div>
       </body>
     </html>
   );

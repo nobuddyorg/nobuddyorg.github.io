@@ -1,5 +1,5 @@
 import { MetadataRoute } from "next";
-import { tools } from "./tools";
+import { tools } from "./tools/tools";
 import { SITE_URL } from "./globals";
 
 export const dynamic = "force-static";

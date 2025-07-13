@@ -1,6 +1,6 @@
 import { SITE_URL, AUTHOR_NAME } from "../../globals";
 import { createMetadata } from "../../metadata";
-import { tools } from "../../tools";
+import { tools } from "../tools";
 import ProcrastinationBuddyClient from "./client";
 import PageWrapper from "../../components/PageWrapper";
 import Header from "../../components/Header";

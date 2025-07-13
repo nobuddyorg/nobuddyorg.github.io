@@ -48,7 +48,7 @@ const emojis = [
 ];
 
 const cellSize = 64;
-const parallaxFactor = 0.4;
+const parallaxFactor = 1;
 const font = "32px serif";
 
 export default function EmojiGridCanvas() {

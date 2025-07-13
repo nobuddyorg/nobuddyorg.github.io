@@ -1,4 +1,4 @@
-import { GITHUB_URL } from "./globals";
+import { GITHUB_URL } from "../globals";
 
 export const tools = [
   {
@@ -78,14 +78,7 @@ export const tools = [
       "Find and visualize geocaching power trails with ease. Designed for efficiency-focused cachers who love long trails and rapid finds.",
     logo: "/logos/powertrail.webp",
     previewImage: "/logos/powertrail_preview.png",
-    tags: [
-      "Geocaching",
-      "Maps",
-      "Navigation",
-      "Trails",
-      "Next.js",
-      "Outdoor",
-    ],
+    tags: ["Geocaching", "Maps", "Navigation", "Trails", "Next.js", "Outdoor"],
     github: `${GITHUB_URL}/PowerTrailBuddy`,
     status: "coming_soon",
   },
