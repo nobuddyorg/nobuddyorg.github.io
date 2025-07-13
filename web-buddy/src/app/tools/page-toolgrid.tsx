@@ -27,7 +27,7 @@ export default function ToolGrid() {
 
   return (
     <>
-      <div className="relative mt-35 min-h-[60rem] pb-60">
+      <div className="relative mt-35 min-h-[60rem]">
         <h1 className="text-center relative z-10 text-5xl sm:text-6xl font-extrabold tracking-tight leading-tight mb-6 text-black dark:text-white">
           The Buddy Compendium
         </h1>
