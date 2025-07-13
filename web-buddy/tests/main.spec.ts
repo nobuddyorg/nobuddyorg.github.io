@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test';
 
 test.describe('NoBuddy main page - cards section', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto('/');
+    await page.goto('/tools');
     await expect(page.getByRole('heading', { name: 'The Buddy Compendium' })).toBeVisible();
     await expect(page.getByRole('link')).toHaveCount(10);
   });
@@ -37,7 +37,7 @@ test.describe('NoBuddy main page - cards section', () => {
     await firstEnabledCardLink.click();
     await page.waitForLoadState('networkidle');
 
-    await expect(page).toHaveURL(/\/tools\/.+/);
+    await expect(page).toHaveURL(/\/tools\/procrastinationbuddy/);
     await expect(page.locator('h1')).toContainText(/Procrastination Buddy/i);
   });
 
