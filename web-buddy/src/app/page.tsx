@@ -4,7 +4,6 @@ import Header from "./components/Header";
 import Footer from "./components/Footer";
 import PageWrapper from "./components/PageWrapper";
 import { SITE_URL, SITE_NAME } from "./globals";
-import { tools } from "./tools/tools";
 import { createMetadata } from "./metadata";
 import CirclesBackground from "./components/CirclesBackground";
 
@@ -12,9 +11,7 @@ const title = SITE_NAME;
 const slug = "/";
 const url = `${SITE_URL}${slug}`;
 
-const description = `A growing collection of useful web tools with unique personality and practical features for creative problem-solving, including ${tools
-  .map((tool) => tool.name)
-  .join(", ")}.`;
+const description = "Explore nobuddy.org – a playground of creative tools, weird ideas & useful mini-apps. Built for curious minds, developers, and digital explorers."
 
 export const metadata = createMetadata({
   title,
@@ -35,9 +32,9 @@ export default function HomePage() {
     <>
       <PageWrapper metadata={metadata} jsonLd={jsonLd} />
       <Header />
-      <main className="h-screen overflow-y-scroll snap-y snap-mandatory scroll-smooth text-black dark:text-white">
+      <main className="h-screen overflow-y-scroll snap-y snap-mandatory scroll-smooth text-black dark:text-white overflow-x-hidden">
         <section className="snap-start h-screen">
-          <CirclesBackground />
+          <CirclesBackground variant="page2" />
           <TerminalIntro />
         </section>
         <ManifestoScroll />

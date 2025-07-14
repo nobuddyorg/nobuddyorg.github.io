@@ -13,6 +13,7 @@ export default function Header() {
           <Image
             src="/logo-header.webp"
             alt="Web Buddy Logo"
+            title="Web Buddy Logo"
             width={25}
             height={25}
             className="inline-block mr-2"
@@ -23,18 +24,21 @@ export default function Header() {
           <Link
             href="/"
             className="text-gray-700 dark:text-gray-300 hover:text-black dark:hover:text-white font-semibold transition"
+            title="home"
           >
             Home
           </Link>
           <Link
             href="/tools"
             className="text-gray-700 dark:text-gray-300 hover:text-black dark:hover:text-white font-semibold transition"
+            title="tools"
           >
             Tools
           </Link>
           <Link
             href="/about"
             className="text-gray-700 dark:text-gray-300 hover:text-black dark:hover:text-white font-semibold transition"
+            title="about"
           >
             About
           </Link>
@@ -43,6 +47,7 @@ export default function Header() {
             target="_blank"
             rel="noreferrer"
             className="text-gray-700 dark:text-gray-300 hover:text-black dark:hover:text-white font-semibold transition"
+            title="github"
           >
             GitHub
           </a>

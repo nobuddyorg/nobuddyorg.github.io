@@ -64,25 +64,26 @@ type Phase = "lines" | "loading" | "wait";
 function Hero() {
   return (
     <section
-      className="relative pt-23 pb-20 max-w-4xl mx-auto px-4 sm:px-6 text-center"
+      className="relative pt-10 pb-5 md:pt-23 md:pb-20 max-w-4xl mx-auto px-4 sm:px-6 text-center"
       aria-label="Introduction section"
     >
-      <h1 className="relative z-10 text-5xl sm:text-6xl font-extrabold tracking-tight leading-tight mb-6 text-black dark:text-white">
+      <h1 className="relative z-10 text-5xl sm:text-6xl font-extrabold tracking-tight leading-tight mb-4 md:mb-6 text-black dark:text-white">
         {SITE_NAME}
       </h1>
-      <h2 className="relative z-10 max-w-3xl mx-auto text-lg sm:text-xl text-neutral-750 dark:text-neutral-150 mb-8">
-        NoBuddy is your gateway into a universe of useful, and either brilliant
-        or useless tools. Built as a personal playground of code and curiosity,
-        it’s a place where ideas go to have fun: from apps that help you
-        procrastinate more creatively, to utilities that merge GPS tracks or
-        generate wallpapers from your board game shelf.
+
+      <h2 className="hidden md:block relative z-10 max-w-3xl mx-auto text-lg sm:text-xl text-neutral-750 dark:text-neutral-150 mb-8">
+        Explore nobuddy.org – a playground of creative tools, weird ideas &
+        useful mini-apps. Built for curious minds, developers, and digital
+        explorers.
       </h2>
+
       <Link
         href={GITHUB_URL}
         target="_blank"
         rel="noopener noreferrer"
-        className="relative z-10 inline-block bg-black dark:bg-white text-white dark:text-black font-semibold px-8 py-3 rounded-full shadow-lg hover:bg-gray-900 transition"
+        className="hidden md:inline-block relative z-10 bg-black dark:bg-white text-white dark:text-black font-semibold px-8 py-3 rounded-full shadow-lg hover:bg-gray-900 transition"
         aria-label="Follow Nobuddyorg on GitHub"
+        title="follow on github"
       >
         Follow on GitHub
       </Link>
@@ -147,17 +148,17 @@ export default function TerminalIntro() {
   }, [phase, lineIndex, loadingIndex, appendLine]);
 
   return (
-    <div className="flex flex-col items-center px-4 pt-12">
+    <div className="flex flex-col items-center px-4 pt-10">
       <Hero />
 
-      <div className="w-full max-w-3xl min-h-[400px] rounded-lg overflow-clip shadow-lg border border-neutral-800 bg-[#1a1a1a] mb-10">
+      <div className="w-full max-w-3xl min-h-[340px] rounded-lg overflow-clip shadow-lg border border-neutral-800 bg-[#1a1a1a] mb-10">
         <div className="flex items-center space-x-2 px-3 py-2 bg-[#2d2d2d] border-b border-neutral-700">
           <div className="w-3 h-3 rounded-full bg-red-500"></div>
           <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
           <div className="w-3 h-3 rounded-full bg-green-500"></div>
         </div>
 
-        <div className="py-12 px-6 font-mono text-green-400 text-lg bg-[#1a1a1a] text-left">
+        <div className="py-10 px-6 font-mono text-green-400 text-lg bg-[#1a1a1a] text-left">
           {lines.map((line, i) => (
             <motion.div
               key={i}

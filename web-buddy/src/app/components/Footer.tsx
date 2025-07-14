@@ -10,6 +10,7 @@ export default function Footer() {
           target="_blank"
           rel="noopener"
           className="underline hover:text-black transition"
+          title="home"
         >
           {AUTHOR_NAME}
         </a>{" "}
@@ -19,6 +20,7 @@ export default function Footer() {
           target="_blank"
           rel="noreferrer"
           className="underline hover:text-black transition"
+          title="github"
         >
           GitHub
         </a>

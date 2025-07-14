@@ -45,6 +45,47 @@ function AnimatedPreview() {
   );
 }
 
+function TechStackSection() {
+  const techStack = [
+    { name: "Ollama", url: "https://ollama.com/" },
+    {
+      name: "AI",
+      url: "https://en.wikipedia.org/wiki/Artificial_intelligence",
+    },
+    { name: "Streamlit", url: "https://streamlit.io/" },
+    { name: "Flask", url: "https://flask.palletsprojects.com/" },
+    { name: "Python", url: "https://www.python.org/" },
+    { name: "Docker", url: "https://www.docker.com/" },
+    { name: "Docker Compose", url: "https://docs.docker.com/compose/" },
+    { name: "PostgreSQL", url: "https://www.postgresql.org/" },
+    { name: "Ruff", url: "https://docs.astral.sh/ruff/" },
+    { name: "uv", url: "https://github.com/astral-sh/uv" },
+  ];
+
+  return (
+    <section className="mt-20">
+      <h2 className="text-2xl font-bold text-black dark:text-white mb-6 text-center">
+        Tech Stack
+      </h2>
+      <ul className="flex flex-wrap justify-center gap-4 text-sm text-gray-700 dark:text-gray-300">
+        {techStack.map(({ name, url }) => (
+          <li key={name}>
+            <a
+              href={url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="underline hover:text-black dark:hover:text-white"
+              title={name}
+            >
+              {name}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </section>
+  );
+}
+
 function DescriptionSection() {
   return (
     <section className="text-sm leading-relaxed text-gray-700 dark:text-gray-300">
@@ -65,6 +106,7 @@ function DescriptionSection() {
           target="_blank"
           rel="noopener noreferrer"
           className="underline hover:text-black dark:hover:text-white"
+          title="procrastination github"
         >
           View the repository on GitHub and try it out on your machine
         </a>
@@ -104,7 +146,9 @@ function ScreenshotsSection() {
               <h3 className="text-xl font-semibold mb-2 text-black dark:text-white">
                 {alt}
               </h3>
-              <p className="text-sm leading-relaxed text-gray-700 dark:text-gray-300">{text}</p>
+              <p className="text-sm leading-relaxed text-gray-700 dark:text-gray-300">
+                {text}
+              </p>
             </div>
           </motion.div>
         );
@@ -129,6 +173,7 @@ export default function ProcrastinationBuddyClient({
         <AnimatedPreview />
         <DescriptionSection />
         <ScreenshotsSection />
+        <TechStackSection />
       </div>
     </main>
   );

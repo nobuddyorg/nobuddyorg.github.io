@@ -9,6 +9,38 @@ const preview = {
   text: "GameGalleryBuddy creates a beautiful wallpaper using all board games from your BoardGameGeek collection. Just enter your BGG username and enjoy a personalized background!",
 };
 
+function TechStackSection() {
+  const techStack = [
+    { name: "BoardGameGeek", url: "https://boardgamegeek.com/" },
+    { name: "Groovy", url: "https://groovy-lang.org/" },
+    { name: "Spring Boot", url: "https://spring.io/projects/spring-boot" },
+    { name: "Gradle", url: "https://gradle.org/" },
+  ];
+
+  return (
+    <section className="mt-20">
+      <h2 className="text-2xl font-bold text-black dark:text-white mb-6 text-center">
+        Tech Stack
+      </h2>
+      <ul className="flex flex-wrap justify-center gap-4 text-sm text-gray-700 dark:text-gray-300">
+        {techStack.map(({ name, url }) => (
+          <li key={name}>
+            <a
+              href={url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="underline hover:text-black dark:hover:text-white"
+              title={name}
+            >
+              {name}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </section>
+  );
+}
+
 export default function GameGalleryBuddyClient({ title }: { title: string }) {
   return (
     <main className="min-h-screen pt-36 pb-28 px-4 sm:px-6">
@@ -40,8 +72,8 @@ export default function GameGalleryBuddyClient({ title }: { title: string }) {
             the order, and more.
           </p>
           <p>
-            Requires a tiny bit of dev experience to run locally, but
-            everything is explained in the README file.
+            Requires a tiny bit of dev experience to run locally, but everything
+            is explained in the README file.
           </p>
           <p>
             🔗{" "}
@@ -50,11 +82,13 @@ export default function GameGalleryBuddyClient({ title }: { title: string }) {
               target="_blank"
               rel="noopener noreferrer"
               className="underline hover:text-black dark:hover:text-white"
+              title="game gallery github"
             >
               View the code on GitHub or run it locally
             </a>
           </p>
         </section>
+        <TechStackSection />
       </div>
     </main>
   );

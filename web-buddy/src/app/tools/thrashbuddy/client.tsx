@@ -45,6 +45,47 @@ function AnimatedPreview() {
   );
 }
 
+function TechStackSection() {
+  const techStack = [
+    { name: "Groovy", url: "https://groovy-lang.org/" },
+    { name: "k6", url: "https://k6.io/" },
+    { name: "Grafana", url: "https://grafana.com/" },
+    { name: "Prometheus", url: "https://prometheus.io/" },
+    { name: "Testing", url: "https://en.wikipedia.org/wiki/Software_testing" },
+    { name: "DevOps", url: "https://en.wikipedia.org/wiki/DevOps" },
+    { name: "Cloud", url: "https://en.wikipedia.org/wiki/Cloud_computing" },
+    { name: "Kubernetes", url: "https://kubernetes.io/" },
+    { name: "Helm", url: "https://helm.sh/" },
+    { name: "Spring Boot", url: "https://spring.io/projects/spring-boot" },
+    { name: "Gradle", url: "https://gradle.org/" },
+    { name: "Docker", url: "https://www.docker.com/" },
+    { name: "Minikube", url: "https://minikube.sigs.k8s.io/" },
+  ];
+
+  return (
+    <section className="mt-20">
+      <h2 className="text-2xl font-bold text-black dark:text-white mb-6 text-center">
+        Tech Stack
+      </h2>
+      <ul className="flex flex-wrap justify-center gap-4 text-sm text-gray-700 dark:text-gray-300">
+        {techStack.map(({ name, url }) => (
+          <li key={name}>
+            <a
+              href={url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="underline hover:text-black dark:hover:text-white"
+              title={name}
+            >
+              {name}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </section>
+  );
+}
+
 function DescriptionSection() {
   return (
     <section className="text-sm leading-relaxed text-gray-700 dark:text-gray-300">
@@ -62,6 +103,7 @@ function DescriptionSection() {
           target="_blank"
           rel="noopener noreferrer"
           className="underline hover:text-black dark:hover:text-white"
+          title="thrash github"
         >
           View the repository on GitHub and try it out on your infrastructure
         </a>
@@ -126,6 +168,7 @@ export default function ThrashBuddyClient({
         <AnimatedPreview />
         <DescriptionSection />
         <ScreenshotsSection />
+        <TechStackSection />
       </div>
     </main>
   );
