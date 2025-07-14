@@ -18,7 +18,7 @@ export const tools = [
     description:
       "Load-test your apps at scale using k6, Grafana, InfluxDB, and AWS EKS. Fully cloud-native and containerized with Docker and Helm.",
     logo: "/logos/thrash.webp",
-    previewImage: "/logos/thrash_preview.png",
+    previewImage: "/logos/thrash_preview.jpg",
     tags: ["DevOps", "Testing", "Cloud", "Kubernetes", "Groovy", "k6"],
     github: `${GITHUB_URL}/ThrashBuddy`,
     status: "ready",
