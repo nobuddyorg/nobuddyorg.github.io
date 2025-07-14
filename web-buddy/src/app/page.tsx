@@ -33,7 +33,7 @@ export default function HomePage() {
       <PageWrapper metadata={metadata} jsonLd={jsonLd} />
       <Header />
       <main className="h-screen overflow-y-scroll snap-y snap-mandatory scroll-smooth text-black dark:text-white overflow-x-hidden">
-        <section className="snap-start h-screen">
+        <section className="snap-start min-h-screen">
           <CirclesBackground variant="page2" />
           <TerminalIntro />
         </section>
