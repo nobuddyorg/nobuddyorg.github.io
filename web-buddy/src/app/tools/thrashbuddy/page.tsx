@@ -12,13 +12,14 @@ const path = `/tools/${slug}`;
 const tool = tools.find((t) => t.slug === slug);
 
 const title = tool?.name ?? "";
+const titleFull = `${title} - A tool to push your web api/app to it's limits with load and performance testing`;
 const description = tool?.description ?? "";
 const image = tool?.previewImage;
 const url = `${SITE_URL}${path}`;
 const authorName = AUTHOR_NAME;
 
 export const metadata = createMetadata({
-  title,
+  title: titleFull,
   description,
   slug: path,
   image,

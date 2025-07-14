@@ -13,7 +13,7 @@ export function createMetadata({
   image?: string;
 }): Metadata {
   const url = `${SITE_URL}${slug}`;
-  const fullTitle = `${title} - by ${AUTHOR_NAME}`;
+  const fullTitle = `${title} - crafted with love and fun by ${AUTHOR_NAME}`;
   const absoluteImage = image.startsWith("http")
     ? image
     : `${SITE_URL}${image}`;

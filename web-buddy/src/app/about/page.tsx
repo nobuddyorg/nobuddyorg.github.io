@@ -20,7 +20,7 @@ const metadata = createMetadata({
 const jsonLd = {
   "@context": "https://schema.org",
   "@type": "WebPage",
-  name: title,
+  name: `${title} - legal information about nobuddy.org, required on german websites.`,
   description,
   url,
   author: {

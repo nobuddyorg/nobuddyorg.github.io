@@ -12,13 +12,14 @@ const path = `/tools/${slug}`;
 const tool = tools.find((t) => t.slug === slug);
 
 const title = tool?.name ?? "";
+const titleFull = `${title} - A spring boot app for managing game galleries`;
 const description = tool?.description ?? "";
 const image = tool?.previewImage;
 const url = `${SITE_URL}${path}`;
 const authorName = AUTHOR_NAME;
 
 export const metadata = createMetadata({
-  title,
+  title: titleFull,
   description,
   slug: path,
   image,
@@ -27,7 +28,7 @@ export const metadata = createMetadata({
 const jsonLd = {
   "@context": "https://schema.org",
   "@type": "SoftwareApplication",
-  name: title,
+  name: titleFull,
   description,
   url,
   author: {
