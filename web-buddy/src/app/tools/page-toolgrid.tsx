@@ -45,7 +45,7 @@ export default function ToolGrid() {
             const cardClasses = `group block rounded-2xl p-6 border ${
               isReady
                 ? "bg-white dark:bg-black border-1 border-neutral-400 dark:border-neutral-600 hover:border-black dark:hover:border-white shadow-sm dark:shadow-[0_2px_8px_rgba(255,255,255,0.05)] hover:shadow-md dark:hover:shadow-[0_4px_12px_rgba(255,255,255,0.15)] transition-all duration-300 hover:-translate-y-1 cursor-pointer"
-                : "bg-gray-200 dark:bg-neutral-900 border-neutral-600 border-dashed border-2 dark:border-neutral-400 dark:border-2 dark:border-dashed opacity-60 cursor-not-allowed"
+                : "bg-gray-200 dark:bg-neutral-800 border-neutral-600 border-dashed border-2 dark:border-neutral-400 dark:border-2 dark:border-dashed opacity-60 cursor-not-allowed"
             }`;
 
             const cardInner = (

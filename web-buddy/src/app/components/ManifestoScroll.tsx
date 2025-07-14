@@ -35,7 +35,7 @@ export default function ManifestoScroll() {
       {ideas.map(({ emoji, title, body, bg }, idx) => (
         <section
           key={idx}
-          className={`snap-start h-screen flex flex-col justify-center items-center text-center p-10 ${bg}`}
+          className={`snap-start min-h-screen flex flex-col justify-center items-center text-center px-6 py-10 ${bg}`}
         >
           <motion.div
             className="text-6xl mb-6"
