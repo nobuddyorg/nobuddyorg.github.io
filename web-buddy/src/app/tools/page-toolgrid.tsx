@@ -166,7 +166,7 @@ function Pagination({
   onPageChange: (page: number) => void;
 }) {
   return (
-    <div className="w-fit mx-auto mt-0 rounded-2xl p-4 border bg-white/60 dark:bg-black/60 border-gray-200 dark:border-gray-800 shadow-sm dark:shadow-[0_2px_8px_rgba(255,255,255,0.05)] backdrop-blur-sm">
+    <div className="w-fit mx-auto mt-0 rounded-2xl p-4 border bg-white/60 dark:bg-black/60 border-gray-200 dark:border-gray-800 shadow-sm dark:shadow-[0_2px_8px_rgba(255,255,255,0.05)] backdrop-blur-sm mb-0 md:mb-10">
       <div className="flex justify-center gap-2 items-center text-sm">
         <button
           onClick={() => onPageChange(Math.max(1, currentPage - 1))}
