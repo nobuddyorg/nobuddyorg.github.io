@@ -32,7 +32,7 @@ export default function HomePage() {
       <PageWrapper metadata={metadata} jsonLd={jsonLd} />
       <Header />
       <main>
-        <CirclesBackground topOffset="-23.5rem" />
+        <CirclesBackground />
         <ToolGrid />
       </main>
       <Footer />

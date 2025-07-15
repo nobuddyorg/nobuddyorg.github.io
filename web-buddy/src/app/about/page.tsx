@@ -121,7 +121,7 @@ export default function AboutPage() {
       <PageWrapper metadata={metadata} jsonLd={jsonLd} />
       <Header />
       <main className="min-h-screen pt-20 md:pt-32 pb-28 px-4 md:px-6 max-w-5xl mx-auto">
-        <CirclesBackground topOffset="-23.8rem" variant="page3" />
+        <CirclesBackground variant="page3" />
         <h1 className="text-center relative z-10 text-5xl md:text-6xl font-extrabold tracking-tight leading-tight mb-4 md:mb-6 text-black dark:text-white">
           About / Impressum
         </h1>

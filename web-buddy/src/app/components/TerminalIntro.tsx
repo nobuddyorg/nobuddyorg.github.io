@@ -52,9 +52,9 @@ const [loadingMessage, msg1, msg2] = shuffled.slice(0, 3);
 
 const scriptLines: ScriptLine[] = [
   { role: "cmd", text: "initialize --buddyverse" },
+  { role: "echo", text: msg1 },
   { role: "echo", text: `${loadingMessage} ${loadingSteps[0]}` },
   { role: "cmd", text: "sync nobuddy.org" },
-  { role: "echo", text: msg1 },
   { role: "echo", text: msg2 },
   { role: "output", text: "↳ You’ve reached The Buddy Compendium." },
 ];
