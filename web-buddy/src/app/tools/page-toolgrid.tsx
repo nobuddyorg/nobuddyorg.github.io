@@ -27,11 +27,11 @@ export default function ToolGrid() {
 
   return (
     <>
-      <div className="relative mt-35 min-h-[60rem]">
-        <h1 className="text-center relative z-10 text-5xl sm:text-6xl font-extrabold tracking-tight leading-tight mb-6 text-black dark:text-white">
+      <div className="relative pt-20 md:pt-32 min-h-[60rem]">
+        <h1 className="text-center relative z-10 text-5xl md:text-6xl font-extrabold tracking-tight leading-tight mb-4 md:mb-6 text-black dark:text-white">
           The Buddy Compendium
         </h1>
-        <h2 className="text-center relative z-10 max-w-2xl mx-auto text-lg sm:text-xl text-neutral-750 dark:text-neutral-150 mb-8">
+        <h2 className="text-center relative z-10 max-w-2xl mx-auto text-lg sm:text-xl text-neutral-750 dark:text-neutral-150 mb-4 md:mb-8">
           Blending quirky charm with real-world usefulness for {"'everybuddy'"}
         </h2>
         <br />
@@ -54,7 +54,11 @@ export default function ToolGrid() {
                   className="flex items-center gap-4 mb-4"
                   data-testid={tool.status}
                 >
-                  <div className="w-12 h-12 bg-gray-50 rounded-full flex items-center justify-center shadow-inner">
+                  <div
+                    className={`w-12 h-12 bg-gray-50 rounded-full flex items-center justify-center shadow-inner ${
+                      tool.status !== "ready" ? "grayscale" : ""
+                    }`}
+                  >
                     {tool.logo ? (
                       <Image
                         src={tool.logo}

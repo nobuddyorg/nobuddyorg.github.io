@@ -64,10 +64,10 @@ type Phase = "lines" | "loading" | "wait";
 function Hero() {
   return (
     <section
-      className="relative pt-10 pb-5 md:pt-23 md:pb-20 max-w-4xl mx-auto px-4 sm:px-6 text-center"
+      className="relative pb-5 md:pb-20 max-w-4xl mx-auto px-4 md:px-6 text-center"
       aria-label="Introduction section"
     >
-      <h1 className="relative z-10 text-5xl sm:text-6xl font-extrabold tracking-tight leading-tight mb-4 md:mb-6 text-black dark:text-white">
+      <h1 className="relative z-10 text-5xl md:text-6xl font-extrabold tracking-tight leading-tight mb-4 md:mb-6 text-black dark:text-white">
         {SITE_NAME}
       </h1>
 
@@ -148,7 +148,7 @@ export default function TerminalIntro() {
   }, [phase, lineIndex, loadingIndex, appendLine]);
 
   return (
-    <div className="flex flex-col items-center px-4 pt-10">
+    <div className="flex flex-col items-center px-4 pt-20 md:pt-32">
       <Hero />
 
       <div className="w-full max-w-3xl min-h-[340px] rounded-lg overflow-clip shadow-lg border border-neutral-800 bg-[#1a1a1a] mb-10">
