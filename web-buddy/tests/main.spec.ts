@@ -4,7 +4,7 @@ test.describe('NoBuddy main page - cards section', () => {
   test.beforeEach(async ({ page }) => {
     await page.goto('/tools');
     await expect(page.getByRole('heading', { name: 'The Buddy Compendium' })).toBeVisible();
-    await expect(page.getByRole('link')).toHaveCount(10);
+    await expect(page.getByRole('link')).toHaveCount(9);
   });
 
   test('has exactly 3 enabled card in #tools', async ({ page }) => {
