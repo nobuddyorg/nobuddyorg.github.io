@@ -42,6 +42,25 @@ export const tools = [
     status: "ready",
   },
   {
+    slug: "collectionbuddy",
+    name: "Collection Buddy",
+    description:
+      "A web-app catalog for your collected items. Organize and track stamps, coins, or any collectibles with an elegant interface.",
+    logo: "/logos/collection.webp",
+    previewImage: "",
+    tags: [
+      "Collections",
+      "web-app",
+      "Next.js",
+      "React",
+      "TypeScript",
+      "Supabase",
+      "Tailwind CSS",
+    ],
+    github: `${GITHUB_URL}/CollectionBuddy`,
+    status: "ready",
+  },
+  {
     slug: "fairbuddy",
     name: "Fair Buddy",
     description:
