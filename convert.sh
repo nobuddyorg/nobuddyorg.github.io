@@ -15,7 +15,7 @@ find . -type f -iname '*.gif' | while read -r file; do
     fi
 done
 
-for name in procrastination.webp fair.webp thrash.webp karma.webp qr.webp peek.webp ridemerge.webp powertrail.webp gamegallery.webp; do
+for name in procrastination.webp fair.webp thrash.webp karma.webp peek.webp ridemerge.webp powertrail.webp gamegallery.webp; do
     find . -type f -name "$name" | while read -r file; do
         echo "Resizing $file..."
         convert "$file" -resize 100x100\! -quality 85 "$file"

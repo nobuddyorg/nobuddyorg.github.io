@@ -102,17 +102,6 @@ export const tools = [
     status: "coming_soon",
   },
   {
-    slug: "qrbuddy",
-    name: "QR Buddy",
-    description:
-      "Read QR-codes from images on your phone or PC, using a simple web app. You don't need camera access, this is local storage only.",
-    logo: "/logos/qr.webp",
-    previewImage: "",
-    tags: ["Kotlin", "Mobile", "Image Processing", "Camera", "Files", "Local"],
-    github: `${GITHUB_URL}/FairBuddy`,
-    status: "coming_soon",
-  },
-  {
     slug: "karmabudddy",
     name: "Karma Buddy",
     description:
