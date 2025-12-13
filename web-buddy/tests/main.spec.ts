@@ -7,9 +7,9 @@ test.describe('NoBuddy main page - cards section', () => {
     await expect(page.getByRole('link')).toHaveCount(10);
   });
 
-  test('has exactly 3 enabled card in #tools', async ({ page }) => {
+  test('has exactly 4 enabled card in #tools', async ({ page }) => {
     const enabledCards = page.getByTestId('ready');
-    await expect(enabledCards).toHaveCount(3);
+    await expect(enabledCards).toHaveCount(4);
     await expect(enabledCards.first()).toBeVisible();
   });
 
