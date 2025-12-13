@@ -1,10 +1,11 @@
 #!/bin/bash
+#only for local sanity check
 
-pushd web-buddy
+set -euo pipefail
+
+pushd web-buddy >/dev/null
 rm -rf out
-rm -rf ../docs
 npm ci
 npm run build
 touch out/.nojekyll
-cp -a out/. ../docs
-popd
+popd >/dev/null
