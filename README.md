@@ -1,6 +1,6 @@
 # nobuddyorg.github.io
 
-![nobuddy logo](web-buddy/public/nobuddy_logo.webp)
+![nobuddy logo large](web-buddy/public/nobuddy_logo.webp)
 
 This repository contains the static pages of nobuddyorg.
 
