@@ -75,6 +75,13 @@ export default function GameGalleryBuddyClient({ title }: { title: string }) {
             Requires a tiny bit of dev experience to run locally, but everything
             is explained in the README file.
           </p>
+          <Image
+            src={`/images/gamegallery-buddy/powered-by-bgg.webp`}
+            alt="powered by bgg"
+            width={1200}
+            height={352}
+            className="w-full h-auto rounded-xl"
+          />
           <p>
             🔗{" "}
             <a

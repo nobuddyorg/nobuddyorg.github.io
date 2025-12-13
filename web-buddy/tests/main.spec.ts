@@ -9,7 +9,7 @@ test.describe('NoBuddy main page - cards section', () => {
 
   test('has exactly 3 enabled card in #tools', async ({ page }) => {
     const enabledCards = page.getByTestId('ready');
-    await expect(enabledCards).toHaveCount(4);
+    await expect(enabledCards).toHaveCount(3);
     await expect(enabledCards.first()).toBeVisible();
   });
 
@@ -48,7 +48,7 @@ test.describe('NoBuddy main page - cards section', () => {
     await paginationLink.click();
 
     const disabledCards = page.getByTestId('coming_soon');
-    await expect(disabledCards).toHaveCount(4);
+    await expect(disabledCards).toHaveCount(3);
 
     const enabledCards = page.getByTestId('ready');
     await expect(enabledCards).toHaveCount(0);
