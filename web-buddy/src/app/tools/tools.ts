@@ -88,7 +88,7 @@ export const tools = [
     previewImage: "/logos/ridemerge_preview.png",
     tags: ["Cycling", "GPX", "Strava", "Tracking", "Angular", "Tools"],
     github: `${GITHUB_URL}/RideMergeBuddy`,
-    status: "coming_soon",
+    status: "ready",
   },
   {
     slug: "powertrailbuddy",

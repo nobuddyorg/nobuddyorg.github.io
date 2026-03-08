@@ -5,22 +5,22 @@ import { motion } from "framer-motion";
 
 const screenshots = [
   {
-    src: "login.gif",
+    src: "login.webp",
     alt: "Secure Authentication",
     text: "Get started with secure authentication powered by Supabase and Google OAuth. Sign up or log in with ease to access your personal collection catalog. Your data is protected and always available when you need it. No need to share any details, just use your existing Google Account",
   },
   {
-    src: "preview.gif",
+    src: "preview.webp",
     alt: "Collection Overview",
     text: "View your entire collection at a glance with beautiful card layouts. Each item displays essential information like title, descriptions, location, and images. Perfect for getting a quick overview of your treasures.",
   },
   {
-    src: "pagination.gif",
+    src: "pagination.webp",
     alt: "Smart Navigation",
     text: "Navigate through large collections effortlessly with smooth pagination. Browse hundreds or thousands of items without performance issues. Find what you're looking for quickly and efficiently. And if you don't find the item you are looking for, just use the search box. You can search for any text on the cards, even location and tags.",
   },
   {
-    src: "map.gif",
+    src: "map.webp",
     alt: "Location Mapping",
     text: "Track where your items are located or where you found them with integrated mapping features. Perfect for collectors who want to remember acquisition locations. Especially useful for remembering: 'Hm, I found this at the flea market in 2020.' when you come to the same spot again.",
   },
