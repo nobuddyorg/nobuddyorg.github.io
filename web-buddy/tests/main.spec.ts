@@ -6,12 +6,12 @@ test.describe("NoBuddy main page - cards section", () => {
     await expect(
       page.getByRole("heading", { name: "The Buddy Compendium" })
     ).toBeVisible();
-    await expect(page.getByRole("link")).toHaveCount(10);
+    await expect(page.getByRole("link")).toHaveCount(11);
   });
 
   test("has exactly 4 enabled card in #tools", async ({ page }) => {
     const enabledCards = page.getByTestId("ready");
-    await expect(enabledCards).toHaveCount(4);
+    await expect(enabledCards).toHaveCount(5);
     await expect(enabledCards.first()).toBeVisible();
   });
 
@@ -25,7 +25,7 @@ test.describe("NoBuddy main page - cards section", () => {
 
   test("disabled cards exist and are not clickable", async ({ page }) => {
     const disabledCards = page.getByTestId("coming_soon");
-    await expect(disabledCards).toHaveCount(2);
+    await expect(disabledCards).toHaveCount(1);
 
     const firstDisabledCard = disabledCards.first();
 
