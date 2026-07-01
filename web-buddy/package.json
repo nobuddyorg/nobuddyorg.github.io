@@ -11,7 +11,7 @@
     "test:e2e": "playwright test"
   },
   "dependencies": {
-    "framer-motion": "^12.42.0",
+    "framer-motion": "^12.42.2",
     "next": "16.2.9",
     "postcss": "^8.5.16",
     "react": "^19.2.5",
