@@ -1,26 +1,26 @@
 "use client";
 
-import Image from "next/image";
 import { motion } from "framer-motion";
+import AnimatedClip from "../../components/AnimatedClip";
 
 const screenshots = [
   {
-    src: "login.webp",
+    src: "login",
     alt: "Secure Authentication",
     text: "Get started with secure authentication powered by Supabase and Google OAuth. Sign up or log in with ease to access your personal collection catalog. Your data is protected and always available when you need it. No need to share any details, just use your existing Google Account",
   },
   {
-    src: "preview.webp",
+    src: "preview",
     alt: "Collection Overview",
     text: "View your entire collection at a glance with beautiful card layouts. Each item displays essential information like title, descriptions, location, and images. Perfect for getting a quick overview of your treasures.",
   },
   {
-    src: "pagination.webp",
+    src: "pagination",
     alt: "Smart Navigation",
     text: "Navigate through large collections effortlessly with smooth pagination. Browse hundreds or thousands of items without performance issues. Find what you're looking for quickly and efficiently. And if you don't find the item you are looking for, just use the search box. You can search for any text on the cards, even location and tags.",
   },
   {
-    src: "map.webp",
+    src: "map",
     alt: "Location Mapping",
     text: "Track where your items are located or where you found them with integrated mapping features. Perfect for collectors who want to remember acquisition locations. Especially useful for remembering: 'Hm, I found this at the flea market in 2020.' when you come to the same spot again.",
   },
@@ -34,11 +34,10 @@ function AnimatedPreview() {
       transition={{ duration: 0.8 }}
       className="mb-12 rounded-xl overflow-hidden shadow-lg"
     >
-      <Image
-        src="/images/collection-buddy/preview.webp"
-        alt="Collection Buddy animated preview"
-        width={1200}
-        height={600}
+      <AnimatedClip
+        src="/images/collection-buddy/preview.mp4"
+        poster="/images/collection-buddy/preview-poster.jpg"
+        label="Collection Buddy animated preview"
         className="w-full h-auto rounded-xl"
       />
     </motion.div>
@@ -133,11 +132,10 @@ function ScreenshotsSection() {
               !isEven ? "md:flex-row-reverse" : ""
             } items-center gap-8`}
           >
-            <Image
-              src={`/images/collection-buddy/${src}`}
-              alt={alt}
-              width={300}
-              height={200}
+            <AnimatedClip
+              src={`/images/collection-buddy/${src}.mp4`}
+              poster={`/images/collection-buddy/${src}-poster.jpg`}
+              label={alt}
               className="rounded-xl shadow-md w-full md:w-1/2"
             />
             <div className="text-gray-700 dark:text-gray-300 text-base leading-relaxed md:w-1/2">

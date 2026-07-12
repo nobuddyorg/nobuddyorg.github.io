@@ -4,3 +4,5 @@ updates:
     directory: "/web-buddy"
     schedule:
       interval: "daily"
+    cooldown:
+      default-days: 7

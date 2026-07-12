@@ -1,21 +1,21 @@
 "use client";
 
-import Image from "next/image";
 import { motion } from "framer-motion";
+import AnimatedClip from "../../components/AnimatedClip";
 
 const screenshots = [
   {
-    src: "login.webp",
+    src: "login",
     alt: "Strava Login",
     text: "Login securely with Strava OAuth. No additional credentials required. Your data stays safe and synced automatically with your Strava account.",
   },
   {
-    src: "table.webp",
+    src: "table",
     alt: "Activity Table",
     text: "View your recent Strava activities in a detailed table. Click a row to see full details, including distance, duration, elevation, and route map. Easily see the most relevant data about your activities for quick analysis.",
   },
   {
-    src: "merge.webp",
+    src: "merge",
     alt: "Merge Activities",
     text: "Select multiple activities and merge them into a new one. Merged activities are highlighted for clarity. This helps clean up duplicates or combine segmented rides effortlessly. Check out the full project at https://github.com/nobuddyorg/RideMergeBuddy for setup instructions and source code.",
   },
@@ -98,11 +98,10 @@ function ScreenshotsSection() {
               !isEven ? "md:flex-row-reverse" : ""
             } items-center gap-8`}
           >
-            <Image
-              src={`/images/ridemerge-buddy/${src}`}
-              alt={alt}
-              width={300}
-              height={200}
+            <AnimatedClip
+              src={`/images/ridemerge-buddy/${src}.mp4`}
+              poster={`/images/ridemerge-buddy/${src}-poster.jpg`}
+              label={alt}
               className="rounded-xl shadow-md w-full md:w-1/2"
             />
             <div className="text-gray-700 dark:text-gray-300 text-base leading-relaxed md:w-1/2">

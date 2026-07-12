@@ -1,0 +1,8 @@
+[files]
+extend-exclude = [
+  "web-buddy/public/",
+  "web-buddy/package-lock.json",
+  # Contains an intentional German-language Impressum block; German words
+  # trip the English spell checker.
+  "web-buddy/src/app/about/page.tsx",
+]
