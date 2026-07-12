@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { motion } from "framer-motion";
+import AnimatedClip from "../../components/AnimatedClip";
 
 const screenshots = [
   {
@@ -34,11 +35,10 @@ function AnimatedPreview() {
       transition={{ duration: 0.8 }}
       className="mb-12 rounded-xl overflow-hidden shadow-lg"
     >
-      <Image
-        src="/images/thrash-buddy/preview.webp"
-        alt="Thrash Buddy animated preview"
-        width={1200}
-        height={600}
+      <AnimatedClip
+        src="/images/thrash-buddy/preview.mp4"
+        poster="/images/thrash-buddy/preview-poster.jpg"
+        label="Thrash Buddy animated preview"
         className="w-full h-auto rounded-xl"
       />
     </motion.div>
