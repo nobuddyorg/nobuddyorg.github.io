@@ -1,0 +1,13 @@
+{
+  "Exclude": [
+    "web-buddy/public/",
+    "web-buddy/\\.next/",
+    "web-buddy/out/",
+    "web-buddy/node_modules/",
+    "package-lock\\.json",
+    "^LICENSE$"
+  ],
+  "Disable": {
+    "Indentation": true
+  }
+}

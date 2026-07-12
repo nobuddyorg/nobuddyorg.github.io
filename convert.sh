@@ -20,7 +20,7 @@ echo "Found directory: $dir"
 find "$dir" -type f -iname '*.gif' -print0 | while IFS= read -r -d '' file; do
     # Check if GIF is animated (more than 1 frame)
     frames=$(gif2webp -info "$file" 2>/dev/null | grep -c 'frame')
-    
+
     if [ "$frames" -gt 1 ]; then
         out="${file%.*}.webp"
         echo "Converting animated GIF: $file → $out"

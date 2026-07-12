@@ -8,19 +8,46 @@ on:
 
 permissions:
   contents: read
-  actions: write
 
 jobs:
+  prek:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
+        with:
+          persist-credentials: false
+
+      - name: Set up Node.js
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: '22.x'
+          cache: 'npm'
+          cache-dependency-path: web-buddy/package-lock.json
+
+      - name: Install web-buddy dependencies
+        run: npm ci
+        working-directory: web-buddy
+
+      - name: Run prek
+        uses: j178/prek-action@bdca6f102f98e2b4c7029491a53dfd366469e33d
+        with:
+          extra-args: "--all-files"
+        env:
+          SKIP: no-commit-to-branch
+
   build_and_test:
+    needs: prek
     runs-on: ubuntu-latest
     defaults:
       run:
         working-directory: ./web-buddy
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
+        with:
+          persist-credentials: false
 
       - name: Set up Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
         with:
           node-version: '22.x'
           cache: 'npm'
@@ -48,7 +75,7 @@ jobs:
 
       - name: Upload Playwright report if tests fail
         if: failure()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
           name: playwright-report
           path: web-buddy/playwright-report/
@@ -56,7 +83,7 @@ jobs:
 
       - name: Upload Playwright traces if tests fail
         if: failure()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
           name: playwright-traces
           path: web-buddy/test-results/
