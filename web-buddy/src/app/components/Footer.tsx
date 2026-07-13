@@ -9,7 +9,7 @@ export default function Footer() {
           href={SITE_URL}
           target="_blank"
           rel="noopener"
-          className="underline hover:text-black transition"
+          className="underline hover:text-black dark:hover:text-white transition"
           title="home"
         >
           {AUTHOR_NAME}
@@ -19,7 +19,7 @@ export default function Footer() {
           href={GITHUB_URL}
           target="_blank"
           rel="noreferrer"
-          className="underline hover:text-black transition"
+          className="underline hover:text-black dark:hover:text-white transition"
           title="github"
         >
           GitHub
