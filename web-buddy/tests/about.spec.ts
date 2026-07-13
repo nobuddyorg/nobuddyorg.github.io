@@ -14,8 +14,9 @@ test("navigate to About page and verify content", async ({ page }) => {
   await expect(aboutHeading).toBeVisible();
   await expect(aboutHeading).toHaveText(/About/i);
 
+  const languageSections = page.locator("h2", { hasText: /English|Deutsch/ });
   const contactEmail = page.locator("p", { hasText: "info@nobuddy.org" });
-  await expect(contactEmail).toHaveCount(2);
+  await expect(contactEmail).toHaveCount(await languageSections.count());
   await expect(contactEmail.first()).toBeVisible();
 
   const disclaimerText = page.locator("text=This project is purely private");

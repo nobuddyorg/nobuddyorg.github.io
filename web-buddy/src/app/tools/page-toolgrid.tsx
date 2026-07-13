@@ -6,7 +6,7 @@ import { motion } from "framer-motion";
 import { tools } from "./tools";
 import { useState, useEffect } from "react";
 
-const ITEMS_PER_PAGE = 6;
+export const ITEMS_PER_PAGE = 6;
 
 const MotionLink = motion(Link);
 
