@@ -177,7 +177,7 @@ export default function TerminalIntro() {
           ))}
           {phase === "wait" && (
             <motion.div
-              className="mt-8 text-yellow-400 animate-pulse"
+              className="mt-8 text-yellow-400 animate-pulse motion-reduce:animate-none"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
             >
