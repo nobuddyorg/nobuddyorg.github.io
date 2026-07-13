@@ -50,7 +50,7 @@ function ManifestoSection({
   return (
     <section
       ref={ref}
-      className={`snap-start min-h-screen flex flex-col justify-center items-center text-center px-6 py-10 ${bg}`}
+      className={`min-h-screen flex flex-col justify-center items-center text-center px-6 py-10 ${bg}`}
     >
       <div className={`text-6xl mb-6 ${revealClass}`} style={fadeStyle(inView, 0, 20)}>
         {emoji}
@@ -77,7 +77,7 @@ function CallToActionSection() {
   return (
     <section
       ref={ref}
-      className="snap-start h-screen flex flex-col justify-center items-center text-center p-10 bg-lime-100 dark:bg-lime-900"
+      className="h-screen flex flex-col justify-center items-center text-center p-10 bg-lime-100 dark:bg-lime-900"
     >
       <div
         className={`text-xl sm:text-2xl mb-6 ${inView ? "fade-in-up" : "opacity-0"}`}
