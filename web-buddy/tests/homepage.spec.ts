@@ -34,6 +34,18 @@ test.describe("homepage hero and manifesto content", () => {
     ).toBeVisible();
   });
 
+  test("manifesto sections are reachable via keyboard scrolling", async ({
+    page,
+  }) => {
+    await page.goto("/");
+
+    const cta = page.getByRole("link", { name: "Launch /tools →" });
+    await expect(cta).not.toBeInViewport();
+
+    await page.keyboard.press("End");
+    await expect(cta).toBeInViewport({ timeout: 3000 });
+  });
+
   test("renders the manifesto sections", async ({ page }) => {
     await page.goto("/");
 
