@@ -71,7 +71,7 @@ export const tools = [
     description:
       "Effortlessly split costs with friends. A social-friendly app for fair finance, powered by DynamoDB and designed for group sharing.",
     logo: "/logos/fair.webp",
-    previewImage: "/logos/fair_preview.png",
+    previewImage: "/logos/fair.png",
     tags: [
       "Finance",
       "Social",
@@ -91,7 +91,7 @@ export const tools = [
     description:
       "Merge GPX tracks from multiple cycling sessions. Ideal for Strava users, activity aggregators, and route cleanup enthusiasts.",
     logo: "/logos/ridemerge.webp",
-    previewImage: "/logos/ridemerge_preview.png",
+    previewImage: "/logos/ridemerge.png",
     tags: ["Cycling", "GPX", "Strava", "Tracking", "Angular", "Tools"],
     github: `${GITHUB_URL}/RideMergeBuddy`,
     status: "ready",
@@ -102,7 +102,7 @@ export const tools = [
     description:
       "Find and visualize geocaching power trails with ease. Designed for efficiency-focused cachers who love long trails and rapid finds.",
     logo: "/logos/powertrail.webp",
-    previewImage: "/logos/powertrail_preview.png",
+    previewImage: "/logos/powertrail.png",
     tags: ["Geocaching", "Maps", "Navigation", "Trails", "Next.js", "Outdoor"],
     github: `${GITHUB_URL}/PowerTrailBuddy`,
     status: "coming_soon",
