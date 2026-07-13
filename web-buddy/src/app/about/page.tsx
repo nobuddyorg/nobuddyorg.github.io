@@ -75,7 +75,10 @@ function EnglishSection() {
 
 function GermanSection() {
   return (
-    <div className="rounded-2xl p-6 border bg-white dark:bg-black border-gray-400 dark:border-gray-600 text-gray-700 dark:text-gray-300 space-y-4">
+    <div
+      lang="de"
+      className="rounded-2xl p-6 border bg-white dark:bg-black border-gray-400 dark:border-gray-600 text-gray-700 dark:text-gray-300 space-y-4"
+    >
       <h2 className="text-lg font-semibold mb-2">Deutsch</h2>
       <p>
         <strong>Verantwortlich für den Inhalt:</strong>

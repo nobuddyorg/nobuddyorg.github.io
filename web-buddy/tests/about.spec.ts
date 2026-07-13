@@ -22,3 +22,16 @@ test("navigate to About page and verify content", async ({ page }) => {
   const disclaimerText = page.locator("text=This project is purely private");
   await expect(disclaimerText).toBeVisible();
 });
+
+test("German Impressum section is marked lang=\"de\"", async ({ page }) => {
+  await page.goto("/about");
+
+  const germanHeading = page.getByRole("heading", { name: "Deutsch" });
+  const germanSection = page.locator('[lang="de"]', {
+    has: germanHeading,
+  });
+  await expect(germanSection).toHaveCount(1);
+  await expect(
+    germanSection.getByText("Haftungsausschluss")
+  ).toBeVisible();
+});
