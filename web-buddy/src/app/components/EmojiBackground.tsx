@@ -79,10 +79,14 @@ export default function EmojiGridCanvas() {
       }
     };
 
-    const draw = () => {
+    const prefersReducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches;
+
+    const draw = (animate: boolean) => {
       resizeCanvasIfNeeded();
 
-      const t = Date.now();
+      const t = animate ? Date.now() : 0;
       const { width, height } = canvas;
 
       ctx.clearRect(0, 0, width, height);
@@ -91,20 +95,26 @@ export default function EmojiGridCanvas() {
       ctx.textBaseline = "middle";
 
       for (const p of particlesRef.current.values()) {
-        const offset = Math.sin(t * p.speed + p.phase) * p.floatRange;
+        const offset = animate
+          ? Math.sin(t * p.speed + p.phase) * p.floatRange
+          : 0;
         const x = p.baseX + cellSize / 2 + offset;
         const y = p.baseY + cellSize / 2 - offset;
         ctx.fillText(p.emoji, x, y);
       }
 
-      rafRef.current = requestAnimationFrame(draw);
+      if (animate) rafRef.current = requestAnimationFrame(() => draw(true));
     };
 
-    draw();
-    window.addEventListener("resize", resizeCanvasIfNeeded);
+    const handleResize = prefersReducedMotion
+      ? () => draw(false)
+      : resizeCanvasIfNeeded;
+
+    draw(!prefersReducedMotion);
+    window.addEventListener("resize", handleResize);
 
     return () => {
-      window.removeEventListener("resize", resizeCanvasIfNeeded);
+      window.removeEventListener("resize", handleResize);
       if (rafRef.current) cancelAnimationFrame(rafRef.current);
     };
   }, []);
