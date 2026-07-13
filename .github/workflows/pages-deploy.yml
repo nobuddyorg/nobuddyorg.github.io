@@ -37,10 +37,9 @@ jobs:
       # admins are exempt from branch protection and force pushes are
       # allowed), so re-run the e2e suite here rather than trusting that
       # ci.yml's push-triggered run — which races this workflow — passed.
+      # Playwright's webServer config (playwright.config.ts) starts and
+      # waits for `serve` itself.
       - run: npx playwright install --with-deps chromium
-      - run: npx serve@latest out -l 3000 &
-      - run: |
-          timeout 30s bash -c 'until curl -sSf http://localhost:3000 > /dev/null; do sleep 1; done'
       - run: npx playwright test
 
       - run: touch out/.nojekyll
