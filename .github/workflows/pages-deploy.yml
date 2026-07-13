@@ -32,7 +32,25 @@ jobs:
       - run: npm ci
       - run: npm run build
       - run: test -d out && test -f out/index.html
+
+      # A commit can reach main through a non-PR path (direct push, since
+      # admins are exempt from branch protection and force pushes are
+      # allowed), so re-run the e2e suite here rather than trusting that
+      # ci.yml's push-triggered run — which races this workflow — passed.
+      - run: npx playwright install --with-deps chromium
+      - run: npx serve@latest out -l 3000 &
+      - run: |
+          timeout 30s bash -c 'until curl -sSf http://localhost:3000 > /dev/null; do sleep 1; done'
+      - run: npx playwright test
+
       - run: touch out/.nojekyll
+
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        if: failure()
+        with:
+          name: pages-deploy-playwright-report
+          path: web-buddy/playwright-report/
+          retention-days: 30
 
       - uses: actions/upload-pages-artifact@56afc609e74202658d3ffba0e8f6dda462b719fa # v3.0.1
         with:
