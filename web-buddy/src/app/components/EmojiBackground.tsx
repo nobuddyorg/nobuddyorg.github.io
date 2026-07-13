@@ -17,6 +17,8 @@ const emojis = [
 
 const cellSize = 64;
 const font = "32px serif";
+const targetFps = 24;
+const frameInterval = 1000 / targetFps;
 
 const hash2 = (x: number, y: number) => {
   let h = 2166136261;
@@ -27,6 +29,26 @@ const hash2 = (x: number, y: number) => {
 
 const rand01 = (h: number) => (h >>> 0) / 4294967296;
 
+// Rasterizing a color emoji glyph with fillText() is expensive; doing it
+// ~500 times per frame is the bulk of this component's cost. Each emoji is
+// rasterized once into an offscreen canvas up front, and the render loop
+// only ever blits those sprites with drawImage().
+function buildSpriteCache(): Map<string, HTMLCanvasElement> {
+  const cache = new Map<string, HTMLCanvasElement>();
+  for (const emoji of new Set(emojis)) {
+    const sprite = document.createElement("canvas");
+    sprite.width = cellSize;
+    sprite.height = cellSize;
+    const spriteCtx = sprite.getContext("2d")!;
+    spriteCtx.font = font;
+    spriteCtx.textAlign = "center";
+    spriteCtx.textBaseline = "middle";
+    spriteCtx.fillText(emoji, cellSize / 2, cellSize / 2);
+    cache.set(emoji, sprite);
+  }
+  return cache;
+}
+
 export default function EmojiGridCanvas() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const particlesRef = useRef<Map<string, Particle>>(new Map());
@@ -36,6 +58,7 @@ export default function EmojiGridCanvas() {
   useEffect(() => {
     const canvas = canvasRef.current!;
     const ctx = canvas.getContext("2d")!;
+    const sprites = buildSpriteCache();
 
     const getKey = (x: number, y: number) => `${x},${y}`;
 
@@ -83,16 +106,13 @@ export default function EmojiGridCanvas() {
       "(prefers-reduced-motion: reduce)"
     ).matches;
 
-    const draw = (animate: boolean) => {
+    const render = (animate: boolean) => {
       resizeCanvasIfNeeded();
 
       const t = animate ? Date.now() : 0;
       const { width, height } = canvas;
 
       ctx.clearRect(0, 0, width, height);
-      ctx.font = font;
-      ctx.textAlign = "center";
-      ctx.textBaseline = "middle";
 
       for (const p of particlesRef.current.values()) {
         const offset = animate
@@ -100,17 +120,28 @@ export default function EmojiGridCanvas() {
           : 0;
         const x = p.baseX + cellSize / 2 + offset;
         const y = p.baseY + cellSize / 2 - offset;
-        ctx.fillText(p.emoji, x, y);
+        ctx.drawImage(sprites.get(p.emoji)!, x - cellSize / 2, y - cellSize / 2);
       }
+    };
 
-      if (animate) rafRef.current = requestAnimationFrame(() => draw(true));
+    let lastFrameTime = 0;
+    const draw = (timestamp: number) => {
+      if (timestamp - lastFrameTime >= frameInterval) {
+        lastFrameTime = timestamp;
+        render(true);
+      }
+      rafRef.current = requestAnimationFrame(draw);
     };
 
     const handleResize = prefersReducedMotion
-      ? () => draw(false)
+      ? () => render(false)
       : resizeCanvasIfNeeded;
 
-    draw(!prefersReducedMotion);
+    if (prefersReducedMotion) {
+      render(false);
+    } else {
+      rafRef.current = requestAnimationFrame(draw);
+    }
     window.addEventListener("resize", handleResize);
 
     return () => {
