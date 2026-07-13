@@ -1,42 +1,12 @@
-import { SITE_URL, AUTHOR_NAME } from "../../globals";
-import { createMetadata } from "../../metadata";
-import { tools } from "../tools";
+import { getToolPageData } from "../toolPage";
 import GameGalleryBuddyClient from "./client";
 import PageWrapper from "../../components/PageWrapper";
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 
-const slug = "gamegallerybuddy";
-const path = `/tools/${slug}`;
+const { title, metadata, jsonLd } = getToolPageData("gamegallerybuddy");
 
-const tool = tools.find((t) => t.slug === slug);
-
-const title = tool?.name ?? "";
-const titleFull = `${title} - A spring boot app for managing game galleries`;
-const description = tool?.description ?? "";
-const image = tool?.previewImage;
-const url = `${SITE_URL}${path}`;
-const authorName = AUTHOR_NAME;
-
-export const metadata = createMetadata({
-  title: titleFull,
-  description,
-  slug: path,
-  image,
-});
-
-const jsonLd = {
-  "@context": "https://schema.org",
-  "@type": "SoftwareApplication",
-  name: titleFull,
-  description,
-  url,
-  author: {
-    "@type": "Person",
-    name: authorName,
-  },
-  ...(image ? { image } : {}),
-};
+export { metadata };
 
 export default function GameGalleryBuddyPage() {
   return (
