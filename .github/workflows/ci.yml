@@ -76,16 +76,19 @@ jobs:
       - name: Run Playwright tests
         run: npx playwright test
 
-      - name: Upload Playwright report if tests fail
-        if: failure()
+      - name: Upload Playwright report
+        # Uploaded even on a passing job: a test that fails then passes on
+        # retry still leaves flake evidence in the report/traces, and that
+        # evidence is lost if this only runs on failure().
+        if: ${{ !cancelled() }}
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
           name: playwright-report
           path: web-buddy/playwright-report/
           retention-days: 30
 
-      - name: Upload Playwright traces if tests fail
-        if: failure()
+      - name: Upload Playwright traces
+        if: ${{ !cancelled() }}
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
           name: playwright-traces
