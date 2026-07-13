@@ -1,14 +1,20 @@
 "use client";
 
+import type { CSSProperties } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { motion } from "framer-motion";
 import { tools } from "./tools";
 import { useState, useEffect } from "react";
 
 export const ITEMS_PER_PAGE = 6;
 
-const MotionLink = motion(Link);
+function staggerStyle(index: number): CSSProperties {
+  return {
+    animationDuration: "0.4s",
+    animationDelay: `${index * 0.05}s`,
+    "--fade-y": "20px",
+  } as CSSProperties;
+}
 
 export default function ToolGrid() {
   const [currentPage, setCurrentPage] = useState(1);
@@ -106,50 +112,37 @@ export default function ToolGrid() {
 
             if (isReady) {
               return (
-                <motion.div
-                  key={tool.slug}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{
-                    delay: index * 0.05,
-                    duration: 0.4,
-                  }}
-                >
-                  <MotionLink
-                    href={`/tools/${tool.slug}`}
-                    className={cardClasses}
-                  >
+                <div key={tool.slug} className="fade-in-up" style={staggerStyle(index)}>
+                  <Link href={`/tools/${tool.slug}`} className={cardClasses}>
                     {cardInner}
-                  </MotionLink>
-                </motion.div>
+                  </Link>
+                </div>
               );
             }
 
             return (
-              <motion.div
+              <div
                 key={tool.slug}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.05, duration: 0.4 }}
-                className={cardClasses}
+                className={`fade-in-up ${cardClasses}`}
+                style={staggerStyle(index)}
               >
                 {cardInner}
-              </motion.div>
+              </div>
             );
           })}
-          <motion.div
+          <div
             key={`page-bar-${currentPage}`}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.4 }}
-            className="col-span-full"
+            className="fade-in-up col-span-full"
+            style={
+              { animationDuration: "0.4s", "--fade-y": "20px" } as CSSProperties
+            }
           >
             <Pagination
               currentPage={currentPage}
               totalPages={totalPages}
               onPageChange={setCurrentPage}
             />
-          </motion.div>
+          </div>
         </section>
       </div>
     </>

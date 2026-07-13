@@ -1,7 +1,5 @@
-"use client";
-
+import type { CSSProperties } from "react";
 import Image from "next/image";
-import { motion } from "framer-motion";
 import ToolPageShell from "../../components/ToolPageShell";
 import ToolTechStack, { TechStackItem } from "../../components/ToolTechStack";
 
@@ -21,11 +19,11 @@ const techStack: TechStackItem[] = [
 export default function GameGalleryBuddyClient({ title }: { title: string }) {
   return (
     <ToolPageShell title={title}>
-      <motion.div
-        initial={{ opacity: 0, y: 30 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8 }}
-        className="mb-12 rounded-xl overflow-hidden shadow-lg"
+      <div
+        className="fade-in-up mb-12 rounded-xl overflow-hidden shadow-lg"
+        style={
+          { animationDuration: "0.8s", "--fade-y": "30px" } as CSSProperties
+        }
       >
         <Image
           src={preview.src}
@@ -34,7 +32,7 @@ export default function GameGalleryBuddyClient({ title }: { title: string }) {
           height={600}
           className="w-full h-auto rounded-xl"
         />
-      </motion.div>
+      </div>
 
       <section className="text-sm leading-relaxed text-gray-700 dark:text-gray-300 space-y-4">
         <p>

@@ -1,5 +1,3 @@
-"use client";
-
 import ToolPageShell from "../../components/ToolPageShell";
 import ToolScreenshots, {
   ToolScreenshot,
