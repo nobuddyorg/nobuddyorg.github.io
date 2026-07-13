@@ -1,6 +1,7 @@
 "use client";
 
-import { motion } from "framer-motion";
+import type { CSSProperties } from "react";
+import { useInView } from "../hooks/useInView";
 
 const ideas = [
   {
@@ -29,61 +30,79 @@ const ideas = [
   },
 ];
 
+function fadeStyle(inView: boolean, delay: number, y: number): CSSProperties {
+  return {
+    animationDuration: "0.5s",
+    animationDelay: inView ? `${delay}s` : "0s",
+    "--fade-y": `${y}px`,
+  } as CSSProperties;
+}
+
+function ManifestoSection({
+  emoji,
+  title,
+  body,
+  bg,
+}: (typeof ideas)[number]) {
+  const { ref, inView } = useInView<HTMLElement>({ threshold: 0.3 });
+  const revealClass = inView ? "fade-in-up" : "opacity-0";
+
+  return (
+    <section
+      ref={ref}
+      className={`snap-start min-h-screen flex flex-col justify-center items-center text-center px-6 py-10 ${bg}`}
+    >
+      <div className={`text-6xl mb-6 ${revealClass}`} style={fadeStyle(inView, 0, 20)}>
+        {emoji}
+      </div>
+      <h2
+        className={`text-2xl sm:text-3xl font-bold mb-4 ${revealClass}`}
+        style={fadeStyle(inView, 0.2, 20)}
+      >
+        {title}
+      </h2>
+      <p
+        className={`max-w-xl text-base sm:text-lg text-gray-800 dark:text-gray-200 ${revealClass}`}
+        style={fadeStyle(inView, 0.4, 10)}
+      >
+        {body}
+      </p>
+    </section>
+  );
+}
+
+function CallToActionSection() {
+  const { ref, inView } = useInView<HTMLElement>({ threshold: 0.3 });
+
+  return (
+    <section
+      ref={ref}
+      className="snap-start h-screen flex flex-col justify-center items-center text-center p-10 bg-lime-100 dark:bg-lime-900"
+    >
+      <div
+        className={`text-xl sm:text-2xl mb-6 ${inView ? "fade-in-up" : "opacity-0"}`}
+        style={{ animationDuration: "1s", "--fade-y": "0px" } as CSSProperties}
+      >
+        Explore the tools. Adopt a Buddy.
+      </div>
+      <a
+        href="/tools"
+        className="px-6 py-3 bg-black text-white dark:bg-white dark:text-black rounded-full text-lg font-semibold hover:opacity-90 transition"
+        title="tools"
+      >
+        Launch /tools →
+      </a>
+    </section>
+  );
+}
+
 export default function ManifestoScroll() {
   return (
     <>
-      {ideas.map(({ emoji, title, body, bg }, idx) => (
-        <section
-          key={idx}
-          className={`snap-start min-h-screen flex flex-col justify-center items-center text-center px-6 py-10 ${bg}`}
-        >
-          <motion.div
-            className="text-6xl mb-6"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            viewport={{ once: true }}
-          >
-            {emoji}
-          </motion.div>
-          <motion.h2
-            className="text-2xl sm:text-3xl font-bold mb-4"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2, duration: 0.5 }}
-            viewport={{ once: true }}
-          >
-            {title}
-          </motion.h2>
-          <motion.p
-            className="max-w-xl text-base sm:text-lg text-gray-800 dark:text-gray-200"
-            initial={{ opacity: 0, y: 10 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.4, duration: 0.5 }}
-            viewport={{ once: true }}
-          >
-            {body}
-          </motion.p>
-        </section>
+      {ideas.map((idea) => (
+        <ManifestoSection key={idea.title} {...idea} />
       ))}
-
-      <section className="snap-start h-screen flex flex-col justify-center items-center text-center p-10 bg-lime-100 dark:bg-lime-900">
-        <motion.div
-          className="text-xl sm:text-2xl mb-6"
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          transition={{ duration: 1 }}
-        >
-          Explore the tools. Adopt a Buddy.
-        </motion.div>
-        <a
-          href="/tools"
-          className="px-6 py-3 bg-black text-white dark:bg-white dark:text-black rounded-full text-lg font-semibold hover:opacity-90 transition"
-          title="tools"
-        >
-          Launch /tools →
-        </a>
-      </section>
+      <CallToActionSection />
     </>
   );
 }

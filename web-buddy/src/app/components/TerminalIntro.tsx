@@ -1,9 +1,14 @@
 "use client";
 
 import { useEffect, useState, useCallback } from "react";
-import { motion } from "framer-motion";
+import type { CSSProperties } from "react";
 import { SITE_NAME, GITHUB_URL } from "../globals";
 import Link from "next/link";
+
+const fadeInStyle = {
+  animationDuration: "0.3s",
+  "--fade-y": "0px",
+} as CSSProperties;
 
 const loadingSteps = [
   "[░░░░░░░░░░]",
@@ -163,12 +168,7 @@ export default function TerminalIntro() {
 
         <div className="py-10 px-6 font-mono text-green-400 text-lg bg-[#1a1a1a] text-left">
           {lines.map((line, i) => (
-            <motion.div
-              key={i}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              className="whitespace-pre"
-            >
+            <div key={i} className="fade-in-up whitespace-pre" style={fadeInStyle}>
               {line.role === "cmd" && (
                 <>
                   <span className="text-blue-400">nobuddy</span>
@@ -176,16 +176,14 @@ export default function TerminalIntro() {
                 </>
               )}
               {line.text}
-            </motion.div>
+            </div>
           ))}
           {phase === "wait" && (
-            <motion.div
-              className="mt-8 text-yellow-400 animate-pulse motion-reduce:animate-none"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-            >
-              Scroll down to continue...
-            </motion.div>
+            <div className="fade-in-up mt-8" style={fadeInStyle}>
+              <span className="text-yellow-400 animate-pulse motion-reduce:animate-none">
+                Scroll down to continue...
+              </span>
+            </div>
           )}
         </div>
       </div>

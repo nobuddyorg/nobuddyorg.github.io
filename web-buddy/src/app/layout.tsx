@@ -1,7 +1,6 @@
 import "./globals.css";
 import { Inter } from "next/font/google";
 import EmojiBackground from "./components/EmojiBackground";
-import MotionProvider from "./components/MotionProvider";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -17,11 +16,9 @@ export default function RootLayout({
     <html lang="en" className={inter.variable}>
       <body className="relative overflow-x-hidden">
         <EmojiBackground />
-        <MotionProvider>
-          <div className="relative">
-            <div className="relative z-10">{children}</div>
-          </div>
-        </MotionProvider>
+        <div className="relative">
+          <div className="relative z-10">{children}</div>
+        </div>
       </body>
     </html>
   );
