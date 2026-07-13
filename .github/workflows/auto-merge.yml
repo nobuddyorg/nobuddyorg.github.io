@@ -13,10 +13,20 @@ permissions:
 jobs:
     auto-approve-merge:
         runs-on: ubuntu-latest
+        if: ${{ github.event.pull_request.user.login == 'dependabot[bot]' }}
 
         steps:
-            - name: Merge PR if Dependabot is the creator
-              if: ${{ github.event.pull_request.user.login == 'dependabot[bot]' }}
+            - name: Fetch Dependabot metadata
+              id: metadata
+              uses: dependabot/fetch-metadata@25dd0e34f4fe68f24cc83900b1fe3fe149efef98 # v3.1.0
+              with:
+                  github-token: ${{ secrets.GITHUB_TOKEN }}
+
+            # Major version bumps can carry breaking changes, so they are
+            # left for a human to review and merge manually. Patch/minor
+            # bumps auto-merge once the required CI check passes.
+            - name: Auto-merge patch and minor updates
+              if: ${{ steps.metadata.outputs.update-type != 'version-update:semver-major' }}
               env:
                   GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
               run: |
