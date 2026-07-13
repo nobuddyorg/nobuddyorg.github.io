@@ -4,6 +4,7 @@ export const tools = [
   {
     slug: "procrastinationbuddy",
     name: "Procrastination Buddy",
+    tagline: "A tool to help you embrace procrastination",
     description:
       "Avoid productivity with delightfully useless tasks. Built using Streamlit, Ollama AI, and Docker. Perfect for professional procrastinators.",
     logo: "/logos/procrastination.webp",
@@ -15,6 +16,8 @@ export const tools = [
   {
     slug: "thrashbuddy",
     name: "Thrash Buddy",
+    tagline:
+      "A tool to push your web api/app to it's limits with load and performance testing",
     description:
       "Load-test your apps at scale using k6, Grafana, Prometheus, and AWS EKS. Fully cloud-native and containerized with Docker and Helm.",
     logo: "/logos/thrash.webp",
@@ -26,6 +29,7 @@ export const tools = [
   {
     slug: "gamegallerybuddy",
     name: "Game Gallery Buddy",
+    tagline: "A spring boot app for managing game galleries",
     description:
       "Generates a wallpaper using all board games from a BoardGameGeek user's collection. Customizable layout with many options.",
     logo: "/logos/gamegallery.webp",
@@ -44,6 +48,7 @@ export const tools = [
   {
     slug: "collectionbuddy",
     name: "Collection Buddy",
+    tagline: "A tool to organize and track your collected items",
     description:
       "A web-app catalog for your collected items. Organize and track stamps, coins, or any collectibles with an elegant interface.",
     logo: "/logos/collection.webp",
@@ -82,6 +87,7 @@ export const tools = [
   {
     slug: "ridemergebuddy",
     name: "Ride Merge Buddy",
+    tagline: "View and merge your Strava activities",
     description:
       "Merge GPX tracks from multiple cycling sessions. Ideal for Strava users, activity aggregators, and route cleanup enthusiasts.",
     logo: "/logos/ridemerge.webp",
