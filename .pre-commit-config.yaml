@@ -65,8 +65,16 @@ repos:
         pass_filenames: false
         files: ^web-buddy/public/images/
 
-  # ESLint (web-buddy/) is intentionally NOT wired up yet: eslint@10.0.2 +
-  # eslint-config-next@16.2.10 currently crash on every file with
-  # "TypeError: scopeManager.addGlobals is not a function" (verified via
-  # `node_modules/.bin/eslint .`), an upstream version incompatibility, not a
-  # config problem. Add an `eslint` local hook here once that's resolved.
+  # ESLint (web-buddy/): eslint@10 + eslint-config-next@16.2.10 crash on
+  # every file (upstream incompatibility); pinned to eslint@9 as a
+  # workaround (see the tracking issue) until eslint-config-next officially
+  # supports eslint@10.
+  - repo: local
+    hooks:
+      - id: eslint
+        name: ESLint
+        entry: bash -c 'cd web-buddy && npx eslint .'
+        language: system
+        pass_filenames: false
+        files: ^web-buddy/src/.*\.(ts|tsx)$
+        stages: [pre-commit]

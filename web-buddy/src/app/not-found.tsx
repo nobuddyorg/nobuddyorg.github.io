@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 
@@ -22,20 +23,20 @@ export default function NotFound() {
           This page doesn&apos;t exist, or has wandered off somewhere.
         </p>
         <div className="flex flex-wrap gap-4 justify-center">
-          <a
+          <Link
             href="/"
             className="bg-black dark:bg-white text-white dark:text-black font-semibold px-8 py-3 rounded-full shadow-lg hover:bg-gray-900 dark:hover:bg-gray-100 transition"
             title="home"
           >
             Back to Home
-          </a>
-          <a
+          </Link>
+          <Link
             href="/tools"
             className="border border-gray-400 dark:border-gray-600 text-black dark:text-white font-semibold px-8 py-3 rounded-full hover:bg-gray-100 dark:hover:bg-zinc-900 transition"
             title="tools"
           >
             Browse the Tools
-          </a>
+          </Link>
         </div>
       </main>
       <Footer />
