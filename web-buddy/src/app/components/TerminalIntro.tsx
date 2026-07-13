@@ -96,7 +96,7 @@ function Hero() {
         href={GITHUB_URL}
         target="_blank"
         rel="noopener noreferrer"
-        className="inline-block relative z-10 bg-black dark:bg-white text-white dark:text-black font-semibold px-6 py-2.5 md:px-8 md:py-3 text-sm sm:text-base rounded-full shadow-lg hover:bg-gray-900 transition"
+        className="inline-block relative z-10 bg-black dark:bg-white text-white dark:text-black font-semibold px-6 py-2.5 md:px-8 md:py-3 text-sm sm:text-base rounded-full shadow-lg hover:bg-gray-900 dark:hover:bg-gray-100 transition"
         aria-label="Follow Nobuddyorg on GitHub"
         title="follow on github"
       >
