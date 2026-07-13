@@ -86,7 +86,7 @@ function Hero() {
         {SITE_NAME}
       </h1>
 
-      <h2 className="hidden md:block relative z-10 max-w-3xl mx-auto text-lg sm:text-xl text-neutral-750 dark:text-neutral-150 mb-8">
+      <h2 className="block relative z-10 max-w-3xl mx-auto text-base sm:text-lg md:text-xl text-neutral-750 dark:text-neutral-150 mb-6 md:mb-8">
         Explore nobuddy.org – a playground of creative tools, weird ideas &
         useful mini-apps. Built for curious minds, developers, and digital
         explorers.
@@ -96,7 +96,7 @@ function Hero() {
         href={GITHUB_URL}
         target="_blank"
         rel="noopener noreferrer"
-        className="hidden md:inline-block relative z-10 bg-black dark:bg-white text-white dark:text-black font-semibold px-8 py-3 rounded-full shadow-lg hover:bg-gray-900 transition"
+        className="inline-block relative z-10 bg-black dark:bg-white text-white dark:text-black font-semibold px-6 py-2.5 md:px-8 md:py-3 text-sm sm:text-base rounded-full shadow-lg hover:bg-gray-900 transition"
         aria-label="Follow Nobuddyorg on GitHub"
         title="follow on github"
       >
