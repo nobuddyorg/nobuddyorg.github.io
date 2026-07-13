@@ -106,9 +106,11 @@ export default function TerminalIntro() {
       const current = scriptLines[lineIndex];
 
       if (current.text.startsWith(loadingMessage)) {
-        appendLine(current);
-        setPhase("loading");
-        return;
+        const t = setTimeout(() => {
+          appendLine(current);
+          setPhase("loading");
+        }, 0);
+        return () => clearTimeout(t);
       }
 
       const delay = current.role === "cmd" ? 700 : 500;
@@ -143,7 +145,8 @@ export default function TerminalIntro() {
     }
 
     if (phase === "lines" && lineIndex === scriptLines.length) {
-      setPhase("wait");
+      const t = setTimeout(() => setPhase("wait"), 0);
+      return () => clearTimeout(t);
     }
   }, [phase, lineIndex, loadingIndex, appendLine]);
 
