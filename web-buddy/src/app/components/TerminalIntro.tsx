@@ -1,9 +1,11 @@
 "use client";
 
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useLayoutEffect, useState, useCallback } from "react";
 import type { CSSProperties } from "react";
 import { SITE_NAME, GITHUB_URL } from "../globals";
 import Link from "next/link";
+
+const SESSION_KEY = "terminalIntroPlayed";
 
 const fadeInStyle = {
   animationDuration: "0.3s",
@@ -64,6 +66,14 @@ const scriptLines: ScriptLine[] = [
   { role: "output", text: "↳ You’ve reached The Buddy Compendium." },
 ];
 
+function buildCompletedLines(): ScriptLine[] {
+  return scriptLines.map((line) =>
+    line.text.startsWith(loadingMessage)
+      ? { ...line, text: `${loadingMessage} ${loadingSteps[loadingSteps.length - 1]}` }
+      : line
+  );
+}
+
 type Phase = "lines" | "loading" | "wait";
 
 function Hero() {
@@ -101,12 +111,53 @@ export default function TerminalIntro() {
   const [phase, setPhase] = useState<Phase>("lines");
   const [lineIndex, setLineIndex] = useState(0);
   const [loadingIndex, setLoadingIndex] = useState(0);
+  const [skipAnimation, setSkipAnimation] = useState(false);
 
   const appendLine = useCallback((line: ScriptLine) => {
     setLines((prev) => [...prev, line]);
   }, []);
 
+  const finishNow = useCallback(() => {
+    setSkipAnimation(true);
+    setLines(buildCompletedLines());
+    setLineIndex(scriptLines.length);
+    setLoadingIndex(loadingSteps.length - 1);
+    setPhase("wait");
+  }, []);
+
+  // Render the completed terminal instantly on repeat visits within the
+  // same session instead of replaying the ~5s typing animation every time.
+  // useLayoutEffect (not useEffect) so this resolves before the browser
+  // paints the empty, server-rendered terminal.
+  useLayoutEffect(() => {
+    if (sessionStorage.getItem(SESSION_KEY)) {
+      finishNow();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // A click or keypress anywhere fast-forwards straight to the finished
+  // state instead of forcing visitors to sit through the whole animation.
   useEffect(() => {
+    if (skipAnimation) return;
+    const handleSkip = () => finishNow();
+    window.addEventListener("click", handleSkip);
+    window.addEventListener("keydown", handleSkip);
+    return () => {
+      window.removeEventListener("click", handleSkip);
+      window.removeEventListener("keydown", handleSkip);
+    };
+  }, [skipAnimation, finishNow]);
+
+  useEffect(() => {
+    if (phase === "wait") {
+      sessionStorage.setItem(SESSION_KEY, "1");
+    }
+  }, [phase]);
+
+  useEffect(() => {
+    if (skipAnimation) return;
+
     if (phase === "lines" && lineIndex < scriptLines.length) {
       const current = scriptLines[lineIndex];
 
@@ -153,7 +204,7 @@ export default function TerminalIntro() {
       const t = setTimeout(() => setPhase("wait"), 0);
       return () => clearTimeout(t);
     }
-  }, [phase, lineIndex, loadingIndex, appendLine]);
+  }, [phase, lineIndex, loadingIndex, appendLine, skipAnimation]);
 
   return (
     <div className="flex flex-col items-center px-4 pt-20 md:pt-32">
