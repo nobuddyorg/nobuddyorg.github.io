@@ -42,11 +42,11 @@ test.describe("NoBuddy main page - cards section", () => {
     const disabledCards = page.getByTestId("coming_soon");
     await expect(disabledCards).toHaveCount(pageOneComingSoon.length);
 
-    const firstDisabledCard = disabledCards.first();
-
-    const urlBefore = page.url();
-    await firstDisabledCard.click({ timeout: 1000 }).catch(() => {});
-    await expect(page).toHaveURL(urlBefore);
+    // Structural invariant: a coming-soon card must not be wrapped in an
+    // <a>, so it cannot navigate no matter how it's interacted with.
+    await expect(
+      disabledCards.first().locator("xpath=ancestor::a")
+    ).toHaveCount(0);
   });
 
   test("clicking the first enabled card navigates and shows content", async ({
