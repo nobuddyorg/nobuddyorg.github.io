@@ -65,14 +65,10 @@ jobs:
       - name: Build Next.js application
         run: npm run build
 
-      - name: Start Next.js application
-        run: npx serve@latest out -l 3000 &
-
-      - name: Wait for application to start
-        run: |
-          timeout 30s bash -c 'until curl -sSf http://localhost:3000 > /dev/null; do echo "Waiting for app to start..."; sleep 1; done'
-          curl -I http://localhost:3000
-
+      # Playwright's webServer config starts/waits for `serve` itself and
+      # fails loudly if it doesn't come up, instead of a background `&`
+      # step exiting 0 regardless and a 30s curl-poll timeout obscuring
+      # the real error.
       - name: Run Playwright tests
         run: npx playwright test
 
