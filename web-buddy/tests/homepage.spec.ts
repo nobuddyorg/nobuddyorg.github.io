@@ -18,6 +18,22 @@ test.describe("homepage hero and manifesto content", () => {
     ).toBeVisible({ timeout: 15000 });
   });
 
+  test("shows the value proposition and primary CTA on a mobile viewport", async ({
+    page,
+  }) => {
+    await page.setViewportSize({ width: 375, height: 667 });
+    await page.goto("/");
+
+    await expect(
+      page.getByText(
+        "Explore nobuddy.org – a playground of creative tools, weird ideas & useful mini-apps."
+      )
+    ).toBeVisible();
+    await expect(
+      page.getByRole("link", { name: "Follow Nobuddyorg on GitHub" })
+    ).toBeVisible();
+  });
+
   test("renders the manifesto sections", async ({ page }) => {
     await page.goto("/");
 
