@@ -1,11 +1,13 @@
 import type { Metadata } from "next";
 import { SITE_URL, SITE_NAME, AUTHOR_NAME } from "./globals";
 
+const DEFAULT_IMAGE = "/nobuddy_logo_preview.webp";
+
 export function createMetadata({
   title,
   description,
   slug = "",
-  image = "/nobuddy_logo_preview.webp",
+  image = DEFAULT_IMAGE,
 }: {
   title: string;
   description: string;
@@ -14,9 +16,10 @@ export function createMetadata({
 }): Metadata {
   const url = `${SITE_URL}${slug}`;
   const fullTitle = `${title} - crafted with love and fun by ${AUTHOR_NAME}`;
-  const absoluteImage = image.startsWith("http")
-    ? image
-    : `${SITE_URL}${image}`;
+  const resolvedImage = image.trim() ? image : DEFAULT_IMAGE;
+  const absoluteImage = resolvedImage.startsWith("http")
+    ? resolvedImage
+    : `${SITE_URL}${resolvedImage}`;
 
   return {
     title: fullTitle,
