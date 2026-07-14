@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { SITE_URL, SITE_NAME, AUTHOR_NAME } from "./globals";
+import { SITE_URL, SITE_NAME, AUTHOR_NAME } from "./constants";
 
 const DEFAULT_IMAGE = "/nobuddy_logo_preview.webp";
 

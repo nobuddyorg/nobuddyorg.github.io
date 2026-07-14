@@ -1,4 +1,4 @@
-import { SITE_URL, AUTHOR_NAME, GITHUB_URL } from "../globals";
+import { SITE_URL, AUTHOR_NAME, GITHUB_URL } from "../constants";
 
 export default function Footer() {
   return (

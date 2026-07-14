@@ -3,7 +3,7 @@
 import type { CSSProperties } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { tools } from "./tools";
+import { tools } from "../tools/tools";
 import { useState, useEffect } from "react";
 
 export const ITEMS_PER_PAGE = 6;

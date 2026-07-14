@@ -1,4 +1,4 @@
-import { GITHUB_URL } from "../globals";
+import { GITHUB_URL } from "../constants";
 
 export const tools = [
   {

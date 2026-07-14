@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import { AUTHOR_NAME, GITHUB_URL } from "../globals";
+import { AUTHOR_NAME, GITHUB_URL } from "../constants";
 
 export default function Header() {
   return (
