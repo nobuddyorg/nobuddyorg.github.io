@@ -2,7 +2,7 @@
 
 import { useEffect, useLayoutEffect, useState, useCallback } from "react";
 import type { CSSProperties } from "react";
-import { SITE_NAME, GITHUB_URL } from "../globals";
+import { SITE_NAME, GITHUB_URL, SITE_DESCRIPTION } from "../globals";
 import Link from "next/link";
 
 const SESSION_KEY = "terminalIntroPlayed";
@@ -87,9 +87,7 @@ function Hero() {
       </h1>
 
       <h2 className="block relative z-10 max-w-3xl mx-auto text-base sm:text-lg md:text-xl text-neutral-750 dark:text-neutral-150 mb-6 md:mb-8">
-        Explore nobuddy.org – a playground of creative tools, weird ideas &
-        useful mini-apps. Built for curious minds, developers, and digital
-        explorers.
+        {SITE_DESCRIPTION}
       </h2>
 
       <Link

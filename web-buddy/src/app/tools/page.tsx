@@ -1,4 +1,4 @@
-import { SITE_URL, SITE_NAME } from "../globals";
+import { SITE_URL, SITE_NAME, TOOLS_DESCRIPTION } from "../globals";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import ToolGrid from "./page-toolgrid";
@@ -10,7 +10,7 @@ const title = SITE_NAME;
 const slug = "/tools";
 const url = `${SITE_URL}${slug}`;
 
-const description = `A growing collection of useful web tools with unique personality and practical features for creative problem-solving, including procrastination, load testing and other things.`
+const description = TOOLS_DESCRIPTION;
 
 export const metadata = createMetadata({
   title,

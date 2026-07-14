@@ -1,5 +1,5 @@
 import type { MetadataRoute } from "next";
-import { SITE_NAME, AUTHOR_NAME } from "./globals";
+import { SITE_NAME, AUTHOR_NAME, TOOLS_DESCRIPTION } from "./globals";
 
 export const dynamic = "force-static";
 
@@ -7,8 +7,7 @@ export default function manifest(): MetadataRoute.Manifest {
   return {
     name: SITE_NAME,
     short_name: AUTHOR_NAME,
-    description:
-      "A growing collection of useful web tools with unique personality and practical features for creative problem-solving, including ProcrastinationBuddy, ThrashBuddy, and FairBuddy.",
+    description: TOOLS_DESCRIPTION,
     start_url: "/",
     display: "standalone",
     background_color: "#ffffff",
