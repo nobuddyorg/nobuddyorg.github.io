@@ -2,7 +2,7 @@ import Header from "../components/Header";
 import Footer from "../components/Footer";
 import { createMetadata } from "../metadata";
 import PageWrapper from "../components/PageWrapper";
-import { SITE_URL, LEGAL_AUTHOR, AUTHOR_NAME } from "../globals";
+import { SITE_URL, LEGAL_AUTHOR, AUTHOR_NAME } from "../constants";
 import CirclesBackground from "../components/CirclesBackground";
 
 const title = "About / Impressum";

@@ -1,6 +1,6 @@
 import { test, expect } from "@playwright/test";
 import { tools } from "../src/app/tools/tools";
-import { ITEMS_PER_PAGE } from "../src/app/tools/page-toolgrid";
+import { ITEMS_PER_PAGE } from "../src/app/components/ToolGrid";
 
 const pageOne = tools.slice(0, ITEMS_PER_PAGE);
 const pageTwo = tools.slice(ITEMS_PER_PAGE);

@@ -2,7 +2,7 @@
 
 import { useEffect, useLayoutEffect, useState, useCallback } from "react";
 import type { CSSProperties } from "react";
-import { SITE_NAME, GITHUB_URL, SITE_DESCRIPTION } from "../globals";
+import { SITE_NAME, GITHUB_URL, SITE_DESCRIPTION } from "../constants";
 import Link from "next/link";
 
 const SESSION_KEY = "terminalIntroPlayed";

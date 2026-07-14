@@ -3,7 +3,7 @@ import ManifestoScroll from "./components/ManifestoScroll";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import PageWrapper from "./components/PageWrapper";
-import { SITE_URL, SITE_NAME, SITE_DESCRIPTION } from "./globals";
+import { SITE_URL, SITE_NAME, SITE_DESCRIPTION } from "./constants";
 import { createMetadata } from "./metadata";
 import CirclesBackground from "./components/CirclesBackground";
 

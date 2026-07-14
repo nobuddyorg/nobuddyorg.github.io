@@ -1,4 +1,4 @@
-import { SITE_URL, AUTHOR_NAME } from "../globals";
+import { SITE_URL, AUTHOR_NAME } from "../constants";
 import { createMetadata } from "../metadata";
 import { tools } from "./tools";
 

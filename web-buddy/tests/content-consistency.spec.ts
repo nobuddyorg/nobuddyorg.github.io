@@ -1,5 +1,5 @@
 import { test, expect } from "@playwright/test";
-import { SITE_DESCRIPTION, TOOLS_DESCRIPTION } from "../src/app/globals";
+import { SITE_DESCRIPTION, TOOLS_DESCRIPTION } from "../src/app/constants";
 
 test.describe("marketing copy stays in sync across surfaces", () => {
   test("homepage meta description matches the hero subtitle", async ({
