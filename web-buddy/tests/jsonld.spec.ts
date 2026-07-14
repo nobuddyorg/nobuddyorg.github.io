@@ -13,9 +13,10 @@ for (const path of paths) {
     const html = await response.text();
 
     expect(html).toContain('type="application/ld+json"');
+    expect(html).toMatch(/<script id="jsonld-[a-z0-9-]+"/);
 
     const match = html.match(
-      /<script type="application\/ld\+json">(.*?)<\/script>/
+      /<script[^>]*type="application\/ld\+json"[^>]*>(.*?)<\/script>/
     );
     expect(match).not.toBeNull();
 

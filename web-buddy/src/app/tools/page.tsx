@@ -3,7 +3,7 @@ import Header from "../components/Header";
 import Footer from "../components/Footer";
 import ToolGrid from "../components/ToolGrid";
 import { createMetadata } from "../metadata";
-import PageWrapper from "../components/PageWrapper";
+import JsonLd, { type JsonLdData } from "../components/JsonLd";
 import CirclesBackground from "../components/CirclesBackground";
 
 const title = SITE_NAME;
@@ -18,7 +18,7 @@ export const metadata = createMetadata({
   slug,
 });
 
-const jsonLd = {
+const jsonLd: JsonLdData = {
   "@context": "https://schema.org",
   "@type": "WebSite",
   name: SITE_NAME,
@@ -29,7 +29,7 @@ const jsonLd = {
 export default function HomePage() {
   return (
     <>
-      <PageWrapper metadata={metadata} jsonLd={jsonLd} />
+      <JsonLd id="jsonld-tools" data={jsonLd} />
       <Header />
       <main>
         <CirclesBackground />
