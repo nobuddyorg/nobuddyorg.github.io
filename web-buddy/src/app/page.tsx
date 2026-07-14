@@ -3,7 +3,7 @@ import ManifestoScroll from "./components/ManifestoScroll";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import PageWrapper from "./components/PageWrapper";
-import { SITE_URL, SITE_NAME } from "./globals";
+import { SITE_URL, SITE_NAME, SITE_DESCRIPTION } from "./globals";
 import { createMetadata } from "./metadata";
 import CirclesBackground from "./components/CirclesBackground";
 
@@ -11,7 +11,7 @@ const title = SITE_NAME;
 const slug = "/";
 const url = `${SITE_URL}${slug}`;
 
-const description = "Explore nobuddy.org – a playground of creative tools, weird ideas & useful mini-apps. Built for curious minds, developers, and digital explorers."
+const description = SITE_DESCRIPTION;
 
 export const metadata = createMetadata({
   title,
