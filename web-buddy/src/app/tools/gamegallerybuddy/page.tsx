@@ -1,17 +1,17 @@
 import { getToolPageData } from "../toolPage";
 import GameGalleryBuddyClient from "./client";
-import PageWrapper from "../../components/PageWrapper";
+import JsonLd from "../../components/JsonLd";
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 
-const { title, metadata, jsonLd } = getToolPageData("gamegallerybuddy");
+const { title, metadata, jsonLd, jsonLdId } = getToolPageData("gamegallerybuddy");
 
 export { metadata };
 
 export default function GameGalleryBuddyPage() {
   return (
     <>
-      <PageWrapper metadata={metadata} jsonLd={jsonLd} />
+      <JsonLd id={jsonLdId} data={jsonLd} />
       <Header />
       <GameGalleryBuddyClient title={title} />
       <Footer />

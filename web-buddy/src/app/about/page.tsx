@@ -1,7 +1,7 @@
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import { createMetadata } from "../metadata";
-import PageWrapper from "../components/PageWrapper";
+import JsonLd, { type JsonLdData } from "../components/JsonLd";
 import { SITE_URL, LEGAL_AUTHOR, AUTHOR_NAME } from "../constants";
 import CirclesBackground from "../components/CirclesBackground";
 
@@ -17,7 +17,7 @@ const metadata = createMetadata({
   slug,
 });
 
-const jsonLd = {
+const jsonLd: JsonLdData = {
   "@context": "https://schema.org",
   "@type": "WebPage",
   name: `${title} - legal information about nobuddy.org, required on german websites.`,
@@ -121,7 +121,7 @@ function GermanSection() {
 export default function AboutPage() {
   return (
     <>
-      <PageWrapper metadata={metadata} jsonLd={jsonLd} />
+      <JsonLd id="jsonld-about" data={jsonLd} />
       <Header />
       <main className="min-h-screen pt-20 md:pt-32 pb-28 px-4 md:px-6 max-w-5xl mx-auto">
         <CirclesBackground variant="page3" />

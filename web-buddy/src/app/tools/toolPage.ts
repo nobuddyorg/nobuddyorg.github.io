@@ -1,6 +1,7 @@
 import { SITE_URL, AUTHOR_NAME } from "../constants";
 import { createMetadata } from "../metadata";
 import { tools } from "./tools";
+import type { JsonLdData } from "../components/JsonLd";
 
 export function getToolPageData(slug: string) {
   const tool = tools.find((t) => t.slug === slug);
@@ -19,7 +20,7 @@ export function getToolPageData(slug: string) {
     image,
   });
 
-  const jsonLd = {
+  const jsonLd: JsonLdData = {
     "@context": "https://schema.org",
     "@type": "SoftwareApplication",
     name: title,
@@ -32,5 +33,5 @@ export function getToolPageData(slug: string) {
     ...(image ? { image } : {}),
   };
 
-  return { title, metadata, jsonLd };
+  return { title, metadata, jsonLd, jsonLdId: `jsonld-${slug}` };
 }
