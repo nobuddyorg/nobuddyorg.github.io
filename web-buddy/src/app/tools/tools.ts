@@ -33,7 +33,7 @@ export const tools = [
     description:
       "Generates a wallpaper using all board games from a BoardGameGeek user's collection. Customizable layout with many options.",
     logo: "/logos/gamegallery.webp",
-    previewImage: "/logos/gamegallery_preview.png",
+    previewImage: "/logos/gamegallery_preview.webp",
     tags: [
       "Games",
       "BoardGameGeek",
@@ -91,7 +91,7 @@ export const tools = [
     description:
       "Merge GPX tracks from multiple cycling sessions. Ideal for Strava users, activity aggregators, and route cleanup enthusiasts.",
     logo: "/logos/ridemerge.webp",
-    previewImage: "/logos/ridemerge.png",
+    previewImage: "/logos/ridemerge_preview.webp",
     tags: ["Cycling", "GPX", "Strava", "Tracking", "Angular", "Tools"],
     github: `${GITHUB_URL}/RideMergeBuddy`,
     status: "ready",
@@ -102,7 +102,7 @@ export const tools = [
     description:
       "Find and visualize geocaching power trails with ease. Designed for efficiency-focused cachers who love long trails and rapid finds.",
     logo: "/logos/powertrail.webp",
-    previewImage: "/logos/powertrail.png",
+    previewImage: "/logos/powertrail_preview.webp",
     tags: ["Geocaching", "Maps", "Navigation", "Trails", "Next.js", "Outdoor"],
     github: `${GITHUB_URL}/PowerTrailBuddy`,
     status: "coming_soon",
