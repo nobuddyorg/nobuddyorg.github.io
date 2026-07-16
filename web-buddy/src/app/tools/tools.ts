@@ -108,7 +108,7 @@ export const tools = [
     status: "coming_soon",
   },
   {
-    slug: "karmabudddy",
+    slug: "karmabuddy",
     name: "Karma Buddy",
     description:
       "Track your karma points with a fun and engaging app. Compete with friends and see who has the highest karma score.",
