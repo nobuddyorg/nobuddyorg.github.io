@@ -34,7 +34,7 @@ export default function HomePage() {
       <Header />
       <main className="text-black dark:text-white overflow-x-hidden snap-y snap-proximity motion-reduce:snap-none">
         <section className="min-h-screen snap-start">
-          <CirclesBackground variant="page2" />
+          <CirclesBackground variant="home" />
           <TerminalIntro />
         </section>
         <ManifestoScroll />
