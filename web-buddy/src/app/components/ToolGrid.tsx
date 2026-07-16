@@ -159,11 +159,15 @@ function Pagination({
   onPageChange: (page: number) => void;
 }) {
   return (
-    <div className="w-fit mx-auto mt-0 rounded-2xl p-4 border bg-white/60 dark:bg-black/60 border-gray-200 dark:border-gray-800 shadow-sm dark:shadow-[0_2px_8px_rgba(255,255,255,0.05)] backdrop-blur-sm mb-0 md:mb-10">
+    <nav
+      aria-label="Tools pagination"
+      className="w-fit mx-auto mt-0 rounded-2xl p-4 border bg-white/60 dark:bg-black/60 border-gray-200 dark:border-gray-800 shadow-sm dark:shadow-[0_2px_8px_rgba(255,255,255,0.05)] backdrop-blur-sm mb-0 md:mb-10"
+    >
       <div className="flex justify-center gap-2 items-center text-sm">
         <button
           onClick={() => onPageChange(Math.max(1, currentPage - 1))}
           disabled={currentPage === 1}
+          aria-label="Previous page"
           className="px-2 py-1 rounded hover:bg-gray-200 dark:hover:bg-gray-700 disabled:opacity-40"
         >
           ◀
@@ -172,6 +176,8 @@ function Pagination({
           <button
             key={page}
             onClick={() => onPageChange(page)}
+            aria-label={`Page ${page}`}
+            aria-current={page === currentPage ? "page" : undefined}
             className={`px-3 py-1 rounded-full transition ${
               page === currentPage
                 ? "bg-gray-900 text-white dark:bg-gray-100 dark:text-black ring-2 ring-black dark:ring-white"
@@ -184,11 +190,12 @@ function Pagination({
         <button
           onClick={() => onPageChange(Math.min(totalPages, currentPage + 1))}
           disabled={currentPage === totalPages}
+          aria-label="Next page"
           className="px-2 py-1 rounded hover:bg-gray-200 dark:hover:bg-gray-700 disabled:opacity-40"
         >
           ▶
         </button>
       </div>
-    </div>
+    </nav>
   );
 }
