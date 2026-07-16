@@ -16,7 +16,13 @@ const techStack: TechStackItem[] = [
   { name: "Gradle", url: "https://gradle.org/" },
 ];
 
-export default function GameGalleryBuddyClient({ title }: { title: string }) {
+export default function GameGalleryBuddyClient({
+  title,
+  githubUrl,
+}: {
+  title: string;
+  githubUrl: string;
+}) {
   return (
     <ToolPageShell title={title}>
       <div
@@ -55,7 +61,7 @@ export default function GameGalleryBuddyClient({ title }: { title: string }) {
         <p>
           🔗{" "}
           <a
-            href="https://github.com/nobuddyorg/GameGalleryBuddy"
+            href={githubUrl}
             target="_blank"
             rel="noopener noreferrer"
             className="underline hover:text-black dark:hover:text-white"

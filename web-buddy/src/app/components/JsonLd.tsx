@@ -1,6 +1,6 @@
 export interface JsonLdData {
   "@context": "https://schema.org";
-  "@type": "WebSite" | "WebPage" | "SoftwareApplication";
+  "@type": "WebSite" | "WebPage" | "SoftwareApplication" | "CollectionPage";
   name: string;
   description: string;
   url: string;
@@ -9,6 +9,15 @@ export interface JsonLdData {
     name: string;
   };
   image?: string;
+  mainEntity?: {
+    "@type": "ItemList";
+    itemListElement: {
+      "@type": "ListItem";
+      position: number;
+      url: string;
+      name: string;
+    }[];
+  };
 }
 
 interface JsonLdProps {
