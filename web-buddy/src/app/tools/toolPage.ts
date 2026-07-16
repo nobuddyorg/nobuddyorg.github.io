@@ -12,10 +12,10 @@ export function getToolPageData(slug: string) {
   const description = tool?.description ?? "";
   const image = tool?.previewImage;
   const github = tool?.github ?? "";
-  const titleFull = tool?.tagline ? `${title} - ${tool.tagline}` : title;
 
   const metadata = createMetadata({
-    title: titleFull,
+    title,
+    subtitle: tool?.tagline,
     description,
     slug: path,
     image,

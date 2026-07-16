@@ -5,8 +5,16 @@ const DEFAULT_IMAGE = "/nobuddy_logo_preview.webp";
 const DEFAULT_IMAGE_WIDTH = 1280;
 const DEFAULT_IMAGE_HEIGHT = 640;
 
+// Google truncates SERP titles around ~60 chars, so the suffix stays short
+// and a subtitle (e.g. a tool's tagline) is only appended when the combined
+// title still fits the budget — otherwise it's dropped rather than
+// truncated mid-word.
+const TITLE_SUFFIX = " | nobuddy.org";
+export const MAX_TITLE_LENGTH = 60;
+
 export function createMetadata({
   title,
+  subtitle,
   description,
   slug = "",
   image = DEFAULT_IMAGE,
@@ -14,6 +22,7 @@ export function createMetadata({
   imageHeight = DEFAULT_IMAGE_HEIGHT,
 }: {
   title: string;
+  subtitle?: string;
   description: string;
   slug?: string;
   image?: string;
@@ -21,7 +30,12 @@ export function createMetadata({
   imageHeight?: number;
 }): Metadata {
   const url = `${SITE_URL}${slug}`;
-  const fullTitle = `${title} - crafted with love and fun by ${AUTHOR_NAME}`;
+  const withSubtitle = subtitle ? `${title} - ${subtitle}` : title;
+  const baseTitle =
+    (withSubtitle + TITLE_SUFFIX).length <= MAX_TITLE_LENGTH
+      ? withSubtitle
+      : title;
+  const fullTitle = `${baseTitle}${TITLE_SUFFIX}`;
   const resolvedImage = image.trim() ? image : DEFAULT_IMAGE;
   const absoluteImage = resolvedImage.startsWith("http")
     ? resolvedImage
