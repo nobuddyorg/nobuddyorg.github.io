@@ -34,7 +34,7 @@ export default function HomePage() {
       <Header />
       <main className="text-black dark:text-white overflow-x-hidden">
         <section className="min-h-screen">
-          <CirclesBackground variant="page2" />
+          <CirclesBackground variant="home" />
           <TerminalIntro />
         </section>
         <ManifestoScroll />
