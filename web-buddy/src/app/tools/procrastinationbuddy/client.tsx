@@ -46,7 +46,7 @@ const techStack: TechStackItem[] = [
   { name: "uv", url: "https://github.com/astral-sh/uv" },
 ];
 
-function DescriptionSection() {
+function DescriptionSection({ githubUrl }: { githubUrl: string }) {
   return (
     <section className="text-sm leading-relaxed text-gray-700 dark:text-gray-300">
       <p>
@@ -62,7 +62,7 @@ function DescriptionSection() {
       <p>
         🔗{" "}
         <a
-          href="https://github.com/nobuddyorg/ProcrastinationBuddy"
+          href={githubUrl}
           target="_blank"
           rel="noopener noreferrer"
           className="underline hover:text-black dark:hover:text-white"
@@ -77,10 +77,12 @@ function DescriptionSection() {
 
 interface ProcrastinationBuddyClientProps {
   title: string;
+  githubUrl: string;
 }
 
 export default function ProcrastinationBuddyClient({
   title,
+  githubUrl,
 }: ProcrastinationBuddyClientProps) {
   return (
     <ToolPageShell title={title}>
@@ -89,7 +91,7 @@ export default function ProcrastinationBuddyClient({
         poster={`${imageDir}/buddy-preview-poster.jpg`}
         label="Procrastination Buddy animated preview"
       />
-      <DescriptionSection />
+      <DescriptionSection githubUrl={githubUrl} />
       <ToolScreenshots
         screenshots={screenshots}
         imageDir={imageDir}
