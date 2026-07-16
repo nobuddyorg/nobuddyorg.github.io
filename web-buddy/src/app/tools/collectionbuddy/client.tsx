@@ -50,7 +50,7 @@ const techStack: TechStackItem[] = [
   { name: "Open Street Map", url: "https://www.openstreetmap.org/" },
 ];
 
-function DescriptionSection() {
+function DescriptionSection({ githubUrl }: { githubUrl: string }) {
   return (
     <section className="text-sm leading-relaxed text-gray-700 dark:text-gray-300">
       <p>
@@ -63,7 +63,7 @@ function DescriptionSection() {
       <p>
         🔗{" "}
         <a
-          href="https://github.com/nobuddyorg/CollectionBuddy"
+          href={githubUrl}
           target="_blank"
           rel="noopener noreferrer"
           className="underline hover:text-black dark:hover:text-white"
@@ -78,10 +78,12 @@ function DescriptionSection() {
 
 interface CollectionBuddyClientProps {
   title: string;
+  githubUrl: string;
 }
 
 export default function CollectionBuddyClient({
   title,
+  githubUrl,
 }: CollectionBuddyClientProps) {
   return (
     <ToolPageShell title={title}>
@@ -90,7 +92,7 @@ export default function CollectionBuddyClient({
         poster={`${imageDir}/preview-poster.jpg`}
         label="Collection Buddy animated preview"
       />
-      <DescriptionSection />
+      <DescriptionSection githubUrl={githubUrl} />
       <ToolScreenshots
         screenshots={screenshots}
         imageDir={imageDir}
