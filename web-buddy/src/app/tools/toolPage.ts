@@ -19,6 +19,8 @@ export function getToolPageData(slug: string) {
     description,
     slug: path,
     image,
+    imageWidth: tool?.previewImageWidth,
+    imageHeight: tool?.previewImageHeight,
   });
 
   const jsonLd: JsonLdData = {

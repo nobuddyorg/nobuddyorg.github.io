@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { SITE_URL, SITE_NAME, AUTHOR_NAME } from "./constants";
 
 const DEFAULT_IMAGE = "/nobuddy_logo_preview.webp";
+const DEFAULT_IMAGE_WIDTH = 1280;
+const DEFAULT_IMAGE_HEIGHT = 640;
 
 // Google truncates SERP titles around ~60 chars, so the suffix stays short
 // and a subtitle (e.g. a tool's tagline) is only appended when the combined
@@ -16,12 +18,16 @@ export function createMetadata({
   description,
   slug = "",
   image = DEFAULT_IMAGE,
+  imageWidth = DEFAULT_IMAGE_WIDTH,
+  imageHeight = DEFAULT_IMAGE_HEIGHT,
 }: {
   title: string;
   subtitle?: string;
   description: string;
   slug?: string;
   image?: string;
+  imageWidth?: number;
+  imageHeight?: number;
 }): Metadata {
   const url = `${SITE_URL}${slug}`;
   const withSubtitle = subtitle ? `${title} - ${subtitle}` : title;
@@ -50,8 +56,8 @@ export function createMetadata({
       images: [
         {
           url: absoluteImage,
-          width: 1280,
-          height: 640,
+          width: imageWidth,
+          height: imageHeight,
           alt: `${title} preview`,
         },
       ],
