@@ -37,7 +37,7 @@ export default function ToolGrid() {
         <h1 className="text-center relative z-10 text-5xl md:text-6xl font-extrabold tracking-tight leading-tight mb-4 md:mb-6 text-black dark:text-white">
           The Buddy Compendium
         </h1>
-        <h2 className="text-center relative z-10 max-w-2xl mx-auto text-lg sm:text-xl text-neutral-750 dark:text-neutral-150 mb-4 md:mb-8">
+        <h2 className="text-center relative z-10 max-w-2xl mx-auto text-lg sm:text-xl text-neutral-700 dark:text-neutral-200 mb-4 md:mb-8">
           Blending quirky charm with real-world usefulness for {"'everybuddy'"}
         </h2>
         <br />
@@ -98,7 +98,7 @@ export default function ToolGrid() {
                 </p>
 
                 <div className="flex flex-wrap gap-2">
-                  {(tool.tags || []).map((tag) => (
+                  {tool.tags.map((tag) => (
                     <span
                       key={tag}
                       className="text-xs bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 px-2 py-1 rounded-full font-medium"

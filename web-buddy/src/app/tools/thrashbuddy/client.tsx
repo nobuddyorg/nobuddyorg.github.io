@@ -46,7 +46,7 @@ const techStack: TechStackItem[] = [
   { name: "Minikube", url: "https://minikube.sigs.k8s.io/" },
 ];
 
-function DescriptionSection() {
+function DescriptionSection({ githubUrl }: { githubUrl: string }) {
   return (
     <section className="text-sm leading-relaxed text-gray-700 dark:text-gray-300">
       <p>
@@ -59,7 +59,7 @@ function DescriptionSection() {
       <p>
         🔗{" "}
         <a
-          href="https://github.com/nobuddyorg/ThrashBuddy"
+          href={githubUrl}
           target="_blank"
           rel="noopener noreferrer"
           className="underline hover:text-black dark:hover:text-white"
@@ -74,10 +74,12 @@ function DescriptionSection() {
 
 interface ThrashBuddyClientProps {
   title: string;
+  githubUrl: string;
 }
 
 export default function ThrashBuddyClient({
   title,
+  githubUrl,
 }: ThrashBuddyClientProps) {
   return (
     <ToolPageShell title={title}>
@@ -86,7 +88,7 @@ export default function ThrashBuddyClient({
         poster="/images/thrash-buddy/preview-poster.jpg"
         label="Thrash Buddy animated preview"
       />
-      <DescriptionSection />
+      <DescriptionSection githubUrl={githubUrl} />
       <ToolScreenshots
         screenshots={screenshots}
         imageDir={imageDir}

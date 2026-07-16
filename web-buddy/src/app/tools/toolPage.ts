@@ -11,13 +11,16 @@ export function getToolPageData(slug: string) {
   const title = tool?.name ?? "";
   const description = tool?.description ?? "";
   const image = tool?.previewImage;
-  const titleFull = tool?.tagline ? `${title} - ${tool.tagline}` : title;
+  const github = tool?.github ?? "";
 
   const metadata = createMetadata({
-    title: titleFull,
+    title,
+    subtitle: tool?.tagline,
     description,
     slug: path,
     image,
+    imageWidth: tool?.previewImageWidth,
+    imageHeight: tool?.previewImageHeight,
   });
 
   const jsonLd: JsonLdData = {
@@ -33,5 +36,5 @@ export function getToolPageData(slug: string) {
     ...(image ? { image } : {}),
   };
 
-  return { title, metadata, jsonLd, jsonLdId: `jsonld-${slug}` };
+  return { title, github, metadata, jsonLd, jsonLdId: `jsonld-${slug}` };
 }
