@@ -1,6 +1,18 @@
 import { GITHUB_URL } from "../constants";
 
-export const tools = [
+export interface Tool {
+  slug: string;
+  name: string;
+  tagline?: string;
+  description: string;
+  logo: string;
+  previewImage?: string;
+  tags: string[];
+  github: string;
+  status: "ready" | "coming_soon";
+}
+
+export const tools: Tool[] = [
   {
     slug: "procrastinationbuddy",
     name: "Procrastination Buddy",
