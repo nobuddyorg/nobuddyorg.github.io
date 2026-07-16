@@ -33,7 +33,7 @@ const techStack: TechStackItem[] = [
   { name: "Gradle", url: "https://gradle.org/" },
 ];
 
-function DescriptionSection() {
+function DescriptionSection({ githubUrl }: { githubUrl: string }) {
   return (
     <section className="text-sm leading-relaxed text-gray-700 dark:text-gray-300">
       <p>
@@ -43,7 +43,7 @@ function DescriptionSection() {
       <p>
         🔗{" "}
         <a
-          href="https://github.com/nobuddyorg/RideMergeBuddy"
+          href={githubUrl}
           target="_blank"
           rel="noopener noreferrer"
           className="underline hover:text-black dark:hover:text-white"
@@ -58,14 +58,16 @@ function DescriptionSection() {
 
 interface RideMergeBuddyClientProps {
   title: string;
+  githubUrl: string;
 }
 
 export default function RideMergeBuddyClient({
   title,
+  githubUrl,
 }: RideMergeBuddyClientProps) {
   return (
     <ToolPageShell title={title}>
-      <DescriptionSection />
+      <DescriptionSection githubUrl={githubUrl} />
       <ToolScreenshots
         screenshots={screenshots}
         imageDir={imageDir}
