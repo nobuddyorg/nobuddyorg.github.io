@@ -40,7 +40,10 @@ function ScreenshotRow({
       {media === "image" ? (
         <Image
           src={`${imageDir}/${src}`}
-          alt={alt}
+          // Decorative: the adjacent h3/p already convey this screenshot's
+          // caption and description in text, so a screen reader shouldn't
+          // announce the same string a second time.
+          alt=""
           width={300}
           height={200}
           className="rounded-xl shadow-md w-full md:w-1/2"
@@ -49,7 +52,7 @@ function ScreenshotRow({
         <AnimatedClip
           src={`${imageDir}/${src}.mp4`}
           poster={`${imageDir}/${src}-poster.jpg`}
-          label={alt}
+          label=""
           className="rounded-xl shadow-md w-full md:w-1/2"
         />
       )}
