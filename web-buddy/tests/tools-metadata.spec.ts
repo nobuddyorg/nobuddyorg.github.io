@@ -10,7 +10,9 @@ for (const tool of readyTools) {
     await page.goto(`/tools/${tool.slug}`);
 
     await expect(page).toHaveTitle(
-      new RegExp(`^${tool.name.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")} - `)
+      new RegExp(
+        `^${tool.name.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}( - .+)? \\| nobuddy\\.org$`
+      )
     );
 
     const jsonLd = await page
