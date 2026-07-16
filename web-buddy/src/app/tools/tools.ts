@@ -1,6 +1,6 @@
 import { GITHUB_URL } from "../constants";
 
-interface Tool {
+export interface Tool {
   slug: string;
   name: string;
   tagline?: string;
@@ -137,7 +137,7 @@ export const tools: Tool[] = [
     status: "coming_soon",
   },
   {
-    slug: "karmabudddy",
+    slug: "karmabuddy",
     name: "Karma Buddy",
     description:
       "Track your karma points with a fun and engaging app. Compete with friends and see who has the highest karma score.",

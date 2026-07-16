@@ -50,13 +50,14 @@ export function createMetadata({
       locale: "en_US",
       type: "website",
     },
+    // No site/creator: no X/Twitter account is controlled by this project,
+    // and @nobuddy would likely attribute shared pages to an unrelated
+    // account. The card renders fine without them.
     twitter: {
       card: "summary_large_image",
       title: fullTitle,
       description,
       images: [absoluteImage],
-      site: `@${AUTHOR_NAME}`,
-      creator: `@${AUTHOR_NAME}`,
     },
   };
 }

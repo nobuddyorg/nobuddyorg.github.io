@@ -11,6 +11,7 @@ export function getToolPageData(slug: string) {
   const title = tool?.name ?? "";
   const description = tool?.description ?? "";
   const image = tool?.previewImage;
+  const github = tool?.github ?? "";
   const titleFull = tool?.tagline ? `${title} - ${tool.tagline}` : title;
 
   const metadata = createMetadata({
@@ -35,5 +36,5 @@ export function getToolPageData(slug: string) {
     ...(image ? { image } : {}),
   };
 
-  return { title, metadata, jsonLd, jsonLdId: `jsonld-${slug}` };
+  return { title, github, metadata, jsonLd, jsonLdId: `jsonld-${slug}` };
 }
