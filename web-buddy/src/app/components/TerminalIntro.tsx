@@ -86,7 +86,7 @@ function Hero() {
         {SITE_NAME}
       </h1>
 
-      <h2 className="block relative z-10 max-w-3xl mx-auto text-base sm:text-lg md:text-xl text-neutral-750 dark:text-neutral-150 mb-6 md:mb-8">
+      <h2 className="block relative z-10 max-w-3xl mx-auto text-base sm:text-lg md:text-xl text-neutral-700 dark:text-neutral-200 mb-6 md:mb-8">
         {SITE_DESCRIPTION}
       </h2>
 

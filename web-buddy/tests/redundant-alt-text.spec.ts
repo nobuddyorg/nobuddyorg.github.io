@@ -1,0 +1,43 @@
+import { test, expect } from "@playwright/test";
+
+test.describe("no redundant accessible-name announcements", () => {
+  test("header logo link's accessible name is just the author name", async ({
+    page,
+  }) => {
+    await page.goto("/");
+
+    const homeLink = page.getByRole("banner").getByRole("link").first();
+    await expect(homeLink).toHaveAccessibleName("nobuddy");
+
+    const logoImg = homeLink.locator("img");
+    await expect(logoImg).toHaveAttribute("alt", "");
+  });
+
+  test("procrastinationbuddy screenshot images are marked decorative", async ({
+    page,
+  }) => {
+    await page.goto("/tools/procrastinationbuddy");
+
+    const screenshotHeading = page.getByRole("heading", {
+      name: "Frontend Light",
+    });
+    await expect(screenshotHeading).toBeVisible();
+
+    const screenshotImages = page.locator("section img[alt='']");
+    await expect(screenshotImages.first()).toBeVisible();
+  });
+
+  test("collectionbuddy screenshot videos are marked decorative", async ({
+    page,
+  }) => {
+    await page.goto("/tools/collectionbuddy");
+
+    const screenshotHeading = page.getByRole("heading", {
+      name: "Secure Authentication",
+    });
+    await expect(screenshotHeading).toBeVisible();
+
+    const videos = page.locator("video[aria-label='']");
+    await expect(videos.first()).toBeAttached();
+  });
+});

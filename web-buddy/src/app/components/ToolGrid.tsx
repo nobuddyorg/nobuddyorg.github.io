@@ -37,7 +37,7 @@ export default function ToolGrid() {
         <h1 className="text-center relative z-10 text-5xl md:text-6xl font-extrabold tracking-tight leading-tight mb-4 md:mb-6 text-black dark:text-white">
           The Buddy Compendium
         </h1>
-        <h2 className="text-center relative z-10 max-w-2xl mx-auto text-lg sm:text-xl text-neutral-750 dark:text-neutral-150 mb-4 md:mb-8">
+        <h2 className="text-center relative z-10 max-w-2xl mx-auto text-lg sm:text-xl text-neutral-700 dark:text-neutral-200 mb-4 md:mb-8">
           Blending quirky charm with real-world usefulness for {"'everybuddy'"}
         </h2>
         <br />
@@ -51,7 +51,7 @@ export default function ToolGrid() {
             const cardClasses = `group block rounded-2xl p-6 border ${
               isReady
                 ? "bg-white dark:bg-black border-1 border-neutral-400 dark:border-neutral-600 hover:border-black dark:hover:border-white shadow-sm dark:shadow-[0_2px_8px_rgba(255,255,255,0.05)] hover:shadow-md dark:hover:shadow-[0_4px_12px_rgba(255,255,255,0.15)] transition-all duration-300 hover:-translate-y-1 cursor-pointer"
-                : "bg-gray-200 dark:bg-neutral-800 border-neutral-600 border-dashed border-2 dark:border-neutral-400 dark:border-2 dark:border-dashed opacity-60 cursor-not-allowed"
+                : "bg-gray-200 dark:bg-neutral-800 border-neutral-600 border-dashed border-2 dark:border-neutral-400 dark:border-2 dark:border-dashed cursor-not-allowed"
             }`;
 
             const cardInner = (
@@ -62,7 +62,7 @@ export default function ToolGrid() {
                 >
                   <div
                     className={`w-12 h-12 bg-gray-50 rounded-full flex items-center justify-center shadow-inner ${
-                      tool.status !== "ready" ? "grayscale" : ""
+                      tool.status !== "ready" ? "grayscale opacity-60" : ""
                     }`}
                   >
                     {tool.logo ? (
