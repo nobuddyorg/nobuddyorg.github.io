@@ -124,7 +124,7 @@ export default function AboutPage() {
       <JsonLd id="jsonld-about" data={jsonLd} />
       <Header />
       <main className="min-h-screen pt-20 md:pt-32 pb-28 px-4 md:px-6 max-w-5xl mx-auto">
-        <CirclesBackground variant="page3" />
+        <CirclesBackground variant="about" />
         <h1 className="text-center relative z-10 text-5xl md:text-6xl font-extrabold tracking-tight leading-tight mb-4 md:mb-6 text-black dark:text-white">
           About / Impressum
         </h1>

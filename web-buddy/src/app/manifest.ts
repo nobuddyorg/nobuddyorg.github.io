@@ -10,8 +10,11 @@ export default function manifest(): MetadataRoute.Manifest {
     description: TOOLS_DESCRIPTION,
     start_url: "/",
     display: "standalone",
-    background_color: "#ffffff",
-    theme_color: "#ffffff",
+    // The UI is dark-first (every surface ships a dark: variant driven by
+    // prefers-color-scheme); white here gave dark-mode users a jarring
+    // white splash screen and status bar on launch.
+    background_color: "#0a0a0a",
+    theme_color: "#0a0a0a",
     icons: [
       {
         src: "/icon-192.png",
