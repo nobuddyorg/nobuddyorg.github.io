@@ -12,8 +12,11 @@ export default function Header() {
         >
           <Image
             src="/logo-header.webp"
-            alt="Web Buddy Logo"
-            title="Web Buddy Logo"
+            // Decorative: the link's visible text ("nobuddy") is already
+            // its accessible name. alt="" excludes the image from the
+            // accessibility tree; no title either, since that also
+            // contributes to the computed accessible name.
+            alt=""
             width={25}
             height={25}
             className="inline-block mr-2"

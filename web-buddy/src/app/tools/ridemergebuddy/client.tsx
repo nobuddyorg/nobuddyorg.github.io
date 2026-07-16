@@ -20,7 +20,7 @@ const screenshots: ToolScreenshot[] = [
   {
     src: "merge",
     alt: "Merge Activities",
-    text: "Select multiple activities and merge them into a new one. Merged activities are highlighted for clarity. This helps clean up duplicates or combine segmented rides effortlessly. Check out the full project at https://github.com/nobuddyorg/RideMergeBuddy for setup instructions and source code.",
+    text: "Select multiple activities and merge them into a new one. Merged activities are highlighted for clarity. This helps clean up duplicates or combine segmented rides effortlessly.",
   },
 ];
 
