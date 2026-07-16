@@ -31,6 +31,17 @@ body {
   overflow-x: hidden;
 }
 
+/* Reserve a stable scrollbar gutter regardless of whether a given page
+   actually needs to scroll. Without this, navigating between a short page
+   (no scrollbar) and a tall one (scrollbar present) shifts the effective
+   viewport width on platforms/browsers with classic reserved-space
+   scrollbars (common on Windows/Linux, or macOS set to always show
+   scrollbars) — visibly nudging the fixed header/nav and footer, which are
+   centered via mx-auto. */
+html {
+  scrollbar-gutter: stable;
+}
+
 @keyframes fade-in-up {
   from {
     opacity: 0;
