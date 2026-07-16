@@ -2,17 +2,23 @@ import type { Metadata } from "next";
 import { SITE_URL, SITE_NAME, AUTHOR_NAME } from "./constants";
 
 const DEFAULT_IMAGE = "/nobuddy_logo_preview.webp";
+const DEFAULT_IMAGE_WIDTH = 1280;
+const DEFAULT_IMAGE_HEIGHT = 640;
 
 export function createMetadata({
   title,
   description,
   slug = "",
   image = DEFAULT_IMAGE,
+  imageWidth = DEFAULT_IMAGE_WIDTH,
+  imageHeight = DEFAULT_IMAGE_HEIGHT,
 }: {
   title: string;
   description: string;
   slug?: string;
   image?: string;
+  imageWidth?: number;
+  imageHeight?: number;
 }): Metadata {
   const url = `${SITE_URL}${slug}`;
   const fullTitle = `${title} - crafted with love and fun by ${AUTHOR_NAME}`;
@@ -36,8 +42,8 @@ export function createMetadata({
       images: [
         {
           url: absoluteImage,
-          width: 1280,
-          height: 640,
+          width: imageWidth,
+          height: imageHeight,
           alt: `${title} preview`,
         },
       ],
