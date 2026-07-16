@@ -98,7 +98,7 @@ export default function ToolGrid() {
                 </p>
 
                 <div className="flex flex-wrap gap-2">
-                  {(tool.tags || []).map((tag) => (
+                  {tool.tags.map((tag) => (
                     <span
                       key={tag}
                       className="text-xs bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 px-2 py-1 rounded-full font-medium"
