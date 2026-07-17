@@ -16,7 +16,9 @@ test.describe("NoBuddy main page - cards section", () => {
     await expect(
       page.getByRole("heading", { name: "The Buddy Compendium" })
     ).toBeVisible();
-    await expect(page.locator("#tools a")).toHaveCount(pageOneReady.length);
+    await expect(page.locator("#tools a")).toHaveCount(
+      pageOneReady.length + pageOneComingSoon.length
+    );
   });
 
   test(`has exactly ${pageOneReady.length} enabled card(s) in #tools`, async ({
@@ -38,15 +40,17 @@ test.describe("NoBuddy main page - cards section", () => {
     );
   });
 
-  test("disabled cards exist and are not clickable", async ({ page }) => {
+  test("coming-soon cards link out to their GitHub repo, not an internal route", async ({
+    page,
+  }) => {
     const disabledCards = page.getByTestId("coming_soon");
     await expect(disabledCards).toHaveCount(pageOneComingSoon.length);
 
-    // Structural invariant: a coming-soon card must not be wrapped in an
-    // <a>, so it cannot navigate no matter how it's interacted with.
-    await expect(
-      disabledCards.first().locator("xpath=ancestor::a")
-    ).toHaveCount(0);
+    const firstComingSoon = pageOneComingSoon[0];
+    const cardLink = disabledCards.first().locator("xpath=ancestor::a");
+    await expect(cardLink).toHaveCount(1);
+    await expect(cardLink).toHaveAttribute("href", firstComingSoon.github);
+    await expect(cardLink).toHaveAttribute("target", "_blank");
   });
 
   test("clicking the first enabled card navigates and shows content", async ({
