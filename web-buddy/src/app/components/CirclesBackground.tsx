@@ -1,137 +1,71 @@
 "use client";
 
+// The five-color amber gradient is shared by every variant; only the
+// circles' positions/sizes differ per page. Kept as complete literal class
+// strings (not built from interpolated hex values) so Tailwind's static
+// scanner can still discover and generate them — it can't see through
+// runtime string concatenation.
+const PALETTE_CLASSES = [
+  "fill-[#FFF7DC] dark:fill-[#FCD34D]",
+  "fill-[#FFE9B8] dark:fill-[#FBBF24]",
+  "fill-[#FFD285] dark:fill-[#F59E0B]",
+  "fill-[#F6B73C] dark:fill-[#D97706]",
+  "fill-[#E09E27] dark:fill-[#B45309]",
+];
+
+type Circle = { cx: number; cy: number; r: number };
+
+const VARIANT_CIRCLES: Record<"home" | "tools" | "about", Circle[]> = {
+  tools: [
+    { cx: 71, cy: 61, r: 111 },
+    { cx: 244, cy: 106, r: 139 },
+    { cx: 400, cy: 150, r: 139 },
+    { cx: 316, cy: 305, r: 139 },
+    { cx: 170, cy: 319, r: 139 },
+  ],
+  home: [
+    { cx: 120, cy: 40, r: 90 },
+    { cx: 260, cy: 180, r: 150 },
+    { cx: 480, cy: 100, r: 100 },
+    { cx: 350, cy: 400, r: 120 },
+    { cx: 100, cy: 300, r: 140 },
+  ],
+  about: [
+    { cx: 50, cy: 100, r: 130 },
+    { cx: 200, cy: 50, r: 110 },
+    { cx: 380, cy: 200, r: 160 },
+    { cx: 250, cy: 450, r: 100 },
+    { cx: 460, cy: 300, r: 120 },
+  ],
+};
+
 type CirclesBackgroundProps = {
-  topOffset?: string;
-  variant?: "page1" | "page2" | "page3";
+  variant?: "home" | "tools" | "about";
 };
 
 export default function CirclesBackground({
-  topOffset = "-15rem",
-  variant = "page1",
+  variant = "tools",
 }: CirclesBackgroundProps) {
-  const getCircles = () => {
-    switch (variant) {
-      case "page2":
-        return (
-          <>
-            <circle
-              cx="120"
-              cy="40"
-              r="90"
-              className="fill-[#FFF7DC] dark:fill-[#FCD34D]"
-            />
-            <circle
-              cx="260"
-              cy="180"
-              r="150"
-              className="fill-[#FFE9B8] dark:fill-[#FBBF24]"
-            />
-            <circle
-              cx="480"
-              cy="100"
-              r="100"
-              className="fill-[#FFD285] dark:fill-[#F59E0B]"
-            />
-            <circle
-              cx="350"
-              cy="400"
-              r="120"
-              className="fill-[#F6B73C] dark:fill-[#D97706]"
-            />
-            <circle
-              cx="100"
-              cy="300"
-              r="140"
-              className="fill-[#E09E27] dark:fill-[#B45309]"
-            />
-          </>
-        );
-      case "page3":
-        return (
-          <>
-            <circle
-              cx="50"
-              cy="100"
-              r="130"
-              className="fill-[#FFF7DC] dark:fill-[#FCD34D]"
-            />
-            <circle
-              cx="200"
-              cy="50"
-              r="110"
-              className="fill-[#FFE9B8] dark:fill-[#FBBF24]"
-            />
-            <circle
-              cx="380"
-              cy="200"
-              r="160"
-              className="fill-[#FFD285] dark:fill-[#F59E0B]"
-            />
-            <circle
-              cx="250"
-              cy="450"
-              r="100"
-              className="fill-[#F6B73C] dark:fill-[#D97706]"
-            />
-            <circle
-              cx="460"
-              cy="300"
-              r="120"
-              className="fill-[#E09E27] dark:fill-[#B45309]"
-            />
-          </>
-        );
-      case "page1":
-      default:
-        return (
-          <>
-            <circle
-              cx="71"
-              cy="61"
-              r="111"
-              className="fill-[#FFF7DC] dark:fill-[#FCD34D]"
-            />
-            <circle
-              cx="244"
-              cy="106"
-              r="139"
-              className="fill-[#FFE9B8] dark:fill-[#FBBF24]"
-            />
-            <circle
-              cx="400"
-              cy="150"
-              r="139"
-              className="fill-[#FFD285] dark:fill-[#F59E0B]"
-            />
-            <circle
-              cx="316"
-              cy="305"
-              r="139"
-              className="fill-[#F6B73C] dark:fill-[#D97706]"
-            />
-            <circle
-              cx="170"
-              cy="319"
-              r="139"
-              className="fill-[#E09E27] dark:fill-[#B45309]"
-            />
-          </>
-        );
-    }
-  };
-
   return (
     <div className="w-full relative -z-10 pointer-events-none">
       <svg
         className="absolute left-1/2 -translate-x-1/2 w-[100rem] h-[80rem] opacity-100"
-        style={{ top: topOffset }}
+        style={{ top: "-15rem" }}
         viewBox="0 0 528 560"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
         aria-hidden="true"
         focusable="false"
       >
-        {getCircles()}
+        {VARIANT_CIRCLES[variant].map(({ cx, cy, r }, index) => (
+          <circle
+            key={index}
+            cx={cx}
+            cy={cy}
+            r={r}
+            className={PALETTE_CLASSES[index]}
+          />
+        ))}
       </svg>
     </div>
   );
