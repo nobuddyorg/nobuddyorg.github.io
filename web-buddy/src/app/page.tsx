@@ -33,7 +33,7 @@ export default function HomePage() {
       <JsonLd id="jsonld-home" data={jsonLd} />
       <Header />
       <main className="text-black dark:text-white overflow-x-hidden snap-y snap-proximity motion-reduce:snap-none">
-        <section className="min-h-screen snap-start">
+        <section className="min-h-screen snap-center">
           <CirclesBackground variant="home" />
           <TerminalIntro />
         </section>
