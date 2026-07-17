@@ -3,6 +3,14 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --manifesto-gradient: linear-gradient(
+    180deg,
+    #fee2e2 0%,
+    #fef9c3 25%,
+    #e0f2fe 50%,
+    #ffe4e6 75%,
+    #ecfccb 100%
+  );
 }
 
 @theme inline {
@@ -17,6 +25,14 @@
   :root {
     --background: #0a0a0a;
     --foreground: #ededed;
+    --manifesto-gradient: linear-gradient(
+      180deg,
+      #7f1d1d 0%,
+      #713f12 25%,
+      #0c4a6e 50%,
+      #4c0519 75%,
+      #365314 100%
+    );
   }
 }
 
@@ -64,5 +80,96 @@ html {
     animation: none;
     opacity: 1;
     transform: none;
+  }
+}
+
+/* Homepage manifesto scroll effects: one continuous gradient painted
+   behind all manifesto sections (replacing hard per-section color cuts),
+   plus a progressive reveal driven by useInView (JS/IntersectionObserver
+   + CSS transition) rather than animation-timeline — the latter is newer
+   CSS that can silently no-op in some browsers, which a purely decorative
+   reveal effect shouldn't risk. */
+.manifesto-gradient {
+  background-image: var(--manifesto-gradient);
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+}
+
+.manifesto-section h2,
+.manifesto-section p {
+  opacity: 0;
+  translate: 0 26px;
+  scale: 0.94;
+  transition:
+    opacity 0.55s cubic-bezier(0.16, 1, 0.3, 1),
+    translate 0.55s cubic-bezier(0.16, 1, 0.3, 1),
+    scale 0.55s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.manifesto-section.in-view h2 {
+  opacity: 1;
+  translate: 0 0;
+  scale: 1;
+  transition-delay: 0.06s;
+}
+.manifesto-section.in-view p {
+  opacity: 1;
+  translate: 0 0;
+  scale: 1;
+  transition-delay: 0.16s;
+}
+
+.manifesto-emoji {
+  opacity: 0;
+  transition: opacity 0.5s ease-out;
+}
+.manifesto-section.in-view .manifesto-emoji {
+  opacity: 1;
+}
+
+.manifesto-cta-text {
+  opacity: 0;
+  translate: 0 26px;
+  scale: 0.94;
+  transition:
+    opacity 0.55s cubic-bezier(0.16, 1, 0.3, 1),
+    translate 0.55s cubic-bezier(0.16, 1, 0.3, 1),
+    scale 0.55s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.manifesto-section.in-view .manifesto-cta-text {
+  opacity: 1;
+  translate: 0 0;
+  scale: 1;
+}
+
+/* Parallax drift on the manifesto emoji only — decorative, continuous
+   motion at a different rate than the (steady, readable) text. Only
+   touches `translate`, so it can't fight the opacity transition above.
+   Purely an enhancement: degrades to a static emoji if unsupported. */
+@supports (animation-timeline: view()) {
+  @keyframes manifesto-emoji-drift {
+    from {
+      translate: 0 56px;
+    }
+    to {
+      translate: 0 -56px;
+    }
+  }
+  .manifesto-emoji {
+    animation: manifesto-emoji-drift linear both;
+    animation-timeline: view();
+    animation-range: cover 0% cover 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .manifesto-emoji,
+  .manifesto-cta-text,
+  .manifesto-section h2,
+  .manifesto-section p {
+    transition: none !important;
+    animation: none !important;
+    opacity: 1 !important;
+    translate: 0 !important;
+    scale: 1 !important;
   }
 }
