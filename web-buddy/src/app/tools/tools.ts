@@ -173,4 +173,16 @@ export const tools: Tool[] = [
     github: `${GITHUB_URL}/PeekBuddy`,
     status: "coming_soon",
   },
+  {
+    slug: "bikebuddy",
+    name: "Bike Buddy",
+    tagline: "Your ride, your routes, your memories",
+    description:
+      "Upload GPX tours from any ride, cycling or motorcycling, visualize them as heatmaps, and attach photos. Powered by Azure Functions and Cosmos DB.",
+    logo: "/logos/bike.webp",
+    previewImage: "",
+    tags: ["Cycling", "GPX", "Heatmaps", "Azure", "Serverless"],
+    github: `${GITHUB_URL}/BikeBuddy`,
+    status: "coming_soon",
+  },
 ];
