@@ -1,0 +1,41 @@
+import { test, expect } from "@playwright/test";
+
+test.describe("homepage manifesto scroll effects", () => {
+  test("manifesto sections sit on one continuous gradient, not hard-cut colors", async ({
+    page,
+  }) => {
+    await page.goto("/");
+
+    const gradientWrap = page.locator(".manifesto-gradient");
+    await expect(gradientWrap).toBeAttached();
+    const backgroundImage = await gradientWrap.evaluate(
+      (el) => getComputedStyle(el).backgroundImage
+    );
+    expect(backgroundImage).toContain("gradient");
+  });
+
+  test("a manifesto section reveals its heading as it scrolls into view", async ({
+    page,
+  }) => {
+    await page.goto("/");
+
+    const heading = page.getByRole("heading", {
+      name: "This is a hobby project",
+    });
+    await heading.scrollIntoViewIfNeeded();
+    // Allow the CSS transition to complete.
+    await expect(heading).toHaveCSS("opacity", "1", { timeout: 2000 });
+  });
+
+  test("reveal is disabled (always visible, no transition) under prefers-reduced-motion", async ({
+    page,
+  }) => {
+    await page.emulateMedia({ reducedMotion: "reduce" });
+    await page.goto("/");
+
+    const heading = page.getByRole("heading", {
+      name: "Software can be useful and weird",
+    });
+    await expect(heading).toHaveCSS("opacity", "1");
+  });
+});

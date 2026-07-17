@@ -8,7 +8,7 @@ import { test, expect } from "@playwright/test";
 // keyboard navigation are unaffected — see homepage.spec.ts's existing
 // "reachable via keyboard scrolling" coverage for that.
 test.describe("homepage scroll snap", () => {
-  test("main uses proximity (not mandatory) snap, with matching snap-start targets", async ({
+  test("main uses proximity (not mandatory) snap, with matching snap-center targets", async ({
     page,
   }) => {
     await page.goto("/");
@@ -30,7 +30,7 @@ test.describe("homepage scroll snap", () => {
     for (let i = 0; i < count; i++) {
       await expect(snapTargets.nth(i)).toHaveCSS(
         "scroll-snap-align",
-        "start"
+        "center"
       );
     }
   });
