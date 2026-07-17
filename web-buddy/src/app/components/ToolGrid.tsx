@@ -107,12 +107,6 @@ export default function ToolGrid() {
                     </span>
                   ))}
                 </div>
-
-                {!isReady && (
-                  <p className="text-xs font-semibold text-gray-500 dark:text-gray-400 mt-4 underline group-hover:text-black dark:group-hover:text-white">
-                    In progress — view on GitHub
-                  </p>
-                )}
               </>
             );
 
@@ -133,6 +127,7 @@ export default function ToolGrid() {
                   target="_blank"
                   rel="noopener noreferrer"
                   className={cardClasses}
+                  aria-label={`${tool.name} — in progress, view repository on GitHub`}
                 >
                   {cardInner}
                 </a>
