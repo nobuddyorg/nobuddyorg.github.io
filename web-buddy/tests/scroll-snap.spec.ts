@@ -10,7 +10,7 @@ import { test, expect } from "@playwright/test";
 // correctly declared plus the keyboard-driven settle, which *is*
 // deterministic and directly observable.
 test.describe("homepage manifesto scroll snap", () => {
-  test("the manifesto has its own snap container, separate from the intro", async ({
+  test("the intro is the snap container's first page, ideas/CTA follow", async ({
     page,
   }) => {
     await page.goto("/");
@@ -18,6 +18,13 @@ test.describe("homepage manifesto scroll snap", () => {
     const slider = page.locator(".manifesto-slider");
     await expect(slider).toHaveCSS("overflow-y", "auto");
     await expect(slider).toHaveCSS("scroll-snap-type", "y mandatory");
+
+    // Paging starts from the very first scroll: the intro is a snap page
+    // in the same container, not separate document-flow content the user
+    // has to scroll past on their own before paging kicks in.
+    await expect(
+      slider.getByRole("heading", { name: "Creative Tools for Nerds" })
+    ).toBeAttached();
 
     const sections = page.locator(".manifesto-slider .manifesto-section");
     const count = await sections.count();
@@ -28,14 +35,6 @@ test.describe("homepage manifesto scroll snap", () => {
         "center"
       );
     }
-
-    // The intro/terminal heading must NOT be inside the snap container —
-    // reading it must never be interrupted by the manifesto's snap.
-    await expect(
-      page
-        .locator(".manifesto-slider")
-        .getByRole("heading", { name: "Creative Tools for Nerds" })
-    ).toHaveCount(0);
   });
 
   test("is keyboard-reachable and keyboard-scrollable (#413)", async ({

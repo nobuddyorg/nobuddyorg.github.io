@@ -1,6 +1,8 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import CirclesBackground from "./CirclesBackground";
+import TerminalIntro from "./TerminalIntro";
 
 const ideas = [
   {
@@ -161,6 +163,10 @@ export default function ManifestoScroll() {
         tabIndex={0}
         aria-label="Manifesto: what nobuddy.org is about"
       >
+        <section className="min-h-screen snap-center">
+          <CirclesBackground variant="home" />
+          <TerminalIntro />
+        </section>
         <div className="manifesto-gradient">
           {ideas.map((idea, i) => (
             <ManifestoSection
