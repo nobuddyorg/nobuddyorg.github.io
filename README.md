@@ -2,7 +2,14 @@
 
 [![Deploy Pages](https://github.com/nobuddyorg/nobuddyorg.github.io/actions/workflows/pages-deploy.yml/badge.svg)](https://github.com/nobuddyorg/nobuddyorg.github.io/actions/workflows/pages-deploy.yml)
 [![CI](https://github.com/nobuddyorg/nobuddyorg.github.io/actions/workflows/ci.yml/badge.svg)](https://github.com/nobuddyorg/nobuddyorg.github.io/actions/workflows/ci.yml)
-[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+[![CodeQL](https://img.shields.io/badge/security-CodeQL-blue?logo=github)](https://github.com/nobuddyorg/nobuddyorg.github.io/security/code-scanning)
+![Node.js](https://img.shields.io/badge/node-%3E%3D22-brightgreen?logo=node.js)
+![ESLint](https://img.shields.io/badge/ESLint-9-4B32C3?logo=eslint)
+![Playwright](https://img.shields.io/badge/tested%20with-Playwright-2EAD33?logo=playwright&logoColor=white)
+![prek](https://img.shields.io/badge/prek-enabled-brightgreen)
+![GitHub Pages](https://img.shields.io/badge/hosting-GitHub%20Pages-blue?logo=github)
+[![Last commit](https://img.shields.io/github/last-commit/nobuddyorg/nobuddyorg.github.io)](https://github.com/nobuddyorg/nobuddyorg.github.io/commits/main)
+[![License: MIT](https://img.shields.io/github/license/nobuddyorg/nobuddyorg.github.io)](LICENSE)
 
 ![nobuddy logo](web-buddy/public/nobuddy_logo.webp)
 
@@ -18,20 +25,10 @@ exported and deployed to GitHub Pages.
 
 ## The Buddies
 
-| Tool | What it does | Stack |
-| --- | --- | --- |
-| [Procrastination Buddy](https://github.com/nobuddyorg/ProcrastinationBuddy) | Delightfully useless tasks to help you avoid productivity | Streamlit, Ollama AI, Docker |
-| [Thrash Buddy](https://github.com/nobuddyorg/ThrashBuddy) | Load-test APIs at scale | k6, Grafana, Prometheus, AWS EKS |
-| [Game Gallery Buddy](https://github.com/nobuddyorg/GameGalleryBuddy) | Generates a wallpaper from a BoardGameGeek collection | Groovy, Spring Boot |
-| [Collection Buddy](https://github.com/nobuddyorg/CollectionBuddy) | Catalog and track stamps, coins, or any collectibles | Next.js, Supabase, Tailwind |
-| [Ride Merge Buddy](https://github.com/nobuddyorg/RideMergeBuddy) | Merges GPX tracks from multiple cycling sessions | Angular |
-| Fair Buddy *(coming soon)* | Split costs fairly within a group | Java, DynamoDB |
-| Power Trail Buddy *(coming soon)* | Find and visualize geocaching power trails | Next.js |
-| Karma Buddy *(coming soon)* | Track karma points, compete with friends | Java, Hugging Face |
-| Peek Buddy *(coming soon)* | Watches folders and logs filesystem changes | Electron |
-| Bike Buddy *(coming soon)* | GPX heatmaps and ride memories | Azure Functions, Cosmos DB |
-
-Full descriptions and live links: [nobuddy.org/tools](https://nobuddy.org/tools).
+Every tool has its own repo under the [nobuddyorg](https://github.com/nobuddyorg)
+org and its own README — this one doesn't keep a duplicate list, since that
+list would only ever drift out of sync. The current, accurate catalog lives
+on the site itself: [nobuddy.org/tools](https://nobuddy.org/tools).
 
 ![Tools & Libraries Overview](logo_tools_libs_small.png)
 
