@@ -1,9 +1,6 @@
-import ToolPageShell from "../../components/ToolPageShell";
-import ToolAnimatedPreview from "../../components/ToolAnimatedPreview";
-import ToolScreenshots, {
-  ToolScreenshot,
-} from "../../components/ToolScreenshots";
-import ToolTechStack, { TechStackItem } from "../../components/ToolTechStack";
+import ToolClientPage from "../../components/ToolClientPage";
+import { ToolScreenshot } from "../../components/ToolScreenshots";
+import { TechStackItem } from "../../components/ToolTechStack";
 
 const imageDir = "/images/procrastination-buddy";
 
@@ -46,58 +43,34 @@ const techStack: TechStackItem[] = [
   { name: "uv", url: "https://github.com/astral-sh/uv" },
 ];
 
-function DescriptionSection({ githubUrl }: { githubUrl: string }) {
-  return (
-    <section className="text-sm leading-relaxed text-gray-700 dark:text-gray-300">
-      <p>
-        Meet <strong>Procrastination Buddy</strong>, the app that gently
-        encourages you to do absolutely nothing important. Instead of pushing
-        you to focus, it invites you to take a breath, relax, and enjoy the art
-        of doing less.
-      </p>
-      <p>
-        Feel like slowing down for no good reason? You are in the right place.
-      </p>
-      <br />
-      <p>
-        🔗{" "}
-        <a
-          href={githubUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="underline hover:text-black dark:hover:text-white"
-          title="procrastination github"
-        >
-          View the repository on GitHub and try it out on your machine
-        </a>
-      </p>
-    </section>
-  );
-}
-
-interface ProcrastinationBuddyClientProps {
-  title: string;
-  githubUrl: string;
-}
-
 export default function ProcrastinationBuddyClient({
   title,
   githubUrl,
-}: ProcrastinationBuddyClientProps) {
+}: {
+  title: string;
+  githubUrl: string;
+}) {
   return (
-    <ToolPageShell title={title}>
-      <ToolAnimatedPreview
-        src={`${imageDir}/buddy-preview.mp4`}
-        poster={`${imageDir}/buddy-preview-poster.jpg`}
-        label="Procrastination Buddy animated preview"
-      />
-      <DescriptionSection githubUrl={githubUrl} />
-      <ToolScreenshots
-        screenshots={screenshots}
-        imageDir={imageDir}
-        media="image"
-      />
-      <ToolTechStack items={techStack} />
-    </ToolPageShell>
+    <ToolClientPage
+      title={title}
+      githubUrl={githubUrl}
+      githubLabel="procrastination github"
+      githubText="View the repository on GitHub and try it out on your machine"
+      imageDir={imageDir}
+      preview={{
+        src: `${imageDir}/buddy-preview.mp4`,
+        poster: `${imageDir}/buddy-preview-poster.jpg`,
+        label: "Procrastination Buddy animated preview",
+      }}
+      screenshots={screenshots}
+      media="image"
+      techStack={techStack}
+      description={
+        <>
+          <p>Meet <strong>Procrastination Buddy</strong>, the app that gently encourages you to do absolutely nothing important. Instead of pushing you to focus, it invites you to take a breath, relax, and enjoy the art of doing less.</p>
+          <p>Feel like slowing down for no good reason? You are in the right place.</p>
+        </>
+      }
+    />
   );
 }

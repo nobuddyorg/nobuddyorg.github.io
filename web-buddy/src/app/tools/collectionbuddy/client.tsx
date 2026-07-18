@@ -1,9 +1,6 @@
-import ToolPageShell from "../../components/ToolPageShell";
-import ToolAnimatedPreview from "../../components/ToolAnimatedPreview";
-import ToolScreenshots, {
-  ToolScreenshot,
-} from "../../components/ToolScreenshots";
-import ToolTechStack, { TechStackItem } from "../../components/ToolTechStack";
+import ToolClientPage from "../../components/ToolClientPage";
+import { ToolScreenshot } from "../../components/ToolScreenshots";
+import { TechStackItem } from "../../components/ToolTechStack";
 
 const imageDir = "/images/collection-buddy";
 
@@ -50,55 +47,34 @@ const techStack: TechStackItem[] = [
   { name: "Open Street Map", url: "https://www.openstreetmap.org/" },
 ];
 
-function DescriptionSection({ githubUrl }: { githubUrl: string }) {
-  return (
-    <section className="text-sm leading-relaxed text-gray-700 dark:text-gray-300">
-      <p>
-        <strong>Collection Buddy</strong> is your elegant solution for cataloging personal collections. Whether you&apos;re organizing stamps, coins, trading cards, or any other collectibles, Collection Buddy provides a beautiful and intuitive interface to keep track of your treasures.
-      </p>
-      <p>
-        Built with modern web technologies like Next.js, React, and Supabase, it offers a seamless experience for adding, viewing, and managing your collection items. The responsive design works perfectly on desktop and mobile devices and can even be installed as a PWA app on your phone.
-      </p>
-      <br />
-      <p>
-        🔗{" "}
-        <a
-          href={githubUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="underline hover:text-black dark:hover:text-white"
-          title="collection github"
-        >
-          View the repository on GitHub and start organizing your collection
-        </a>
-      </p>
-    </section>
-  );
-}
-
-interface CollectionBuddyClientProps {
-  title: string;
-  githubUrl: string;
-}
-
 export default function CollectionBuddyClient({
   title,
   githubUrl,
-}: CollectionBuddyClientProps) {
+}: {
+  title: string;
+  githubUrl: string;
+}) {
   return (
-    <ToolPageShell title={title}>
-      <ToolAnimatedPreview
-        src={`${imageDir}/preview.mp4`}
-        poster={`${imageDir}/preview-poster.jpg`}
-        label="Collection Buddy animated preview"
-      />
-      <DescriptionSection githubUrl={githubUrl} />
-      <ToolScreenshots
-        screenshots={screenshots}
-        imageDir={imageDir}
-        media="video"
-      />
-      <ToolTechStack items={techStack} />
-    </ToolPageShell>
+    <ToolClientPage
+      title={title}
+      githubUrl={githubUrl}
+      githubLabel="collection github"
+      githubText="View the repository on GitHub and start organizing your collection"
+      imageDir={imageDir}
+      preview={{
+        src: `${imageDir}/preview.mp4`,
+        poster: `${imageDir}/preview-poster.jpg`,
+        label: "Collection Buddy animated preview",
+      }}
+      screenshots={screenshots}
+      media="video"
+      techStack={techStack}
+      description={
+        <>
+          <p><strong>Collection Buddy</strong> is your elegant solution for cataloging personal collections. Whether you&apos;re organizing stamps, coins, trading cards, or any other collectibles, Collection Buddy provides a beautiful and intuitive interface to keep track of your treasures.</p>
+          <p>Built with modern web technologies like Next.js, React, and Supabase, it offers a seamless experience for adding, viewing, and managing your collection items. The responsive design works perfectly on desktop and mobile devices and can even be installed as a PWA app on your phone.</p>
+        </>
+      }
+    />
   );
 }
