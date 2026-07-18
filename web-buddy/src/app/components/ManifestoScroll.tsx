@@ -27,25 +27,69 @@ const ideas = [
 
 const sectionCount = ideas.length + 1; // + call-to-action
 
-// Eases the section you *stopped* in to fill the viewport, but only after
-// scrolling settles — it never intercepts an active scroll (so, unlike the
-// old CSS scroll-snap, there's no scroll-jacking or keyboard trap, #413).
-// The intro/terminal section isn't registered here, so stopping to read it
-// is never yanked into the manifesto.
-function snapToStoppedSection(refs: (HTMLElement | null)[]) {
+// Distance (as a fraction of the viewport) a scroll must cover away from
+// the current page before it commits to the adjacent one. Small enough that
+// one ordinary scroll gesture flips a whole page — the "page scroll" feel —
+// without a tiny nudge accidentally triggering it.
+const PAGE_COMMIT = 0.2;
+
+// Snaps one page per gesture, but only after scrolling settles — it never
+// intercepts an active scroll (so, unlike the old CSS scroll-snap, there's
+// no scroll-jacking or keyboard trap, #413). Anchored on the page you last
+// landed on: a modest scroll in either direction commits to the neighbour,
+// a big fling lands on the nearest. The intro/terminal section isn't a page
+// here, so stopping to read it is never yanked into the manifesto.
+function pageSnap(refs: (HTMLElement | null)[], pageRef: { current: number }) {
   const vh = window.innerHeight;
-  const viewportCenter = window.scrollY + vh / 2;
-  for (const el of refs) {
-    if (!el) continue;
+  const y = window.scrollY;
+
+  // Scroll position at which each section is centered in the viewport.
+  const tops = refs.map((el) => {
+    if (!el) return null;
     const rect = el.getBoundingClientRect();
-    if (rect.height > vh + 4) continue; // taller than the viewport: can't center
-    const top = rect.top + window.scrollY;
-    if (viewportCenter < top || viewportCenter >= top + rect.height) continue;
-    const target = top + rect.height / 2 - vh / 2;
-    if (Math.abs(target - window.scrollY) > 3) {
-      window.scrollTo({ top: target, behavior: "smooth" });
-    }
+    if (rect.height > vh * 1.5) return null; // too tall to page cleanly
+    return rect.top + y + rect.height / 2 - vh / 2;
+  });
+
+  const firstTop = tops.find((t): t is number => t != null);
+  if (firstTop === undefined) return;
+
+  // Still up in the intro/terminal: leave scrolling completely free.
+  if (y < firstTop - vh * 0.5) {
+    pageRef.current = -1;
     return;
+  }
+
+  let nearest = -1;
+  let nearestDist = Infinity;
+  tops.forEach((t, i) => {
+    if (t == null) return;
+    const dist = Math.abs(t - y);
+    if (dist < nearestDist) {
+      nearestDist = dist;
+      nearest = i;
+    }
+  });
+
+  let target = nearest;
+  const cur = pageRef.current;
+  const curTop = cur >= 0 ? tops[cur] : null;
+  if (curTop != null && Math.abs(y - curTop) <= vh * 1.2) {
+    const delta = y - curTop;
+    if (delta > vh * PAGE_COMMIT && cur + 1 < tops.length && tops[cur + 1] != null) {
+      target = cur + 1;
+    } else if (delta < -vh * PAGE_COMMIT && cur - 1 >= 0 && tops[cur - 1] != null) {
+      target = cur - 1;
+    } else {
+      target = cur;
+    }
+  }
+  if (target < 0) return;
+
+  pageRef.current = target;
+  const ty = tops[target];
+  if (ty != null && Math.abs(ty - y) > 3) {
+    window.scrollTo({ top: ty, behavior: "smooth" });
   }
 }
 
@@ -96,10 +140,11 @@ function useManifesto() {
 
   useEffect(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const pageRef = { current: -1 };
     let timer: ReturnType<typeof setTimeout>;
     const onScroll = () => {
       clearTimeout(timer);
-      timer = setTimeout(() => snapToStoppedSection(refs.current), 120);
+      timer = setTimeout(() => pageSnap(refs.current, pageRef), 120);
     };
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => {
