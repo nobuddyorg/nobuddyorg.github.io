@@ -94,7 +94,7 @@ html {
 
    The gradient lives on a ::before rather than the element's own
    background so it can be masked to fade in from transparent over the
-   first ~60vh: that fade lets the fixed EmojiBackground canvas (sitting
+   first ~30vh: that fade lets the fixed EmojiBackground canvas (sitting
    behind the whole page) stay visible through the intro and into the first
    bit of scroll, instead of being hard-covered the instant the manifesto
    starts. Masking the pseudo-element leaves the section content itself
@@ -110,8 +110,8 @@ html {
   background-image: var(--manifesto-gradient);
   background-size: 100% 100%;
   background-repeat: no-repeat;
-  -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 60vh);
-  mask-image: linear-gradient(to bottom, transparent 0, #000 60vh);
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 30vh);
+  mask-image: linear-gradient(to bottom, transparent 0, #000 30vh);
 }
 
 .manifesto-section h2,

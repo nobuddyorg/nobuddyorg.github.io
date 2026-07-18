@@ -29,6 +29,26 @@ test.describe("homepage scroll snap (ease-to-section on settle)", () => {
     expect(Math.abs(settled - target)).toBeLessThan(6);
   });
 
+  test("a modest scroll past a page commits to the next section (page-scroll feel)", async ({
+    page,
+  }) => {
+    await page.goto("/");
+    const c1 = await centerOf(page, 1);
+    const c2 = await centerOf(page, 2);
+
+    // Land centered on section 1 first so it becomes the anchored page.
+    await page.evaluate((y) => window.scrollTo(0, y), c1);
+    await page.waitForTimeout(700);
+
+    // A ~30% viewport nudge downward should page all the way to section 2,
+    // not settle back on section 1.
+    await page.evaluate(() => window.scrollBy(0, window.innerHeight * 0.3));
+    await page.waitForTimeout(700);
+
+    const settled = await page.evaluate(() => window.scrollY);
+    expect(Math.abs(settled - c2)).toBeLessThan(6);
+  });
+
   test("does not yank you out of the intro/terminal section", async ({
     page,
   }) => {
