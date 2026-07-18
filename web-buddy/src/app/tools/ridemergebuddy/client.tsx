@@ -1,8 +1,6 @@
-import ToolPageShell from "../../components/ToolPageShell";
-import ToolScreenshots, {
-  ToolScreenshot,
-} from "../../components/ToolScreenshots";
-import ToolTechStack, { TechStackItem } from "../../components/ToolTechStack";
+import ToolClientPage from "../../components/ToolClientPage";
+import { ToolScreenshot } from "../../components/ToolScreenshots";
+import { TechStackItem } from "../../components/ToolTechStack";
 
 const imageDir = "/images/ridemerge-buddy";
 
@@ -33,47 +31,26 @@ const techStack: TechStackItem[] = [
   { name: "Gradle", url: "https://gradle.org/" },
 ];
 
-function DescriptionSection({ githubUrl }: { githubUrl: string }) {
-  return (
-    <section className="text-sm leading-relaxed text-gray-700 dark:text-gray-300">
-      <p>
-        <strong>RideMergeBuddy</strong> lets you view and merge your Strava activities seamlessly. Select multiple rides or runs, merge them into a new activity, and track everything in one place.
-      </p>
-      <br />
-      <p>
-        🔗{" "}
-        <a
-          href={githubUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="underline hover:text-black dark:hover:text-white"
-          title="RideMergeBuddy GitHub"
-        >
-          View the repository on GitHub
-        </a>
-      </p>
-    </section>
-  );
-}
-
-interface RideMergeBuddyClientProps {
-  title: string;
-  githubUrl: string;
-}
-
 export default function RideMergeBuddyClient({
   title,
   githubUrl,
-}: RideMergeBuddyClientProps) {
+}: {
+  title: string;
+  githubUrl: string;
+}) {
   return (
-    <ToolPageShell title={title}>
-      <DescriptionSection githubUrl={githubUrl} />
-      <ToolScreenshots
-        screenshots={screenshots}
-        imageDir={imageDir}
-        media="video"
-      />
-      <ToolTechStack items={techStack} />
-    </ToolPageShell>
+    <ToolClientPage
+      title={title}
+      githubUrl={githubUrl}
+      githubLabel="RideMergeBuddy GitHub"
+      githubText="View the repository on GitHub"
+      imageDir={imageDir}
+      screenshots={screenshots}
+      media="video"
+      techStack={techStack}
+      description={
+        <p><strong>RideMergeBuddy</strong> lets you view and merge your Strava activities seamlessly. Select multiple rides or runs, merge them into a new activity, and track everything in one place.</p>
+      }
+    />
   );
 }
