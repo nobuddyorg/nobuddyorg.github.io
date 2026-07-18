@@ -1,11 +1,9 @@
-import TerminalIntro from "./components/TerminalIntro";
 import ManifestoScroll from "./components/ManifestoScroll";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import JsonLd, { type JsonLdData } from "./components/JsonLd";
 import { SITE_URL, SITE_NAME, SITE_DESCRIPTION } from "./constants";
 import { createMetadata } from "./metadata";
-import CirclesBackground from "./components/CirclesBackground";
 
 const title = SITE_NAME;
 const slug = "/";
@@ -33,10 +31,6 @@ export default function HomePage() {
       <JsonLd id="jsonld-home" data={jsonLd} />
       <Header />
       <main className="text-black dark:text-white overflow-x-hidden">
-        <section className="min-h-screen">
-          <CirclesBackground variant="home" />
-          <TerminalIntro />
-        </section>
         <ManifestoScroll />
       </main>
       <Footer />

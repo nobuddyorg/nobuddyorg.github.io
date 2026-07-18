@@ -68,8 +68,10 @@ html {
    JS to "take over" scrolling: the browser's own scroll-chaining already
    sends wheel/touch input to whichever scrollable element is under the
    pointer first, only falling through to the outer page once this
-   container's own scroll is exhausted. The intro/terminal section lives
-   outside this element entirely, so reading it is never interrupted.
+   container's own scroll is exhausted. The intro/terminal section is this
+   container's first page (native mandatory snap only responds to an
+   actual scroll gesture — it never auto-advances while stationary — so
+   reading it still can't be interrupted mid-read).
 
    A nested scroll container isn't independently reachable by keyboard
    scrolling unless it's focusable — see the tabIndex + aria-label on
