@@ -17,8 +17,7 @@ const emojis = [
 
 const cellSize = 64;
 const font = "32px serif";
-const targetFps = 24;
-const frameInterval = 1000 / targetFps;
+const frameInterval = 1000 / 24; // targetFps
 
 const hash2 = (x: number, y: number) => {
   let h = 2166136261;
@@ -26,7 +25,6 @@ const hash2 = (x: number, y: number) => {
   h = Math.imul(h ^ y, 16777619);
   return h >>> 0;
 };
-
 const rand01 = (h: number) => (h >>> 0) / 4294967296;
 
 // Rasterizing a color emoji glyph with fillText() is expensive; doing it
@@ -59,47 +57,35 @@ export default function EmojiGridCanvas() {
     const canvas = canvasRef.current!;
     const ctx = canvas.getContext("2d")!;
     const sprites = buildSpriteCache();
-
-    const getKey = (x: number, y: number) => `${x},${y}`;
+    const particles = particlesRef.current;
 
     const ensureGrid = (width: number, height: number) => {
       const cols = Math.ceil(width / cellSize);
       const rows = Math.ceil(height / cellSize);
-      const particles = particlesRef.current;
-
       for (let gy = 0; gy < rows; gy++) {
         for (let gx = 0; gx < cols; gx++) {
-          const key = getKey(gx, gy);
+          const key = `${gx},${gy}`;
           if (particles.has(key)) continue;
-
-          const h0 = hash2(gx, gy);
-          const h1 = hash2(gx + 1013, gy + 7);
-          const h2 = hash2(gx + 17, gy + 2003);
-          const h3 = hash2(gx + 4099, gy + 97);
-
           particles.set(key, {
             baseX: gx * cellSize,
             baseY: gy * cellSize,
-            emoji: emojis[h0 % emojis.length],
-            phase: rand01(h1) * Math.PI * 2,
-            floatRange: 6 + rand01(h2) * 3,
-            speed: 0.0005 + rand01(h3) * 0.0005,
+            emoji: emojis[hash2(gx, gy) % emojis.length],
+            phase: rand01(hash2(gx + 1013, gy + 7)) * Math.PI * 2,
+            floatRange: 6 + rand01(hash2(gx + 17, gy + 2003)) * 3,
+            speed: 0.0005 + rand01(hash2(gx + 4099, gy + 97)) * 0.0005,
           });
         }
       }
     };
 
     const resizeCanvasIfNeeded = () => {
-      const width = window.innerWidth;
-      const height = window.innerHeight;
-
+      const { innerWidth: width, innerHeight: height } = window;
       const dims = dimensionsRef.current;
-      if (width !== dims.width || height !== dims.height) {
-        canvas.width = width;
-        canvas.height = height;
-        dimensionsRef.current = { width, height };
-        ensureGrid(width, height);
-      }
+      if (width === dims.width && height === dims.height) return;
+      canvas.width = width;
+      canvas.height = height;
+      dimensionsRef.current = { width, height };
+      ensureGrid(width, height);
     };
 
     const prefersReducedMotion = window.matchMedia(
@@ -108,19 +94,19 @@ export default function EmojiGridCanvas() {
 
     const render = (animate: boolean) => {
       resizeCanvasIfNeeded();
-
       const t = animate ? Date.now() : 0;
-      const { width, height } = canvas;
-
-      ctx.clearRect(0, 0, width, height);
-
-      for (const p of particlesRef.current.values()) {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      for (const p of particles.values()) {
         const offset = animate
           ? Math.sin(t * p.speed + p.phase) * p.floatRange
           : 0;
         const x = p.baseX + cellSize / 2 + offset;
         const y = p.baseY + cellSize / 2 - offset;
-        ctx.drawImage(sprites.get(p.emoji)!, x - cellSize / 2, y - cellSize / 2);
+        ctx.drawImage(
+          sprites.get(p.emoji)!,
+          x - cellSize / 2,
+          y - cellSize / 2
+        );
       }
     };
 
@@ -133,10 +119,10 @@ export default function EmojiGridCanvas() {
       rafRef.current = requestAnimationFrame(draw);
     };
 
-    const handleResize = prefersReducedMotion
-      ? () => render(false)
-      : resizeCanvasIfNeeded;
-
+    // Always redraws immediately on resize (rather than only recomputing
+    // the grid and waiting for the next animation frame), since resize is
+    // rare enough that one extra draw call is free.
+    const handleResize = () => render(!prefersReducedMotion);
     if (prefersReducedMotion) {
       render(false);
     } else {

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useLayoutEffect, useState, useCallback } from "react";
+import { useEffect, useLayoutEffect, useState } from "react";
 import type { CSSProperties } from "react";
 import { SITE_NAME, GITHUB_URL, SITE_DESCRIPTION } from "../constants";
 import Link from "next/link";
@@ -26,10 +26,7 @@ const loadingSteps = [
   "[██████████]",
 ];
 
-type ScriptLine = {
-  text: string;
-  role: "cmd" | "echo" | "output";
-};
+type ScriptLine = { text: string; role: "cmd" | "echo" | "output" };
 
 const moreLoadingMessages = [
   "Untangling cables...",
@@ -57,24 +54,41 @@ const moreLoadingMessages = [
 const shuffled = [...moreLoadingMessages].sort(() => 0.5 - Math.random());
 const [loadingMessage, msg1, msg2] = shuffled.slice(0, 3);
 
-const scriptLines: ScriptLine[] = [
-  { role: "cmd", text: "initialize --buddyverse" },
-  { role: "echo", text: msg1 },
-  { role: "echo", text: `${loadingMessage} ${loadingSteps[0]}` },
-  { role: "cmd", text: "sync nobuddy.org" },
-  { role: "echo", text: msg2 },
-  { role: "output", text: "↳ You’ve reached The Buddy Compendium." },
-];
+type Frame = { lines: ScriptLine[]; delay: number };
 
-function buildCompletedLines(): ScriptLine[] {
-  return scriptLines.map((line) =>
-    line.text.startsWith(loadingMessage)
-      ? { ...line, text: `${loadingMessage} ${loadingSteps[loadingSteps.length - 1]}` }
-      : line
-  );
+// Each frame is a full snapshot of the terminal's lines plus how long to
+// wait before showing it — flattening the whole "type a line, tick the
+// loading bar, pause, type the next line" choreography into one linear
+// list turns the old phase/lineIndex/loadingIndex state machine (four
+// separate effects) into a single "advance to the next frame" effect.
+function buildFrames(): Frame[] {
+  const frames: Frame[] = [{ lines: [], delay: 0 }];
+  const last = () => frames[frames.length - 1].lines;
+  const push = (line: ScriptLine, delay: number) =>
+    frames.push({ lines: [...last(), line], delay });
+  const pause = (delay: number) => frames.push({ lines: last(), delay });
+
+  push({ role: "cmd", text: "initialize --buddyverse" }, 700);
+  push({ role: "echo", text: msg1 }, 500);
+  push({ role: "echo", text: `${loadingMessage} ${loadingSteps[0]}` }, 0);
+  for (let i = 1; i < loadingSteps.length; i++) {
+    frames.push({
+      lines: [
+        ...last().slice(0, -1),
+        { role: "echo", text: `${loadingMessage} ${loadingSteps[i]}` },
+      ],
+      delay: 80,
+    });
+  }
+  pause(700);
+  push({ role: "cmd", text: "sync nobuddy.org" }, 700);
+  push({ role: "echo", text: msg2 }, 500);
+  push({ role: "output", text: "↳ You’ve reached The Buddy Compendium." }, 500);
+  return frames;
 }
 
-type Phase = "lines" | "loading" | "wait";
+const frames = buildFrames();
+const lastFrame = frames.length - 1;
 
 function Hero() {
   return (
@@ -105,104 +119,47 @@ function Hero() {
 }
 
 export default function TerminalIntro() {
-  const [lines, setLines] = useState<ScriptLine[]>([]);
-  const [phase, setPhase] = useState<Phase>("lines");
-  const [lineIndex, setLineIndex] = useState(0);
-  const [loadingIndex, setLoadingIndex] = useState(0);
-  const [skipAnimation, setSkipAnimation] = useState(false);
-
-  const appendLine = useCallback((line: ScriptLine) => {
-    setLines((prev) => [...prev, line]);
-  }, []);
-
-  const finishNow = useCallback(() => {
-    setSkipAnimation(true);
-    setLines(buildCompletedLines());
-    setLineIndex(scriptLines.length);
-    setLoadingIndex(loadingSteps.length - 1);
-    setPhase("wait");
-  }, []);
+  const [frameIndex, setFrameIndex] = useState(0);
 
   // Render the completed terminal instantly on repeat visits within the
-  // same session instead of replaying the ~5s typing animation every time.
+  // same session instead of replaying the ~4s typing animation every time.
   // useLayoutEffect (not useEffect) so this resolves before the browser
   // paints the empty, server-rendered terminal.
+  // Must run post-mount (sessionStorage doesn't exist during SSR); a lazy
+  // useState initializer would run on the server too and mismatch on
+  // hydration.
   useLayoutEffect(() => {
-    if (sessionStorage.getItem(SESSION_KEY)) {
-      finishNow();
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    if (sessionStorage.getItem(SESSION_KEY)) setFrameIndex(lastFrame);
   }, []);
+
+  useEffect(() => {
+    if (frameIndex >= lastFrame) return;
+    const t = setTimeout(
+      () => setFrameIndex((i) => i + 1),
+      frames[frameIndex + 1].delay
+    );
+    return () => clearTimeout(t);
+  }, [frameIndex]);
 
   // A click or keypress anywhere fast-forwards straight to the finished
   // state instead of forcing visitors to sit through the whole animation.
   useEffect(() => {
-    if (skipAnimation) return;
-    const handleSkip = () => finishNow();
-    window.addEventListener("click", handleSkip);
-    window.addEventListener("keydown", handleSkip);
+    const skip = () => setFrameIndex(lastFrame);
+    window.addEventListener("click", skip);
+    window.addEventListener("keydown", skip);
     return () => {
-      window.removeEventListener("click", handleSkip);
-      window.removeEventListener("keydown", handleSkip);
+      window.removeEventListener("click", skip);
+      window.removeEventListener("keydown", skip);
     };
-  }, [skipAnimation, finishNow]);
+  }, []);
 
   useEffect(() => {
-    if (phase === "wait") {
-      sessionStorage.setItem(SESSION_KEY, "1");
-    }
-  }, [phase]);
+    if (frameIndex === lastFrame) sessionStorage.setItem(SESSION_KEY, "1");
+  }, [frameIndex]);
 
-  useEffect(() => {
-    if (skipAnimation) return;
-
-    if (phase === "lines" && lineIndex < scriptLines.length) {
-      const current = scriptLines[lineIndex];
-
-      if (current.text.startsWith(loadingMessage)) {
-        const t = setTimeout(() => {
-          appendLine(current);
-          setPhase("loading");
-        }, 0);
-        return () => clearTimeout(t);
-      }
-
-      const delay = current.role === "cmd" ? 700 : 500;
-      const t = setTimeout(() => {
-        appendLine(current);
-        setLineIndex((i) => i + 1);
-      }, delay);
-      return () => clearTimeout(t);
-    }
-
-    if (phase === "loading" && loadingIndex < loadingSteps.length - 1) {
-      const t = setTimeout(() => {
-        setLines((prev) => {
-          const copy = [...prev];
-          copy[copy.length - 1] = {
-            ...copy[copy.length - 1],
-            text: `${loadingMessage} ${loadingSteps[loadingIndex + 1]}`,
-          };
-          return copy;
-        });
-        setLoadingIndex((i) => i + 1);
-      }, 80);
-      return () => clearTimeout(t);
-    }
-
-    if (phase === "loading" && loadingIndex === loadingSteps.length - 1) {
-      const t = setTimeout(() => {
-        setLineIndex((i) => i + 1);
-        setPhase("lines");
-      }, 700);
-      return () => clearTimeout(t);
-    }
-
-    if (phase === "lines" && lineIndex === scriptLines.length) {
-      const t = setTimeout(() => setPhase("wait"), 0);
-      return () => clearTimeout(t);
-    }
-  }, [phase, lineIndex, loadingIndex, appendLine, skipAnimation]);
+  const { lines } = frames[frameIndex];
+  const isWaiting = frameIndex === lastFrame;
 
   return (
     <div className="flex flex-col items-center px-4 pt-20 md:pt-32">
@@ -227,7 +184,7 @@ export default function TerminalIntro() {
               {line.text}
             </div>
           ))}
-          {phase === "wait" && (
+          {isWaiting && (
             <div className="fade-in-up mt-8" style={fadeInStyle}>
               <span className="text-yellow-400 animate-pulse motion-reduce:animate-none">
                 Scroll down to continue...

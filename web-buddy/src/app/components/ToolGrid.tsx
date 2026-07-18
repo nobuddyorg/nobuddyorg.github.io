@@ -110,27 +110,23 @@ export default function ToolGrid() {
               </>
             );
 
-            if (isReady) {
-              return (
-                <div key={tool.slug} className="fade-in-up" style={staggerStyle(index)}>
+            return (
+              <div key={tool.slug} className="fade-in-up" style={staggerStyle(index)}>
+                {isReady ? (
                   <Link href={`/tools/${tool.slug}`} className={cardClasses}>
                     {cardInner}
                   </Link>
-                </div>
-              );
-            }
-
-            return (
-              <div key={tool.slug} className="fade-in-up" style={staggerStyle(index)}>
-                <a
-                  href={tool.github}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={cardClasses}
-                  aria-label={`${tool.name} — in progress, view repository on GitHub`}
-                >
-                  {cardInner}
-                </a>
+                ) : (
+                  <a
+                    href={tool.github}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={cardClasses}
+                    aria-label={`${tool.name} — in progress, view repository on GitHub`}
+                  >
+                    {cardInner}
+                  </a>
+                )}
               </div>
             );
           })}
