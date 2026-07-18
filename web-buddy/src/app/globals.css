@@ -60,6 +60,36 @@ html {
   scrollbar-gutter: stable;
 }
 
+/* The manifesto's own scroll container, not the document. scroll-snap only
+   settles reliably when it's set on the actual overflow:auto/scroll box —
+   snapping the whole document (even correctly targeting the real
+   document.scrollingElement) proved flaky across browsers/trackpads in
+   practice. A plain nested overflow-y box needs no sticky positioning or
+   JS to "take over" scrolling: the browser's own scroll-chaining already
+   sends wheel/touch input to whichever scrollable element is under the
+   pointer first, only falling through to the outer page once this
+   container's own scroll is exhausted. The intro/terminal section lives
+   outside this element entirely, so reading it is never interrupted.
+
+   A nested scroll container isn't independently reachable by keyboard
+   scrolling unless it's focusable — see the tabIndex + aria-label on
+   ManifestoScroll's wrapper div, matching #413's own suggested fix for
+   this exact pattern. */
+.manifesto-slider {
+  height: 100dvh;
+  overflow-y: auto;
+  scroll-snap-type: y mandatory;
+  scrollbar-width: none;
+}
+.manifesto-slider::-webkit-scrollbar {
+  display: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .manifesto-slider {
+    scroll-snap-type: none;
+  }
+}
+
 @keyframes fade-in-up {
   from {
     opacity: 0;

@@ -42,6 +42,10 @@ test.describe("homepage hero and manifesto content", () => {
     const cta = page.getByRole("link", { name: "Launch /tools →" });
     await expect(cta).not.toBeInViewport();
 
+    // The manifesto is its own scroll container (see scroll-snap.spec.ts),
+    // so keyboard scrolling reaches it the same way any keyboard user
+    // would: Tab until it's focused, then scroll it directly.
+    await page.locator(".manifesto-slider").focus();
     await page.keyboard.press("End");
     await expect(cta).toBeInViewport({ timeout: 3000 });
   });

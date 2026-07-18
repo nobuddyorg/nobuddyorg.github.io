@@ -27,72 +27,6 @@ const ideas = [
 
 const sectionCount = ideas.length + 1; // + call-to-action
 
-// Distance (as a fraction of the viewport) a scroll must cover away from
-// the current page before it commits to the adjacent one. Small enough that
-// one ordinary scroll gesture flips a whole page — the "page scroll" feel —
-// without a tiny nudge accidentally triggering it.
-const PAGE_COMMIT = 0.2;
-
-// Snaps one page per gesture, but only after scrolling settles — it never
-// intercepts an active scroll (so, unlike the old CSS scroll-snap, there's
-// no scroll-jacking or keyboard trap, #413). Anchored on the page you last
-// landed on: a modest scroll in either direction commits to the neighbour,
-// a big fling lands on the nearest. The intro/terminal section isn't a page
-// here, so stopping to read it is never yanked into the manifesto.
-function pageSnap(refs: (HTMLElement | null)[], pageRef: { current: number }) {
-  const vh = window.innerHeight;
-  const y = window.scrollY;
-
-  // Scroll position at which each section is centered in the viewport.
-  const tops = refs.map((el) => {
-    if (!el) return null;
-    const rect = el.getBoundingClientRect();
-    if (rect.height > vh * 1.5) return null; // too tall to page cleanly
-    return rect.top + y + rect.height / 2 - vh / 2;
-  });
-
-  const firstTop = tops.find((t): t is number => t != null);
-  if (firstTop === undefined) return;
-
-  // Still up in the intro/terminal: leave scrolling completely free.
-  if (y < firstTop - vh * 0.5) {
-    pageRef.current = -1;
-    return;
-  }
-
-  let nearest = -1;
-  let nearestDist = Infinity;
-  tops.forEach((t, i) => {
-    if (t == null) return;
-    const dist = Math.abs(t - y);
-    if (dist < nearestDist) {
-      nearestDist = dist;
-      nearest = i;
-    }
-  });
-
-  let target = nearest;
-  const cur = pageRef.current;
-  const curTop = cur >= 0 ? tops[cur] : null;
-  if (curTop != null && Math.abs(y - curTop) <= vh * 1.2) {
-    const delta = y - curTop;
-    if (delta > vh * PAGE_COMMIT && cur + 1 < tops.length && tops[cur + 1] != null) {
-      target = cur + 1;
-    } else if (delta < -vh * PAGE_COMMIT && cur - 1 >= 0 && tops[cur - 1] != null) {
-      target = cur - 1;
-    } else {
-      target = cur;
-    }
-  }
-  if (target < 0) return;
-
-  pageRef.current = target;
-  const ty = tops[target];
-  if (ty != null && Math.abs(ty - y) > 3) {
-    window.scrollTo({ top: ty, behavior: "smooth" });
-  }
-}
-
 // One shared observer drives both the reveal animation and the dot rail —
 // `active` tracks whichever section is currently centered (for the dots),
 // while `revealed` latches true the first time a section appears and never
@@ -136,21 +70,6 @@ function useManifesto() {
     );
     refs.current.forEach((el) => el && observer.observe(el));
     return () => observer.disconnect();
-  }, []);
-
-  useEffect(() => {
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    const pageRef = { current: -1 };
-    let timer: ReturnType<typeof setTimeout>;
-    const onScroll = () => {
-      clearTimeout(timer);
-      timer = setTimeout(() => pageSnap(refs.current, pageRef), 120);
-    };
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => {
-      window.removeEventListener("scroll", onScroll);
-      clearTimeout(timer);
-    };
   }, []);
 
   const register = (index: number) => (el: HTMLElement | null) => {
@@ -231,20 +150,33 @@ export default function ManifestoScroll() {
   const { register, active, revealed } = useManifesto();
 
   return (
-    <div className="manifesto-gradient">
-      {ideas.map((idea, i) => (
-        <ManifestoSection
-          key={idea.title}
-          register={register(i)}
-          revealed={revealed[i]}
-          {...idea}
-        />
-      ))}
-      <CallToActionSection
-        register={register(ideas.length)}
-        revealed={revealed[ideas.length]}
-      />
+    <>
+      {/* Its own overflow-y scroll container (not the document) is what
+          makes native scroll-snap actually reliable — see globals.css for
+          why. tabIndex + aria-label keep it keyboard-reachable, since a
+          nested scroll container isn't otherwise focusable and none of the
+          idea sections contain a focusable element of their own (#413). */}
+      <div
+        className="manifesto-slider"
+        tabIndex={0}
+        aria-label="Manifesto: what nobuddy.org is about"
+      >
+        <div className="manifesto-gradient">
+          {ideas.map((idea, i) => (
+            <ManifestoSection
+              key={idea.title}
+              register={register(i)}
+              revealed={revealed[i]}
+              {...idea}
+            />
+          ))}
+          <CallToActionSection
+            register={register(ideas.length)}
+            revealed={revealed[ideas.length]}
+          />
+        </div>
+      </div>
       <ScrollDots active={active} />
-    </div>
+    </>
   );
 }
