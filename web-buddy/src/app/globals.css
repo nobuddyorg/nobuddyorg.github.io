@@ -11,6 +11,7 @@
     #ffe4e6 75%,
     #ecfccb 100%
   );
+  --manifesto-dot: #d4d4d8;
 }
 
 @theme inline {
@@ -33,6 +34,7 @@
       #4c0519 75%,
       #365314 100%
     );
+    --manifesto-dot: #3f3f46;
   }
 }
 
@@ -56,6 +58,43 @@ body {
    centered via mx-auto. */
 html {
   scrollbar-gutter: stable;
+}
+
+/* scroll-snap-type only has an effect on the element that actually scrolls.
+   <main> never establishes its own scroll container here (no overflow/
+   height of its own — Header is fixed and out of flow, so the *document*
+   scrolls), so the property has to live on the real scrolling element
+   (html, via document.scrollingElement) instead. :has() scopes it to the
+   homepage only, keyed off the marker attribute on its <main>, without
+   needing every other route to know or care about this.
+
+   mandatory (not proximity): proximity leaves snapping entirely up to the
+   browser's own heuristics, and in Chromium that heuristic turns out to
+   almost never fire on ordinary wheel/trackpad input — verified by
+   landing a scroll 1px short of a section's snap point and finding it
+   never gets pulled the rest of the way, which is the "not snappy"
+   complaint. mandatory guarantees the scroll always rests on a snap point.
+   scroll-snap-stop is left at its default ("normal", not "always"), so a
+   fast fling can still sail past several sections in one gesture — only
+   the *resting* position is forced onto a snap point.
+
+   #413 previously reported mandatory as scroll-jacking + a keyboard trap,
+   but that was a different setup: main was itself a focus-untouchable
+   `h-screen overflow-y-scroll` div back then, so keyboard scrolling (which
+   targets the focused/default scrollable area) never reached it at all,
+   and every wheel tick was captured by that inner scroller one section at
+   a time. #413's own fix removed that inner scroller so the *document*
+   scrolls natively — which is exactly what's back in use here. Native
+   document scrolling honors PageDown/arrow/Home/End the same way it
+   honors wheel input, so there's no separate unfocusable container left
+   to trap keyboard users behind. */
+html:has(main[data-manifesto-scroll]) {
+  scroll-snap-type: y mandatory;
+}
+@media (prefers-reduced-motion: reduce) {
+  html:has(main[data-manifesto-scroll]) {
+    scroll-snap-type: none;
+  }
 }
 
 @keyframes fade-in-up {
@@ -171,5 +210,42 @@ html {
     opacity: 1 !important;
     translate: 0 !important;
     scale: 1 !important;
+  }
+}
+
+/* Right-side rail showing which manifesto section is currently active —
+   reuses --foreground for the active dot since it's already the exact
+   "high-contrast ink" color for both themes. */
+.manifesto-dots {
+  position: fixed;
+  right: 18px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 40;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.manifesto-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 999px;
+  background: var(--manifesto-dot);
+  transition:
+    background 0.2s,
+    scale 0.2s;
+}
+.manifesto-dot.active {
+  background: var(--foreground);
+  scale: 1.35;
+}
+@media (max-width: 640px) {
+  .manifesto-dots {
+    display: none;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .manifesto-dot {
+    transition: none;
   }
 }

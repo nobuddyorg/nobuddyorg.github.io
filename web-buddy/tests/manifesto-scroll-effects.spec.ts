@@ -38,4 +38,22 @@ test.describe("homepage manifesto scroll effects", () => {
     });
     await expect(heading).toHaveCSS("opacity", "1");
   });
+
+  test("shows one dot per manifesto section, highlighting the active one as it scrolls", async ({
+    page,
+  }) => {
+    await page.goto("/");
+
+    const dots = page.locator(".manifesto-dot");
+    await expect(dots).toHaveCount(5);
+    await expect(page.locator(".manifesto-dot.active")).toHaveCount(0);
+
+    const heading = page.getByRole("heading", {
+      name: "Fork it, run it, improve it",
+    });
+    await heading.scrollIntoViewIfNeeded();
+
+    await expect(dots.nth(2)).toHaveClass(/active/, { timeout: 2000 });
+    await expect(page.locator(".manifesto-dot.active")).toHaveCount(1);
+  });
 });

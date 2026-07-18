@@ -1,25 +1,30 @@
 import { test, expect } from "@playwright/test";
 
-// Restores gentle scroll-snap on the homepage manifesto (a small scroll
-// nudge completes to reveal the full next section) without reintroducing
-// the scroll-jacking/keyboard-trap problem a prior fix removed: this uses
-// scroll-snap-type on the normal document flow (no nested overflow
-// container) with "proximity", not "mandatory", so free scrolling and
-// keyboard navigation are unaffected — see homepage.spec.ts's existing
-// "reachable via keyboard scrolling" coverage for that.
+// scroll-snap-type only affects the element that actually scrolls. <main>
+// has no overflow/height of its own (the document scrolls, per #413's
+// fix), so it must live on <html> instead — asserting it on <main> would
+// pass without the snap ever functioning, which is exactly how this
+// regressed silently before. See globals.css for the full mandatory vs.
+// proximity rationale, and homepage.spec.ts's "reachable via keyboard
+// scrolling" test for the #413 keyboard coverage this must not break.
 test.describe("homepage scroll snap", () => {
-  test("main uses proximity (not mandatory) snap, with matching snap-center targets", async ({
+  test("the real scrolling element (html) has mandatory snap, with matching snap-center targets", async ({
     page,
   }) => {
     await page.goto("/");
 
-    // "proximity" is the spec-default strictness when omitted from the
-    // axis-only value, so Chromium's computed style canonicalizes
-    // "y proximity" down to just "y" — this asserts the y-axis is set and,
-    // crucially, that it's NOT "y mandatory" (which would reintroduce the
-    // scroll-jacking #413 removed).
+    const scrollingElement = await page.evaluate(
+      () => document.scrollingElement === document.documentElement
+    );
+    expect(scrollingElement).toBe(true);
+
+    const html = page.locator("html");
+    await expect(html).toHaveCSS("scroll-snap-type", "y mandatory");
+
+    // <main> itself must NOT carry a (dead) scroll-snap-type of its own —
+    // that's the exact bug this fixes.
     const main = page.locator("main");
-    await expect(main).toHaveCSS("scroll-snap-type", "y");
+    await expect(main).toHaveCSS("scroll-snap-type", "none");
 
     const snapTargets = page.locator(
       "main > section, main > div > section"
@@ -39,7 +44,16 @@ test.describe("homepage scroll snap", () => {
     await page.emulateMedia({ reducedMotion: "reduce" });
     await page.goto("/");
 
-    const main = page.locator("main");
-    await expect(main).toHaveCSS("scroll-snap-type", "none");
+    const html = page.locator("html");
+    await expect(html).toHaveCSS("scroll-snap-type", "none");
+  });
+
+  test("snap is scoped to the homepage, not applied site-wide", async ({
+    page,
+  }) => {
+    await page.goto("/about");
+
+    const html = page.locator("html");
+    await expect(html).toHaveCSS("scroll-snap-type", "none");
   });
 });
