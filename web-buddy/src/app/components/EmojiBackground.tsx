@@ -139,7 +139,7 @@ export default function EmojiGridCanvas() {
   return (
     <canvas
       ref={canvasRef}
-      className="fixed inset-0 z-0 pointer-events-none opacity-10 grayscale select-none"
+      className="fixed inset-0 z-0 pointer-events-none opacity-[0.16] grayscale select-none"
     />
   );
 }

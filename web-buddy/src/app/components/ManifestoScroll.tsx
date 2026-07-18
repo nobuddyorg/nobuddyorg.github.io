@@ -27,15 +27,40 @@ const ideas = [
 
 const sectionCount = ideas.length + 1; // + call-to-action
 
-// One shared observer drives both the reveal-on-enter animation and the
-// right-side dot rail — every section already needs the same "is this one
-// roughly centered" answer, so there's no need for a separate observer per
-// section (or a second one just for the dots). Sections receive a `register`
-// callback rather than the ref array itself, so they never mutate a value
-// owned by the parent hook directly.
-function useActiveSections() {
+// Eases the section you *stopped* in to fill the viewport, but only after
+// scrolling settles — it never intercepts an active scroll (so, unlike the
+// old CSS scroll-snap, there's no scroll-jacking or keyboard trap, #413).
+// The intro/terminal section isn't registered here, so stopping to read it
+// is never yanked into the manifesto.
+function snapToStoppedSection(refs: (HTMLElement | null)[]) {
+  const vh = window.innerHeight;
+  const viewportCenter = window.scrollY + vh / 2;
+  for (const el of refs) {
+    if (!el) continue;
+    const rect = el.getBoundingClientRect();
+    if (rect.height > vh + 4) continue; // taller than the viewport: can't center
+    const top = rect.top + window.scrollY;
+    if (viewportCenter < top || viewportCenter >= top + rect.height) continue;
+    const target = top + rect.height / 2 - vh / 2;
+    if (Math.abs(target - window.scrollY) > 3) {
+      window.scrollTo({ top: target, behavior: "smooth" });
+    }
+    return;
+  }
+}
+
+// One shared observer drives both the reveal animation and the dot rail —
+// `active` tracks whichever section is currently centered (for the dots),
+// while `revealed` latches true the first time a section appears and never
+// clears, so already-seen content stays revealed on scroll-away. Sections
+// receive a `register` callback rather than the ref array itself, so they
+// never mutate a value owned by the parent hook directly.
+function useManifesto() {
   const refs = useRef<(HTMLElement | null)[]>([]);
   const [active, setActive] = useState<boolean[]>(() =>
+    Array(sectionCount).fill(false)
+  );
+  const [revealed, setRevealed] = useState<boolean[]>(() =>
     Array(sectionCount).fill(false)
   );
 
@@ -50,6 +75,18 @@ function useActiveSections() {
           }
           return next;
         });
+        setRevealed((prev) => {
+          let changed = false;
+          const next = [...prev];
+          for (const entry of entries) {
+            const i = refs.current.indexOf(entry.target as HTMLElement);
+            if (i !== -1 && entry.isIntersecting && !next[i]) {
+              next[i] = true;
+              changed = true;
+            }
+          }
+          return changed ? next : prev;
+        });
       },
       { threshold: 0.55 }
     );
@@ -57,27 +94,41 @@ function useActiveSections() {
     return () => observer.disconnect();
   }, []);
 
+  useEffect(() => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    let timer: ReturnType<typeof setTimeout>;
+    const onScroll = () => {
+      clearTimeout(timer);
+      timer = setTimeout(() => snapToStoppedSection(refs.current), 120);
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      clearTimeout(timer);
+    };
+  }, []);
+
   const register = (index: number) => (el: HTMLElement | null) => {
     refs.current[index] = el;
   };
 
-  return { register, active };
+  return { register, active, revealed };
 }
 
 function ManifestoSection({
   register,
-  active,
+  revealed,
   emoji,
   title,
   body,
 }: (typeof ideas)[number] & {
   register: (el: HTMLElement | null) => void;
-  active: boolean;
+  revealed: boolean;
 }) {
   return (
     <section
       ref={register}
-      className={`manifesto-section min-h-screen snap-center flex flex-col justify-center items-center text-center px-6 py-10 ${active ? "in-view" : ""}`}
+      className={`manifesto-section min-h-screen snap-center flex flex-col justify-center items-center text-center px-6 py-10 ${revealed ? "in-view" : ""}`}
     >
       <div className="manifesto-emoji text-6xl mb-6">{emoji}</div>
       <h2 className="text-2xl sm:text-3xl font-bold mb-4">{title}</h2>
@@ -90,15 +141,15 @@ function ManifestoSection({
 
 function CallToActionSection({
   register,
-  active,
+  revealed,
 }: {
   register: (el: HTMLElement | null) => void;
-  active: boolean;
+  revealed: boolean;
 }) {
   return (
     <section
       ref={register}
-      className={`manifesto-section h-screen snap-center flex flex-col justify-center items-center text-center p-10 ${active ? "in-view" : ""}`}
+      className={`manifesto-section h-screen snap-center flex flex-col justify-center items-center text-center p-10 ${revealed ? "in-view" : ""}`}
     >
       <div className="manifesto-cta-text text-xl sm:text-2xl mb-6">
         Explore the tools. Adopt a Buddy.
@@ -114,9 +165,9 @@ function CallToActionSection({
   );
 }
 
-// Purely a visual scroll-position affordance — the section headings
-// already convey where you are, so this stays out of the accessibility
-// tree rather than adding redundant, constantly-changing announcements.
+// Purely a visual scroll-position affordance — the section headings already
+// convey where you are, so this stays out of the accessibility tree rather
+// than adding redundant, constantly-changing announcements.
 function ScrollDots({ active }: { active: boolean[] }) {
   const activeIndex = active.lastIndexOf(true);
   return (
@@ -132,7 +183,7 @@ function ScrollDots({ active }: { active: boolean[] }) {
 }
 
 export default function ManifestoScroll() {
-  const { register, active } = useActiveSections();
+  const { register, active, revealed } = useManifesto();
 
   return (
     <div className="manifesto-gradient">
@@ -140,13 +191,13 @@ export default function ManifestoScroll() {
         <ManifestoSection
           key={idea.title}
           register={register(i)}
-          active={active[i]}
+          revealed={revealed[i]}
           {...idea}
         />
       ))}
       <CallToActionSection
         register={register(ideas.length)}
-        active={active[ideas.length]}
+        revealed={revealed[ideas.length]}
       />
       <ScrollDots active={active} />
     </div>

@@ -8,8 +8,10 @@ test.describe("homepage manifesto scroll effects", () => {
 
     const gradientWrap = page.locator(".manifesto-gradient");
     await expect(gradientWrap).toBeAttached();
+    // The gradient lives on ::before (so it can be masked to fade in over
+    // the intro without masking the section content).
     const backgroundImage = await gradientWrap.evaluate(
-      (el) => getComputedStyle(el).backgroundImage
+      (el) => getComputedStyle(el, "::before").backgroundImage
     );
     expect(backgroundImage).toContain("gradient");
   });
@@ -36,6 +38,24 @@ test.describe("homepage manifesto scroll effects", () => {
     const heading = page.getByRole("heading", {
       name: "Software can be useful and weird",
     });
+    await expect(heading).toHaveCSS("opacity", "1");
+  });
+
+  test("a revealed section stays revealed after it scrolls back out of view", async ({
+    page,
+  }) => {
+    await page.goto("/");
+
+    const heading = page.getByRole("heading", {
+      name: "Software can be useful and weird",
+    });
+    await heading.scrollIntoViewIfNeeded();
+    await expect(heading).toHaveCSS("opacity", "1", { timeout: 2000 });
+
+    // Scroll far past it; its reveal must latch, so it stays opaque even
+    // while off-screen (opacity is still computable when scrolled away).
+    await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
+    await page.waitForTimeout(400);
     await expect(heading).toHaveCSS("opacity", "1");
   });
 
