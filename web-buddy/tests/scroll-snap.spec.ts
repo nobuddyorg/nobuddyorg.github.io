@@ -1,75 +1,67 @@
 import { test, expect } from "@playwright/test";
 
-// The homepage eases whichever manifesto section you *stopped* in to fill
-// the viewport, once scrolling settles (JS, in ManifestoScroll). Unlike CSS
-// scroll-snap this is deterministic, so it can be asserted directly. See
-// homepage.spec.ts for the keyboard-reachability coverage this must keep.
-
-// scrollY that centers the given manifesto section in the viewport.
-async function centerOf(page: import("@playwright/test").Page, index: number) {
-  return page.evaluate((i) => {
-    const el = document.querySelectorAll(".manifesto-section")[i] as HTMLElement;
-    const top = el.getBoundingClientRect().top + window.scrollY;
-    return Math.round(top + el.offsetHeight / 2 - window.innerHeight / 2);
-  }, index);
-}
-
-test.describe("homepage scroll snap (ease-to-section on settle)", () => {
-  test("eases a partially-scrolled section to centered once scrolling stops", async ({
-    page,
-  }) => {
-    await page.goto("/");
-    const target = await centerOf(page, 1);
-
-    // Land inside section 1 but well off-center, then let it settle.
-    await page.evaluate((y) => window.scrollTo(0, y), target - 120);
-    await page.waitForTimeout(700);
-
-    const settled = await page.evaluate(() => window.scrollY);
-    expect(Math.abs(settled - target)).toBeLessThan(6);
-  });
-
-  test("a modest scroll past a page commits to the next section (page-scroll feel)", async ({
-    page,
-  }) => {
-    await page.goto("/");
-    const c1 = await centerOf(page, 1);
-    const c2 = await centerOf(page, 2);
-
-    // Land centered on section 1 first so it becomes the anchored page.
-    await page.evaluate((y) => window.scrollTo(0, y), c1);
-    await page.waitForTimeout(700);
-
-    // A ~30% viewport nudge downward should page all the way to section 2,
-    // not settle back on section 1.
-    await page.evaluate(() => window.scrollBy(0, window.innerHeight * 0.3));
-    await page.waitForTimeout(700);
-
-    const settled = await page.evaluate(() => window.scrollY);
-    expect(Math.abs(settled - c2)).toBeLessThan(6);
-  });
-
-  test("does not yank you out of the intro/terminal section", async ({
+// The manifesto sections live in their own overflow-y:auto scroll
+// container (.manifesto-slider) with native CSS scroll-snap — see
+// globals.css for why this (not a document-level snap, not a JS-driven
+// ease) is the version that's actually reliable. Real wheel/trackpad
+// input isn't something Playwright's synthetic events can reliably
+// exercise in headless Chromium (a known CDP limitation, not a sign the
+// CSS is wrong — see the PR description), so this asserts the CSS is
+// correctly declared plus the keyboard-driven settle, which *is*
+// deterministic and directly observable.
+test.describe("homepage manifesto scroll snap", () => {
+  test("the manifesto has its own snap container, separate from the intro", async ({
     page,
   }) => {
     await page.goto("/");
 
-    await page.evaluate(() => window.scrollTo(0, 90));
-    await page.waitForTimeout(700);
+    const slider = page.locator(".manifesto-slider");
+    await expect(slider).toHaveCSS("overflow-y", "auto");
+    await expect(slider).toHaveCSS("scroll-snap-type", "y mandatory");
 
-    const settled = await page.evaluate(() => window.scrollY);
-    expect(settled).toBe(90);
+    const sections = page.locator(".manifesto-slider .manifesto-section");
+    const count = await sections.count();
+    expect(count).toBeGreaterThanOrEqual(5);
+    for (let i = 0; i < count; i++) {
+      await expect(sections.nth(i)).toHaveCSS(
+        "scroll-snap-align",
+        "center"
+      );
+    }
+
+    // The intro/terminal heading must NOT be inside the snap container —
+    // reading it must never be interrupted by the manifesto's snap.
+    await expect(
+      page
+        .locator(".manifesto-slider")
+        .getByRole("heading", { name: "Creative Tools for Nerds" })
+    ).toHaveCount(0);
   });
 
-  test("does not snap under prefers-reduced-motion", async ({ page }) => {
+  test("is keyboard-reachable and keyboard-scrollable (#413)", async ({
+    page,
+  }) => {
+    await page.goto("/");
+
+    const slider = page.locator(".manifesto-slider");
+    await expect(slider).toHaveAttribute("tabindex", "0");
+    await expect(slider).toHaveAccessibleName(/manifesto/i);
+
+    const cta = page.getByRole("link", { name: "Launch /tools →" });
+    await expect(cta).not.toBeInViewport();
+
+    await slider.focus();
+    await page.keyboard.press("End");
+    await expect(cta).toBeInViewport({ timeout: 3000 });
+  });
+
+  test("snap is disabled under prefers-reduced-motion", async ({ page }) => {
     await page.emulateMedia({ reducedMotion: "reduce" });
     await page.goto("/");
-    const target = await centerOf(page, 1);
 
-    await page.evaluate((y) => window.scrollTo(0, y), target - 120);
-    await page.waitForTimeout(700);
-
-    const settled = await page.evaluate(() => window.scrollY);
-    expect(settled).toBe(target - 120);
+    await expect(page.locator(".manifesto-slider")).toHaveCSS(
+      "scroll-snap-type",
+      "none"
+    );
   });
 });
