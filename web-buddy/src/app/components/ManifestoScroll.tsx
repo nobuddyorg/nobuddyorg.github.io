@@ -1,6 +1,6 @@
 "use client";
 
-import { useInView } from "../hooks/useInView";
+import { useEffect, useRef, useState } from "react";
 
 const ideas = [
   {
@@ -25,16 +25,59 @@ const ideas = [
   },
 ];
 
-function ManifestoSection({ emoji, title, body }: (typeof ideas)[number]) {
-  // once: false — re-reveal each time this section becomes the active one
-  // again, matching the center scroll-snap pause (a viewer scrolling back
-  // up should see the same reveal, not a page that's already "used up").
-  const { ref, inView } = useInView<HTMLElement>({ threshold: 0.55 }, false);
+const sectionCount = ideas.length + 1; // + call-to-action
 
+// One shared observer drives both the reveal-on-enter animation and the
+// right-side dot rail — every section already needs the same "is this one
+// roughly centered" answer, so there's no need for a separate observer per
+// section (or a second one just for the dots). Sections receive a `register`
+// callback rather than the ref array itself, so they never mutate a value
+// owned by the parent hook directly.
+function useActiveSections() {
+  const refs = useRef<(HTMLElement | null)[]>([]);
+  const [active, setActive] = useState<boolean[]>(() =>
+    Array(sectionCount).fill(false)
+  );
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        setActive((prev) => {
+          const next = [...prev];
+          for (const entry of entries) {
+            const i = refs.current.indexOf(entry.target as HTMLElement);
+            if (i !== -1) next[i] = entry.isIntersecting;
+          }
+          return next;
+        });
+      },
+      { threshold: 0.55 }
+    );
+    refs.current.forEach((el) => el && observer.observe(el));
+    return () => observer.disconnect();
+  }, []);
+
+  const register = (index: number) => (el: HTMLElement | null) => {
+    refs.current[index] = el;
+  };
+
+  return { register, active };
+}
+
+function ManifestoSection({
+  register,
+  active,
+  emoji,
+  title,
+  body,
+}: (typeof ideas)[number] & {
+  register: (el: HTMLElement | null) => void;
+  active: boolean;
+}) {
   return (
     <section
-      ref={ref}
-      className={`manifesto-section min-h-screen snap-center flex flex-col justify-center items-center text-center px-6 py-10 ${inView ? "in-view" : ""}`}
+      ref={register}
+      className={`manifesto-section min-h-screen snap-center flex flex-col justify-center items-center text-center px-6 py-10 ${active ? "in-view" : ""}`}
     >
       <div className="manifesto-emoji text-6xl mb-6">{emoji}</div>
       <h2 className="text-2xl sm:text-3xl font-bold mb-4">{title}</h2>
@@ -45,13 +88,17 @@ function ManifestoSection({ emoji, title, body }: (typeof ideas)[number]) {
   );
 }
 
-function CallToActionSection() {
-  const { ref, inView } = useInView<HTMLElement>({ threshold: 0.55 }, false);
-
+function CallToActionSection({
+  register,
+  active,
+}: {
+  register: (el: HTMLElement | null) => void;
+  active: boolean;
+}) {
   return (
     <section
-      ref={ref}
-      className={`manifesto-section h-screen snap-center flex flex-col justify-center items-center text-center p-10 ${inView ? "in-view" : ""}`}
+      ref={register}
+      className={`manifesto-section h-screen snap-center flex flex-col justify-center items-center text-center p-10 ${active ? "in-view" : ""}`}
     >
       <div className="manifesto-cta-text text-xl sm:text-2xl mb-6">
         Explore the tools. Adopt a Buddy.
@@ -67,13 +114,41 @@ function CallToActionSection() {
   );
 }
 
+// Purely a visual scroll-position affordance — the section headings
+// already convey where you are, so this stays out of the accessibility
+// tree rather than adding redundant, constantly-changing announcements.
+function ScrollDots({ active }: { active: boolean[] }) {
+  const activeIndex = active.lastIndexOf(true);
+  return (
+    <div className="manifesto-dots" aria-hidden="true">
+      {active.map((_, i) => (
+        <span
+          key={i}
+          className={`manifesto-dot ${i === activeIndex ? "active" : ""}`}
+        />
+      ))}
+    </div>
+  );
+}
+
 export default function ManifestoScroll() {
+  const { register, active } = useActiveSections();
+
   return (
     <div className="manifesto-gradient">
-      {ideas.map((idea) => (
-        <ManifestoSection key={idea.title} {...idea} />
+      {ideas.map((idea, i) => (
+        <ManifestoSection
+          key={idea.title}
+          register={register(i)}
+          active={active[i]}
+          {...idea}
+        />
       ))}
-      <CallToActionSection />
+      <CallToActionSection
+        register={register(ideas.length)}
+        active={active[ideas.length]}
+      />
+      <ScrollDots active={active} />
     </div>
   );
 }

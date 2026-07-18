@@ -32,7 +32,10 @@ export default function HomePage() {
     <>
       <JsonLd id="jsonld-home" data={jsonLd} />
       <Header />
-      <main className="text-black dark:text-white overflow-x-hidden snap-y snap-proximity motion-reduce:snap-none">
+      <main
+        data-manifesto-scroll
+        className="text-black dark:text-white overflow-x-hidden"
+      >
         <section className="min-h-screen snap-center">
           <CirclesBackground variant="home" />
           <TerminalIntro />
