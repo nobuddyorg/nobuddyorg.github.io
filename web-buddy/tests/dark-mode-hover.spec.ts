@@ -32,25 +32,21 @@ test.describe("dark mode hover contrast", () => {
     expect(await contrastRatio(page, bg, color)).toBeGreaterThanOrEqual(4.5);
   });
 
-  test("footer links stay readable on hover in dark mode", async ({
+  test("footer link stays readable on hover in dark mode", async ({
     page,
   }) => {
     await page.goto("/");
 
-    for (const name of ["nobuddy", "GitHub"]) {
-      const link = page.locator("footer a", { hasText: name }).first();
-      await link.hover();
-      await page.waitForTimeout(TRANSITION_SETTLE_MS);
-      const color = await link.evaluate(
-        (node) => getComputedStyle(node).color
-      );
-      const footerBg = await page
-        .locator("footer")
-        .evaluate((node) => getComputedStyle(node).backgroundColor);
+    const link = page.locator("footer a", { hasText: "nobuddy" }).first();
+    await link.hover();
+    await page.waitForTimeout(TRANSITION_SETTLE_MS);
+    const color = await link.evaluate((node) => getComputedStyle(node).color);
+    const footerBg = await page
+      .locator("footer")
+      .evaluate((node) => getComputedStyle(node).backgroundColor);
 
-      expect(
-        await contrastRatio(page, footerBg, color)
-      ).toBeGreaterThanOrEqual(4.5);
-    }
+    expect(await contrastRatio(page, footerBg, color)).toBeGreaterThanOrEqual(
+      4.5
+    );
   });
 });

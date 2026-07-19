@@ -29,9 +29,11 @@ test.describe("homepage hero and manifesto content", () => {
         "Explore nobuddy.org – a playground of creative tools, weird ideas & useful mini-apps."
       )
     ).toBeVisible();
+    // Hidden on mobile portrait to keep the intro compact (#541) — still
+    // one tap away via the header's own GitHub link.
     await expect(
       page.getByRole("link", { name: "Follow Nobuddyorg on GitHub" })
-    ).toBeVisible();
+    ).not.toBeVisible();
   });
 
   test("manifesto sections are reachable via keyboard scrolling", async ({
