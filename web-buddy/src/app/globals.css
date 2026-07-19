@@ -295,3 +295,77 @@ html {
     transition: none;
   }
 }
+
+/* Glowing scroll-hint chevron pinned near the bottom of the viewport
+   (position: fixed, applied via a Tailwind class in the JSX — not set
+   here, so it isn't shadowed by this rule's own cascade position) while
+   the intro is the active page: hints at *and* performs the page-by-page
+   snap scroll on click, so the paging behavior itself is discoverable
+   (#544) rather than something a visitor has to stumble into via a wheel
+   gesture. The glow is a blurred radial-gradient pseudo-element behind
+   the icon (not a box-shadow) so it can bloom past the button's own
+   small box without clipping — it needs the button to be a positioned
+   ancestor, which the fixed positioning already provides.
+
+   Cyan-to-violet (not amber): the intro sits on CirclesBackground's warm
+   amber palette, and an amber/yellow glow (matching the terminal's own
+   yellow "Scroll down" text) all but disappears against it — confirmed
+   via a cropped screenshot, not just reasoning about it. A cool-toned
+   glow contrasts regardless of theme, and the icon itself rides on a
+   translucent --background disc so it stays legible over every stop of
+   the amber gradient, not just the ones it happens to contrast with.
+
+   Only the glow pulses (opacity/scale on ::before) — the button itself
+   doesn't bob. A continuously-translating click target never resolves to
+   a stable position, and Playwright's own click-stability wait (a decent
+   proxy for "is this annoying to click precisely") timed out against it;
+   the glow alone still reads as "alive" without moving the target. */
+.scroll-hint {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 999px;
+  color: var(--foreground);
+  background: color-mix(in srgb, var(--background) 70%, transparent);
+  cursor: pointer;
+  /* Above Footer's z-50, as a safety margin — the bottom-* offset (JSX)
+     is chosen to already clear the footer without overlapping it. */
+  z-index: 60;
+}
+.scroll-hint:hover {
+  color: #06b6d4;
+}
+.scroll-hint::before {
+  content: "";
+  position: absolute;
+  inset: -0.5rem;
+  border-radius: 999px;
+  background: radial-gradient(
+    circle,
+    rgba(34, 211, 238, 0.6),
+    rgba(167, 139, 250, 0.4) 55%,
+    transparent 75%
+  );
+  filter: blur(6px);
+  z-index: -1;
+  animation: scroll-hint-glow 1.8s ease-in-out infinite;
+}
+@keyframes scroll-hint-glow {
+  0%,
+  100% {
+    opacity: 0.35;
+    scale: 0.85;
+  }
+  50% {
+    opacity: 0.9;
+    scale: 1.15;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .scroll-hint,
+  .scroll-hint::before {
+    animation: none;
+  }
+}

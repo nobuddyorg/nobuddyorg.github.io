@@ -27,7 +27,7 @@ const ideas = [
   },
 ];
 
-const sectionCount = ideas.length + 1; // + call-to-action
+const sectionCount = ideas.length + 2; // + intro + call-to-action
 
 // One shared observer drives both the reveal animation and the dot rail —
 // `active` tracks whichever section is currently centered (for the dots),
@@ -163,22 +163,22 @@ export default function ManifestoScroll() {
         tabIndex={0}
         aria-label="Manifesto: what nobuddy.org is about"
       >
-        <section className="min-h-[var(--page-h)] snap-center">
+        <section className="min-h-[var(--page-h)] snap-center" ref={register(0)}>
           <CirclesBackground variant="home" />
-          <TerminalIntro />
+          <TerminalIntro active={active[0]} />
         </section>
         <div className="manifesto-gradient">
           {ideas.map((idea, i) => (
             <ManifestoSection
               key={idea.title}
-              register={register(i)}
-              revealed={revealed[i]}
+              register={register(i + 1)}
+              revealed={revealed[i + 1]}
               {...idea}
             />
           ))}
           <CallToActionSection
-            register={register(ideas.length)}
-            revealed={revealed[ideas.length]}
+            register={register(ideas.length + 1)}
+            revealed={revealed[ideas.length + 1]}
           />
         </div>
       </div>

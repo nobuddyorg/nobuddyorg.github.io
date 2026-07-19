@@ -59,21 +59,43 @@ test.describe("homepage manifesto scroll effects", () => {
     await expect(heading).toHaveCSS("opacity", "1");
   });
 
-  test("shows one dot per manifesto section, highlighting the active one as it scrolls", async ({
+  test("shows one dot per page (intro + manifesto sections), highlighting the active one as it scrolls", async ({
     page,
   }) => {
     await page.goto("/");
 
+    // The intro is a page in the slider too now (#544's own dot, so it
+    // doesn't look like "that page doesn't exist") — its dot is active
+    // immediately on load, not "nothing active until you scroll."
     const dots = page.locator(".manifesto-dot");
-    await expect(dots).toHaveCount(5);
-    await expect(page.locator(".manifesto-dot.active")).toHaveCount(0);
+    await expect(dots).toHaveCount(6);
+    await expect(dots.first()).toHaveClass(/active/, { timeout: 2000 });
+    await expect(page.locator(".manifesto-dot.active")).toHaveCount(1);
 
     const heading = page.getByRole("heading", {
       name: "Fork it, run it, improve it",
     });
     await heading.scrollIntoViewIfNeeded();
 
-    await expect(dots.nth(2)).toHaveClass(/active/, { timeout: 2000 });
+    await expect(dots.nth(3)).toHaveClass(/active/, { timeout: 2000 });
     await expect(page.locator(".manifesto-dot.active")).toHaveCount(1);
+  });
+
+  test("scroll-hint arrow below the terminal advances one page on click (#544)", async ({
+    page,
+  }) => {
+    await page.goto("/");
+    await page.waitForTimeout(300);
+    await page.mouse.click(200, 700);
+
+    const hint = page.getByRole("button", { name: "Scroll to the next page" });
+    await expect(hint).toBeVisible({ timeout: 2000 });
+
+    const dots = page.locator(".manifesto-dot");
+    await expect(dots.first()).toHaveClass(/active/);
+
+    await hint.click();
+
+    await expect(dots.nth(1)).toHaveClass(/active/, { timeout: 3000 });
   });
 });
