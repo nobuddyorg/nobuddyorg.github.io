@@ -90,11 +90,20 @@ html {
    ideas/CTA sections cleanly: .manifesto-gradient has to stay auto-height
    (it's exactly as tall as its 5 stacked children, which is what makes
    there something to scroll through), and a percentage height on its
-   children wouldn't resolve against an auto-height ancestor. */
+   children wouldn't resolve against an auto-height ancestor.
+
+   overflow-x: hidden is required, not cosmetic: per spec, setting only
+   overflow-y to a non-visible value promotes the other axis from visible
+   to auto too, so without this the slider silently becomes its own
+   horizontally-scrollable region. It was carrying CirclesBackground's
+   deliberately oversized decorative SVG (100rem/1600px wide, meant to be
+   clipped by body's own overflow-x: hidden) as ~600px of scrollable dead
+   space — "I can scroll right but there's nothing there" (#546). */
 .manifesto-slider {
   --page-h: calc(100dvh - 2.25rem);
   height: 100dvh;
   overflow-y: auto;
+  overflow-x: hidden;
   scroll-snap-type: y mandatory;
   scrollbar-width: none;
 }
