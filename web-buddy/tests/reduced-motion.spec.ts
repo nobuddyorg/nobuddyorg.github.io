@@ -25,7 +25,12 @@ test.describe("prefers-reduced-motion", () => {
     await page.emulateMedia({ reducedMotion: "reduce" });
     await page.goto("/");
 
-    const pulse = page.getByText("Scroll down to continue...");
+    // An invisible same-content sizer also contains this text (keeps the
+    // terminal box's height constant throughout the animation — see
+    // TerminalIntro.tsx), so this scopes through the visible output.
+    const pulse = page
+      .getByTestId("terminal-output")
+      .getByText("Scroll down to continue...");
     await expect(pulse).toBeVisible({ timeout: 15000 });
     await expect(pulse).toHaveCSS("animation-name", "none");
   });

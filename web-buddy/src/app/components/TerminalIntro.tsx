@@ -90,6 +90,20 @@ function buildFrames(): Frame[] {
 const frames = buildFrames();
 const lastFrame = frames.length - 1;
 
+function LineText({ line }: { line: ScriptLine }) {
+  return (
+    <>
+      {line.role === "cmd" && (
+        <>
+          <span className="text-blue-400">nobuddy</span>
+          <span className="text-purple-400"> /org/nobuddy: </span>
+        </>
+      )}
+      {line.text}
+    </>
+  );
+}
+
 function Hero() {
   return (
     <section
@@ -100,7 +114,7 @@ function Hero() {
         {SITE_NAME}
       </h1>
 
-      <h2 className="block relative z-10 max-w-3xl mx-auto text-sm sm:text-lg md:text-xl text-neutral-700 dark:text-neutral-200 mb-4 sm:mb-6 md:mb-8">
+      <h2 className="block relative z-10 max-w-3xl mx-auto text-sm sm:text-lg md:text-xl text-neutral-800 dark:text-neutral-100 mb-4 sm:mb-6 md:mb-6">
         {SITE_DESCRIPTION}
       </h2>
 
@@ -168,40 +182,46 @@ export default function TerminalIntro() {
     <div className="flex flex-col items-center px-4 pt-16 sm:pt-20 md:pt-24">
       <Hero />
 
-      <div className="w-full max-w-3xl min-h-[220px] sm:min-h-[280px] md:min-h-[280px] rounded-lg overflow-clip shadow-lg border border-neutral-800 bg-[#1a1a1a] mb-6 sm:mb-8 md:mb-10">
+      <div className="w-full max-w-3xl rounded-lg overflow-clip shadow-lg border border-neutral-800 bg-[#1a1a1a] mb-6 sm:mb-8 md:mb-8">
         <div className="flex items-center space-x-2 px-3 py-2 bg-[#2d2d2d] border-b border-neutral-700">
           <div className="w-3 h-3 rounded-full bg-red-500"></div>
           <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
           <div className="w-3 h-3 rounded-full bg-green-500"></div>
         </div>
 
-        <div className="py-5 sm:py-7 md:py-10 px-4 sm:px-5 md:px-6 font-mono text-green-400 text-xs sm:text-base md:text-lg bg-[#1a1a1a] text-left">
-          {lines.map((line, i) => (
-            <div
-              key={i}
-              className="fade-in-up whitespace-pre-wrap break-words"
-              style={fadeInStyle}
-            >
-              {line.role === "cmd" && (
-                <>
-                  <span className="text-blue-400">nobuddy</span>
-                  <span className="text-purple-400"> /org/nobuddy: </span>
-                </>
-              )}
-              {line.text}
-            </div>
-          ))}
-          {/* Always rendered (space reserved via `invisible`, not
-              conditionally mounted) so the box doesn't grow the moment
-              this line becomes real — it fades in into space that was
-              already there. */}
-          <div
-            className={`mt-8 ${isWaiting ? "fade-in-up" : "invisible"}`}
-            style={fadeInStyle}
-          >
-            <span className="text-yellow-400 animate-pulse motion-reduce:animate-none">
-              Scroll down to continue...
-            </span>
+        {/* grid + the same [grid-area:1/1] on both children stacks them in
+            one cell, so the box's height comes from the invisible sizer
+            (always the complete transcript) rather than the real content —
+            which is what's growing line by line. Without this, the box
+            visibly grows throughout the whole typing animation, not just
+            at the final line. */}
+        <div className="grid py-5 sm:py-8 md:py-8 px-4 sm:px-5 md:px-6 font-mono text-green-400 text-xs sm:text-base md:text-lg bg-[#1a1a1a] text-left">
+          <div aria-hidden="true" className="invisible [grid-area:1/1]">
+            {frames[lastFrame].lines.map((line, i) => (
+              <div key={i} className="whitespace-pre-wrap break-words">
+                <LineText line={line} />
+              </div>
+            ))}
+            <div className="mt-8">Scroll down to continue...</div>
+          </div>
+
+          <div className="[grid-area:1/1]" data-testid="terminal-output">
+            {lines.map((line, i) => (
+              <div
+                key={i}
+                className="fade-in-up whitespace-pre-wrap break-words"
+                style={fadeInStyle}
+              >
+                <LineText line={line} />
+              </div>
+            ))}
+            {isWaiting && (
+              <div className="fade-in-up mt-8" style={fadeInStyle}>
+                <span className="text-yellow-400 animate-pulse motion-reduce:animate-none">
+                  Scroll down to continue...
+                </span>
+              </div>
+            )}
           </div>
         </div>
       </div>

@@ -100,7 +100,7 @@ html {
    clipped by body's own overflow-x: hidden) as ~600px of scrollable dead
    space — "I can scroll right but there's nothing there" (#546). */
 .manifesto-slider {
-  --page-h: calc(100dvh - 2.25rem);
+  --page-h: calc(100dvh - 40px);
   height: 100dvh;
   overflow-y: auto;
   overflow-x: hidden;
@@ -109,12 +109,12 @@ html {
 }
 @media (min-width: 640px) {
   .manifesto-slider {
-    --page-h: calc(100dvh - 2.75rem);
+    --page-h: calc(100dvh - 48px);
   }
 }
 @media (min-width: 768px) {
   .manifesto-slider {
-    --page-h: calc(100dvh - 3.5rem);
+    --page-h: calc(100dvh - 68px);
   }
 }
 .manifesto-slider::-webkit-scrollbar {
