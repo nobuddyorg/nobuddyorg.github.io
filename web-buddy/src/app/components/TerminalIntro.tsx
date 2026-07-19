@@ -90,6 +90,21 @@ function buildFrames(): Frame[] {
 const frames = buildFrames();
 const lastFrame = frames.length - 1;
 
+// Both hints at and performs the page-by-page snap scroll, so the
+// paging behavior itself is discoverable (#544) rather than something a
+// visitor has to stumble into via a wheel gesture.
+function scrollToNextPage(button: HTMLElement) {
+  const slider = button.closest<HTMLElement>(".manifesto-slider");
+  if (!slider) return;
+  const reduceMotion = window.matchMedia(
+    "(prefers-reduced-motion: reduce)"
+  ).matches;
+  slider.scrollBy({
+    top: slider.clientHeight,
+    behavior: reduceMotion ? "auto" : "smooth",
+  });
+}
+
 function LineText({ line }: { line: ScriptLine }) {
   return (
     <>
@@ -107,14 +122,14 @@ function LineText({ line }: { line: ScriptLine }) {
 function Hero() {
   return (
     <section
-      className="relative pb-3 sm:pb-5 md:pb-10 max-w-4xl mx-auto px-4 md:px-6 text-center"
+      className="relative pb-3 sm:pb-5 md:pb-8 max-w-4xl mx-auto px-4 md:px-6 text-center"
       aria-label="Introduction section"
     >
-      <h1 className="relative z-10 text-3xl sm:text-5xl md:text-6xl font-extrabold tracking-tight leading-tight mb-2 sm:mb-4 md:mb-6 text-black dark:text-white">
+      <h1 className="relative z-10 text-3xl sm:text-5xl md:text-6xl font-extrabold tracking-tight leading-tight mb-2 sm:mb-4 md:mb-4 text-black dark:text-white">
         {SITE_NAME}
       </h1>
 
-      <h2 className="block relative z-10 max-w-3xl mx-auto text-sm sm:text-lg md:text-xl text-neutral-800 dark:text-neutral-100 mb-4 sm:mb-6 md:mb-6">
+      <h2 className="block relative z-10 max-w-3xl mx-auto text-sm sm:text-lg md:text-xl text-neutral-800 dark:text-neutral-100 mb-4 sm:mb-6 md:mb-4">
         {SITE_DESCRIPTION}
       </h2>
 
@@ -135,7 +150,7 @@ function Hero() {
   );
 }
 
-export default function TerminalIntro() {
+export default function TerminalIntro({ active }: { active: boolean }) {
   const [frameIndex, setFrameIndex] = useState(0);
 
   // Render the completed terminal instantly on repeat visits within the
@@ -179,10 +194,10 @@ export default function TerminalIntro() {
   const isWaiting = frameIndex === lastFrame;
 
   return (
-    <div className="flex flex-col items-center px-4 pt-16 sm:pt-20 md:pt-24">
+    <div className="flex flex-col items-center px-4 pt-16 sm:pt-20 md:pt-20">
       <Hero />
 
-      <div className="w-full max-w-3xl rounded-lg overflow-clip shadow-lg border border-neutral-800 bg-[#1a1a1a] mb-6 sm:mb-8 md:mb-8">
+      <div className="w-full max-w-3xl mb-6 sm:mb-8 md:mb-6 rounded-lg overflow-clip shadow-lg border border-neutral-800 bg-[#1a1a1a]">
         <div className="flex items-center space-x-2 px-3 py-2 bg-[#2d2d2d] border-b border-neutral-700">
           <div className="w-3 h-3 rounded-full bg-red-500"></div>
           <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
@@ -195,7 +210,7 @@ export default function TerminalIntro() {
             which is what's growing line by line. Without this, the box
             visibly grows throughout the whole typing animation, not just
             at the final line. */}
-        <div className="grid py-5 sm:py-8 md:py-8 px-4 sm:px-5 md:px-6 font-mono text-green-400 text-xs sm:text-base md:text-lg bg-[#1a1a1a] text-left">
+        <div className="grid py-5 sm:py-8 md:py-6 px-4 sm:px-5 md:px-6 font-mono text-green-400 text-xs sm:text-base md:text-lg bg-[#1a1a1a] text-left">
           <div aria-hidden="true" className="invisible [grid-area:1/1]">
             {frames[lastFrame].lines.map((line, i) => (
               <div key={i} className="whitespace-pre-wrap break-words">
@@ -225,6 +240,38 @@ export default function TerminalIntro() {
           </div>
         </div>
       </div>
+
+      {/* Fixed to the viewport, not anchored below the terminal: the
+          intro's own content height is already tuned right up against
+          the footer-clearance budget every viewport size has to fit
+          within (#541/#546/#548), so anything that adds to *that* flow
+          re-blows the budget on shorter viewports (confirmed: broke it
+          again at 1280x720 — Playwright's own default test viewport —
+          on the first attempt). A fixed position costs nothing in that
+          budget regardless of content height. Gated on `active` (this
+          page is the one currently in view) so it doesn't stay pinned on
+          screen once scrolled past the intro. */}
+      <button
+        type="button"
+        onClick={(e) => scrollToNextPage(e.currentTarget)}
+        aria-label="Scroll to the next page"
+        className={`scroll-hint fixed bottom-14 sm:bottom-16 md:bottom-20 left-1/2 -translate-x-1/2 ${active && isWaiting ? "fade-in-up" : "invisible"}`}
+        style={fadeInStyle}
+      >
+        <svg
+          width="26"
+          height="26"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2.5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          aria-hidden="true"
+        >
+          <path d="M6 9l6 6 6-6" />
+        </svg>
+      </button>
     </div>
   );
 }

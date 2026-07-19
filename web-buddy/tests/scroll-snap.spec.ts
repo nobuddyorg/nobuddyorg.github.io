@@ -76,9 +76,16 @@ test.describe("homepage manifesto scroll snap", () => {
   // 2016 iPhone SE 1st-gen, long discontinued, and SITE_DESCRIPTION's
   // fixed length makes an exact fit infeasible there without shrinking
   // spacing at every more common size to accommodate a legacy outlier.
+  //
+  // 1280x720 specifically: Playwright's own default chromium project
+  // viewport. #544's scroll-hint arrow silently broke this exact size
+  // (never manually checked, since 1280x800 was — a reasonable-looking
+  // choice that happened to have just enough extra height to hide the
+  // gap) until the click-to-advance test below started failing.
   for (const viewport of [
     { width: 360, height: 740, label: "small mobile" },
     { width: 375, height: 812, label: "mobile" },
+    { width: 1280, height: 720, label: "desktop (Playwright default)" },
     { width: 1280, height: 800, label: "desktop" },
   ]) {
     test(`the intro page doesn't render under the fixed footer (${viewport.label})`, async ({
