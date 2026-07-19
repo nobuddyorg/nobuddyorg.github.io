@@ -63,4 +63,33 @@ test.describe("homepage manifesto scroll snap", () => {
       "none"
     );
   });
+
+  // Footer is fixed site-wide, and unlike every other page here the slider
+  // fills the viewport edge to edge with no bottom padding of its own — a
+  // plain 100dvh page would render its last ~40px under the fixed footer
+  // (#541). Each page sizes off --page-h (globals.css), which reserves
+  // that space; this locks in a real clearance instead of just trusting
+  // the reserved amount matches the footer's actual rendered height.
+  for (const viewport of [
+    { width: 320, height: 568, label: "small mobile" },
+    { width: 375, height: 812, label: "mobile" },
+    { width: 1280, height: 800, label: "desktop" },
+  ]) {
+    test(`the intro page doesn't render under the fixed footer (${viewport.label})`, async ({
+      page,
+    }) => {
+      await page.setViewportSize(viewport);
+      await page.goto("/");
+
+      const footerTop = await page
+        .locator("footer")
+        .evaluate((el) => el.getBoundingClientRect().top);
+      const introBottom = await page
+        .locator(".manifesto-slider section")
+        .first()
+        .evaluate((el) => el.getBoundingClientRect().bottom);
+
+      expect(footerTop - introBottom).toBeGreaterThanOrEqual(0);
+    });
+  }
 });

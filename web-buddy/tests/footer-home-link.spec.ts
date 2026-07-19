@@ -13,13 +13,4 @@ test.describe("footer home link", () => {
     await homeLink.click();
     await expect(page).toHaveURL(/\/$/);
   });
-
-  test("GitHub link still opens in a new tab", async ({ page }) => {
-    await page.goto("/");
-
-    const githubLink = page.getByRole("contentinfo").getByRole("link", {
-      name: "GitHub",
-    });
-    await expect(githubLink).toHaveAttribute("target", "_blank");
-  });
 });

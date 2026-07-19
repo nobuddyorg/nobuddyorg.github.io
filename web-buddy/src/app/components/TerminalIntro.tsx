@@ -93,22 +93,25 @@ const lastFrame = frames.length - 1;
 function Hero() {
   return (
     <section
-      className="relative pb-5 md:pb-20 max-w-4xl mx-auto px-4 md:px-6 text-center"
+      className="relative pb-3 sm:pb-5 md:pb-10 max-w-4xl mx-auto px-4 md:px-6 text-center"
       aria-label="Introduction section"
     >
-      <h1 className="relative z-10 text-5xl md:text-6xl font-extrabold tracking-tight leading-tight mb-4 md:mb-6 text-black dark:text-white">
+      <h1 className="relative z-10 text-3xl sm:text-5xl md:text-6xl font-extrabold tracking-tight leading-tight mb-2 sm:mb-4 md:mb-6 text-black dark:text-white">
         {SITE_NAME}
       </h1>
 
-      <h2 className="block relative z-10 max-w-3xl mx-auto text-base sm:text-lg md:text-xl text-neutral-700 dark:text-neutral-200 mb-6 md:mb-8">
+      <h2 className="block relative z-10 max-w-3xl mx-auto text-sm sm:text-lg md:text-xl text-neutral-700 dark:text-neutral-200 mb-4 sm:mb-6 md:mb-8">
         {SITE_DESCRIPTION}
       </h2>
 
+      {/* Skipped on mobile portrait: the intro is already tight on
+          vertical space there, and this action is one tap away in the
+          header's own GitHub link. */}
       <Link
         href={GITHUB_URL}
         target="_blank"
         rel="noopener noreferrer"
-        className="inline-block relative z-10 bg-black dark:bg-white text-white dark:text-black font-semibold px-6 py-2.5 md:px-8 md:py-3 text-sm sm:text-base rounded-full shadow-lg hover:bg-gray-900 dark:hover:bg-gray-100 transition"
+        className="hidden sm:inline-block relative z-10 bg-black dark:bg-white text-white dark:text-black font-semibold px-6 py-2.5 md:px-8 md:py-3 text-sm sm:text-base rounded-full shadow-lg hover:bg-gray-900 dark:hover:bg-gray-100 transition"
         aria-label="Follow Nobuddyorg on GitHub"
         title="follow on github"
       >
@@ -162,17 +165,17 @@ export default function TerminalIntro() {
   const isWaiting = frameIndex === lastFrame;
 
   return (
-    <div className="flex flex-col items-center px-4 pt-20 md:pt-32">
+    <div className="flex flex-col items-center px-4 pt-16 sm:pt-20 md:pt-24">
       <Hero />
 
-      <div className="w-full max-w-3xl min-h-[340px] rounded-lg overflow-clip shadow-lg border border-neutral-800 bg-[#1a1a1a] mb-10">
+      <div className="w-full max-w-3xl min-h-[220px] sm:min-h-[280px] md:min-h-[280px] rounded-lg overflow-clip shadow-lg border border-neutral-800 bg-[#1a1a1a] mb-6 sm:mb-8 md:mb-10">
         <div className="flex items-center space-x-2 px-3 py-2 bg-[#2d2d2d] border-b border-neutral-700">
           <div className="w-3 h-3 rounded-full bg-red-500"></div>
           <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
           <div className="w-3 h-3 rounded-full bg-green-500"></div>
         </div>
 
-        <div className="py-10 px-6 font-mono text-green-400 text-lg bg-[#1a1a1a] text-left">
+        <div className="py-5 sm:py-7 md:py-10 px-4 sm:px-5 md:px-6 font-mono text-green-400 text-sm sm:text-base md:text-lg bg-[#1a1a1a] text-left">
           {lines.map((line, i) => (
             <div key={i} className="fade-in-up whitespace-pre" style={fadeInStyle}>
               {line.role === "cmd" && (

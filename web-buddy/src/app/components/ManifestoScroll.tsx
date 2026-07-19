@@ -94,7 +94,7 @@ function ManifestoSection({
   return (
     <section
       ref={register}
-      className={`manifesto-section min-h-screen snap-center flex flex-col justify-center items-center text-center px-6 py-10 ${revealed ? "in-view" : ""}`}
+      className={`manifesto-section min-h-[var(--page-h)] snap-center flex flex-col justify-center items-center text-center px-6 py-10 ${revealed ? "in-view" : ""}`}
     >
       <div className="manifesto-emoji text-6xl mb-6">{emoji}</div>
       <h2 className="text-2xl sm:text-3xl font-bold mb-4">{title}</h2>
@@ -115,7 +115,7 @@ function CallToActionSection({
   return (
     <section
       ref={register}
-      className={`manifesto-section h-screen snap-center flex flex-col justify-center items-center text-center p-10 ${revealed ? "in-view" : ""}`}
+      className={`manifesto-section h-[var(--page-h)] snap-center flex flex-col justify-center items-center text-center p-10 ${revealed ? "in-view" : ""}`}
     >
       <div className="manifesto-cta-text text-xl sm:text-2xl mb-6">
         Explore the tools. Adopt a Buddy.
@@ -163,7 +163,7 @@ export default function ManifestoScroll() {
         tabIndex={0}
         aria-label="Manifesto: what nobuddy.org is about"
       >
-        <section className="min-h-screen snap-center">
+        <section className="min-h-[var(--page-h)] snap-center">
           <CirclesBackground variant="home" />
           <TerminalIntro />
         </section>

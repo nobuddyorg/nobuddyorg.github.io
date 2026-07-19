@@ -76,12 +76,37 @@ html {
    A nested scroll container isn't independently reachable by keyboard
    scrolling unless it's focusable — see the tabIndex + aria-label on
    ManifestoScroll's wrapper div, matching #413's own suggested fix for
-   this exact pattern. */
+   this exact pattern.
+
+   --page-h (not 100dvh directly): Footer is fixed site-wide, and unlike
+   every other page here, the slider fills the viewport edge to edge with
+   no bottom padding of its own — so a plain 100dvh page would render its
+   last ~40px under the fixed footer. --page-h reserves that space, and
+   every page (this section, .manifesto-section, the CTA) sizes off it via
+   min-h-[var(--page-h)]/h-[var(--page-h)] instead of Tailwind's
+   min-h-screen/h-screen (100vh) so they can't independently drift back to
+   the un-reserved viewport height. A custom property, rather than sizing
+   .manifesto-gradient itself, is what lets that inheritance reach the
+   ideas/CTA sections cleanly: .manifesto-gradient has to stay auto-height
+   (it's exactly as tall as its 5 stacked children, which is what makes
+   there something to scroll through), and a percentage height on its
+   children wouldn't resolve against an auto-height ancestor. */
 .manifesto-slider {
+  --page-h: calc(100dvh - 2.25rem);
   height: 100dvh;
   overflow-y: auto;
   scroll-snap-type: y mandatory;
   scrollbar-width: none;
+}
+@media (min-width: 640px) {
+  .manifesto-slider {
+    --page-h: calc(100dvh - 2.75rem);
+  }
+}
+@media (min-width: 768px) {
+  .manifesto-slider {
+    --page-h: calc(100dvh - 3.5rem);
+  }
 }
 .manifesto-slider::-webkit-scrollbar {
   display: none;
