@@ -175,9 +175,13 @@ export default function TerminalIntro() {
           <div className="w-3 h-3 rounded-full bg-green-500"></div>
         </div>
 
-        <div className="py-5 sm:py-7 md:py-10 px-4 sm:px-5 md:px-6 font-mono text-green-400 text-sm sm:text-base md:text-lg bg-[#1a1a1a] text-left">
+        <div className="py-5 sm:py-7 md:py-10 px-4 sm:px-5 md:px-6 font-mono text-green-400 text-xs sm:text-base md:text-lg bg-[#1a1a1a] text-left">
           {lines.map((line, i) => (
-            <div key={i} className="fade-in-up whitespace-pre" style={fadeInStyle}>
+            <div
+              key={i}
+              className="fade-in-up whitespace-pre-wrap break-words"
+              style={fadeInStyle}
+            >
               {line.role === "cmd" && (
                 <>
                   <span className="text-blue-400">nobuddy</span>
@@ -187,13 +191,18 @@ export default function TerminalIntro() {
               {line.text}
             </div>
           ))}
-          {isWaiting && (
-            <div className="fade-in-up mt-8" style={fadeInStyle}>
-              <span className="text-yellow-400 animate-pulse motion-reduce:animate-none">
-                Scroll down to continue...
-              </span>
-            </div>
-          )}
+          {/* Always rendered (space reserved via `invisible`, not
+              conditionally mounted) so the box doesn't grow the moment
+              this line becomes real — it fades in into space that was
+              already there. */}
+          <div
+            className={`mt-8 ${isWaiting ? "fade-in-up" : "invisible"}`}
+            style={fadeInStyle}
+          >
+            <span className="text-yellow-400 animate-pulse motion-reduce:animate-none">
+              Scroll down to continue...
+            </span>
+          </div>
         </div>
       </div>
     </div>

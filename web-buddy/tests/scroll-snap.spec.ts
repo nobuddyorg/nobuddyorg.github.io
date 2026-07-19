@@ -92,4 +92,19 @@ test.describe("homepage manifesto scroll snap", () => {
       expect(footerTop - introBottom).toBeGreaterThanOrEqual(0);
     });
   }
+
+  // Only overflow-y was set, and per spec that silently promotes
+  // overflow-x from visible to auto too — turning any oversized
+  // descendant (CirclesBackground's deliberately 100rem-wide decorative
+  // SVG, previously safely clipped by body's own overflow-x: hidden) into
+  // real horizontally-scrollable dead space (#546).
+  test("the slider can't be scrolled horizontally", async ({ page }) => {
+    await page.setViewportSize({ width: 375, height: 812 });
+    await page.goto("/");
+
+    await expect(page.locator(".manifesto-slider")).toHaveCSS(
+      "overflow-x",
+      "hidden"
+    );
+  });
 });
