@@ -284,16 +284,11 @@ export default function TerminalIntro({ active }: { active: boolean }) {
       {/* Fixed to the viewport, not anchored below the terminal in normal
           flow, so it costs nothing in the top/bottom padding budget every
           page here has to fit its content within to clear the fixed
-          header/footer — and so it stays put at the bottom of the screen
-          rather than wherever document flow happens to land it (#558's
-          in-flow version moved with the page, but lost the fixed bottom
-          position; asked back explicitly). Gated on `active` (this page
-          is the one currently in view) so it doesn't stay pinned on
-          screen once scrolled past the intro — intro-only was the ask
-          (#556). Hidden state uses .scroll-hint-hidden's opacity
-          transition rather than `invisible` (an instant visibility cut),
-          so leaving the intro fades the button out instead of just
-          snapping it away. */}
+          header/footer. Gated on `active` (this page is the one currently
+          in view) so it doesn't stay pinned on screen once scrolled past
+          the intro — intro-only was the ask (#556). See globals.css's
+          .scroll-hint rule for why it's fixed rather than in-flow (#556,
+          #558) and why it fades out rather than snapping away (#560). */}
       <button
         ref={scrollHintRef}
         type="button"

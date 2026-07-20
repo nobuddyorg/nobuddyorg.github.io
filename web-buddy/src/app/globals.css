@@ -293,6 +293,10 @@ html {
    back explicitly, so it's fixed again). Both hints at and performs the
    page-by-page snap scroll on click — see TerminalIntro.tsx.
 
+   .scroll-hint-hidden (#560) fades the button out via opacity rather than
+   an instant visibility cut, so leaving the intro fades it away instead
+   of snapping it out of view.
+
    Filled, not transparent: reads as a solid button against the busy
    amber circles instead of a see-through outline. Colors match the
    Hero's "Follow on GitHub" pill (black/white, gray-900/gray-100 hover)
