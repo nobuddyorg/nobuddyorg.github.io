@@ -261,7 +261,7 @@ export default function TerminalIntro({ active }: { active: boolean }) {
         aria-hidden={!(active && isWaiting)}
         tabIndex={active && isWaiting ? 0 : -1}
         data-testid="scroll-hint"
-        className={`scroll-hint fixed bottom-14 sm:bottom-16 md:bottom-20 left-1/2 -translate-x-1/2 ${active && isWaiting ? "" : "scroll-hint-hidden"}`}
+        className={`scroll-hint fixed bottom-14 sm:bottom-16 md:bottom-20 left-1/2 -translate-x-1/2 bg-black dark:bg-white text-white dark:text-black shadow-lg hover:bg-gray-900 dark:hover:bg-gray-100 ${active && isWaiting ? "" : "scroll-hint-hidden"}`}
       >
         <svg
           width="26"
