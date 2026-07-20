@@ -1,23 +1,17 @@
 import { test, expect } from "@playwright/test";
+import { terminalOutput, terminalOutputText } from "./utils/terminal";
 
-// "Scroll down to continue..." and the full transcript text also exist in
-// an invisible same-content sizer (see TerminalIntro.tsx) that keeps the
-// box's height constant throughout the animation, so text queries here
-// scope through the visible output's data-testid rather than matching
-// both copies.
 test.describe("terminal intro skip and session persistence", () => {
   test("a click fast-forwards the terminal instead of forcing the full ~5s animation", async ({
     page,
   }) => {
     await page.goto("/");
 
-    // Click almost immediately, well before the animation would naturally
-    // finish (measured at ~5s in the issue).
     await page.waitForTimeout(200);
     await page.mouse.click(10, 10);
 
     await expect(
-      page.getByTestId("terminal-output").getByText("Scroll down to continue...")
+      terminalOutputText(page, "Scroll down to continue...")
     ).toBeVisible({ timeout: 1000 });
   });
 
@@ -28,7 +22,7 @@ test.describe("terminal intro skip and session persistence", () => {
     await page.keyboard.press("Space");
 
     await expect(
-      page.getByTestId("terminal-output").getByText("Scroll down to continue...")
+      terminalOutputText(page, "Scroll down to continue...")
     ).toBeVisible({ timeout: 1000 });
   });
 
@@ -39,16 +33,14 @@ test.describe("terminal intro skip and session persistence", () => {
     await page.waitForTimeout(200);
     await page.mouse.click(10, 10);
     await expect(
-      page.getByTestId("terminal-output").getByText("Scroll down to continue...")
+      terminalOutputText(page, "Scroll down to continue...")
     ).toBeVisible({ timeout: 1000 });
 
     await page.goto("/tools");
     await page.goto("/");
 
-    // On the repeat visit the completed terminal renders immediately,
-    // without waiting for the typing animation to play out again.
     await expect(
-      page.getByTestId("terminal-output").getByText("Scroll down to continue...")
+      terminalOutputText(page, "Scroll down to continue...")
     ).toBeVisible({ timeout: 500 });
   });
 
@@ -60,10 +52,13 @@ test.describe("terminal intro skip and session persistence", () => {
 
     const box = page.locator(".font-mono").locator("..");
     await page.waitForTimeout(100); // first paint, before any line appears
+    // boundingBox() returns null for an unrendered element; guard against
+    // that instead of risking a raw TypeError on a slow/flaky first paint.
+    await expect(box).toBeVisible();
     const initialHeight = (await box.boundingBox())!.height;
 
     await expect(
-      page.getByTestId("terminal-output").getByText("Scroll down to continue...")
+      terminalOutputText(page, "Scroll down to continue...")
     ).toBeVisible({ timeout: 10000 });
     const finalHeight = (await box.boundingBox())!.height;
 
@@ -78,12 +73,12 @@ test.describe("terminal intro skip and session persistence", () => {
     await page.waitForTimeout(200);
     await page.mouse.click(10, 10);
     await expect(
-      page.getByTestId("terminal-output").getByText("Scroll down to continue...")
+      terminalOutputText(page, "Scroll down to continue...")
     ).toBeVisible({ timeout: 1000 });
 
-    const overflow = await page
-      .getByTestId("terminal-output")
-      .evaluate((el) => el.scrollWidth - el.clientWidth);
+    const overflow = await terminalOutput(page).evaluate(
+      (el) => el.scrollWidth - el.clientWidth
+    );
     expect(overflow).toBe(0);
   });
 });

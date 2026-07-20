@@ -1,8 +1,9 @@
 "use client";
 
-import { useEffect, useLayoutEffect, useState } from "react";
+import { memo, useEffect, useLayoutEffect, useRef, useState } from "react";
 import type { CSSProperties } from "react";
 import { SITE_NAME, GITHUB_URL, SITE_DESCRIPTION } from "../constants";
+import { prefersReducedMotion } from "../utils";
 import Link from "next/link";
 
 const SESSION_KEY = "terminalIntroPlayed";
@@ -54,13 +55,17 @@ const moreLoadingMessages = [
 const shuffled = [...moreLoadingMessages].sort(() => 0.5 - Math.random());
 const [loadingMessage, msg1, msg2] = shuffled.slice(0, 3);
 
+// Deterministic (no Math.random), unlike msg1/msg2/loadingMessage, so the
+// ghost sizer below renders the same text on the server and the client —
+// also a safe upper bound for its height.
+const maxWidthPlaceholder = moreLoadingMessages.reduce((longest, msg) =>
+  msg.length > longest.length ? msg : longest
+);
+
 type Frame = { lines: ScriptLine[]; delay: number };
 
-// Each frame is a full snapshot of the terminal's lines plus how long to
-// wait before showing it — flattening the whole "type a line, tick the
-// loading bar, pause, type the next line" choreography into one linear
-// list turns the old phase/lineIndex/loadingIndex state machine (four
-// separate effects) into a single "advance to the next frame" effect.
+// Each frame is a full snapshot of the terminal's lines plus a delay,
+// so playback is a single "advance to the next frame" effect.
 function buildFrames(): Frame[] {
   const frames: Frame[] = [{ lines: [], delay: 0 }];
   const last = () => frames[frames.length - 1].lines;
@@ -90,18 +95,26 @@ function buildFrames(): Frame[] {
 const frames = buildFrames();
 const lastFrame = frames.length - 1;
 
-// Both hints at and performs the page-by-page snap scroll, so the
-// paging behavior itself is discoverable (#544) rather than something a
-// visitor has to stumble into via a wheel gesture.
+// Same shape as frames[lastFrame].lines, with maxWidthPlaceholder instead
+// of the random text.
+const sizerLines: ScriptLine[] = [
+  { role: "cmd", text: "initialize --buddyverse" },
+  { role: "echo", text: maxWidthPlaceholder },
+  {
+    role: "echo",
+    text: `${maxWidthPlaceholder} ${loadingSteps[loadingSteps.length - 1]}`,
+  },
+  { role: "cmd", text: "sync nobuddy.org" },
+  { role: "echo", text: maxWidthPlaceholder },
+  { role: "output", text: "↳ You’ve reached The Buddy Compendium." },
+];
+
 function scrollToNextPage(button: HTMLElement) {
   const slider = button.closest<HTMLElement>(".manifesto-slider");
   if (!slider) return;
-  const reduceMotion = window.matchMedia(
-    "(prefers-reduced-motion: reduce)"
-  ).matches;
   slider.scrollBy({
     top: slider.clientHeight,
-    behavior: reduceMotion ? "auto" : "smooth",
+    behavior: prefersReducedMotion() ? "auto" : "smooth",
   });
 }
 
@@ -119,6 +132,13 @@ function LineText({ line }: { line: ScriptLine }) {
   );
 }
 
+// Built once — sizerLines never changes after module load.
+const sizerContent = sizerLines.map((line, i) => (
+  <div key={i} className="whitespace-pre-wrap break-words">
+    <LineText line={line} />
+  </div>
+));
+
 function Hero() {
   return (
     <section
@@ -133,9 +153,7 @@ function Hero() {
         {SITE_DESCRIPTION}
       </h2>
 
-      {/* Skipped on mobile portrait: the intro is already tight on
-          vertical space there, and this action is one tap away in the
-          header's own GitHub link. */}
+      {/* Hidden on mobile: header already has a GitHub link. */}
       <Link
         href={GITHUB_URL}
         target="_blank"
@@ -150,16 +168,12 @@ function Hero() {
   );
 }
 
-export default function TerminalIntro({ active }: { active: boolean }) {
+function TerminalIntro({ active }: { active: boolean }) {
   const [frameIndex, setFrameIndex] = useState(0);
+  const scrollHintRef = useRef<HTMLButtonElement>(null);
 
-  // Render the completed terminal instantly on repeat visits within the
-  // same session instead of replaying the ~4s typing animation every time.
-  // useLayoutEffect (not useEffect) so this resolves before the browser
-  // paints the empty, server-rendered terminal.
-  // Must run post-mount (sessionStorage doesn't exist during SSR); a lazy
-  // useState initializer would run on the server too and mismatch on
-  // hydration.
+  // useLayoutEffect: resolves before first paint. sessionStorage isn't
+  // available during SSR, so this can't be a lazy useState initializer.
   useLayoutEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect
     if (sessionStorage.getItem(SESSION_KEY)) setFrameIndex(lastFrame);
@@ -174,8 +188,7 @@ export default function TerminalIntro({ active }: { active: boolean }) {
     return () => clearTimeout(t);
   }, [frameIndex]);
 
-  // A click or keypress anywhere fast-forwards straight to the finished
-  // state instead of forcing visitors to sit through the whole animation.
+  // Click or keypress anywhere skips straight to the finished state.
   useEffect(() => {
     const skip = () => setFrameIndex(lastFrame);
     window.addEventListener("click", skip);
@@ -192,8 +205,15 @@ export default function TerminalIntro({ active }: { active: boolean }) {
 
   const { lines } = frames[frameIndex];
   const isWaiting = frameIndex === lastFrame;
+  const showHint = active && isWaiting;
+
+  // Move focus off the button before it becomes aria-hidden/unfocusable.
+  useEffect(() => {
+    if (!showHint) scrollHintRef.current?.blur();
+  }, [showHint]);
 
   return (
+    // md:pt-24 is intentionally looser than the other sections' md:pt-20.
     <div className="flex flex-col items-center px-4 pt-16 sm:pt-20 md:pt-24 pb-14 sm:pb-16 md:pb-20">
       <Hero />
 
@@ -204,19 +224,11 @@ export default function TerminalIntro({ active }: { active: boolean }) {
           <div className="w-3 h-3 rounded-full bg-green-500"></div>
         </div>
 
-        {/* grid + the same [grid-area:1/1] on both children stacks them in
-            one cell, so the box's height comes from the invisible sizer
-            (always the complete transcript) rather than the real content —
-            which is what's growing line by line. Without this, the box
-            visibly grows throughout the whole typing animation, not just
-            at the final line. */}
+        {/* Stacked via grid so the box's height comes from the (fixed-size)
+            sizer, not the growing real content. */}
         <div className="grid py-5 sm:py-8 md:py-4 px-4 sm:px-5 md:px-6 font-mono text-green-400 text-xs sm:text-base md:text-lg bg-[#1a1a1a] text-left">
           <div aria-hidden="true" className="invisible [grid-area:1/1]">
-            {frames[lastFrame].lines.map((line, i) => (
-              <div key={i} className="whitespace-pre-wrap break-words">
-                <LineText line={line} />
-              </div>
-            ))}
+            {sizerContent}
             <div className="mt-8">Scroll down to continue...</div>
           </div>
 
@@ -241,27 +253,18 @@ export default function TerminalIntro({ active }: { active: boolean }) {
         </div>
       </div>
 
-      {/* Fixed to the viewport, not anchored below the terminal in normal
-          flow, so it costs nothing in the top/bottom padding budget every
-          page here has to fit its content within to clear the fixed
-          header/footer — and so it stays put at the bottom of the screen
-          rather than wherever document flow happens to land it (#558's
-          in-flow version moved with the page, but lost the fixed bottom
-          position; asked back explicitly). Gated on `active` (this page
-          is the one currently in view) so it doesn't stay pinned on
-          screen once scrolled past the intro — intro-only was the ask
-          (#556). Hidden state uses .scroll-hint-hidden's opacity
-          transition rather than `invisible` (an instant visibility cut),
-          so leaving the intro fades the button out instead of just
-          snapping it away. */}
+      {/* Fixed, so it costs nothing in the padding budget above. Only
+          shown while `active` (this page is in view) — see globals.css's
+          .scroll-hint rule for the rest. */}
       <button
+        ref={scrollHintRef}
         type="button"
         onClick={(e) => scrollToNextPage(e.currentTarget)}
         aria-label="Scroll to the next page"
-        aria-hidden={!(active && isWaiting)}
-        tabIndex={active && isWaiting ? 0 : -1}
+        aria-hidden={!showHint}
+        tabIndex={showHint ? 0 : -1}
         data-testid="scroll-hint"
-        className={`scroll-hint fixed bottom-14 sm:bottom-16 md:bottom-20 left-1/2 -translate-x-1/2 bg-black dark:bg-white text-white dark:text-black shadow-lg hover:bg-gray-900 dark:hover:bg-gray-100 ${active && isWaiting ? "" : "scroll-hint-hidden"}`}
+        className={`scroll-hint fixed bottom-14 sm:bottom-16 md:bottom-20 left-1/2 -translate-x-1/2 bg-black dark:bg-white text-white dark:text-black shadow-lg hover:bg-gray-900 dark:hover:bg-gray-100 ${showHint ? "" : "scroll-hint-hidden"}`}
       >
         <svg
           width="26"
@@ -280,3 +283,7 @@ export default function TerminalIntro({ active }: { active: boolean }) {
     </div>
   );
 }
+
+// Memoized: the parent re-renders on every section's scroll transition,
+// not just this one.
+export default memo(TerminalIntro);

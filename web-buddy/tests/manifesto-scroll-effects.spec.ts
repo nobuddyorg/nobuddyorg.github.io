@@ -8,8 +8,6 @@ test.describe("homepage manifesto scroll effects", () => {
 
     const gradientWrap = page.locator(".manifesto-gradient");
     await expect(gradientWrap).toBeAttached();
-    // The gradient lives on ::before (so it can be masked to fade in over
-    // the intro without masking the section content).
     const backgroundImage = await gradientWrap.evaluate(
       (el) => getComputedStyle(el, "::before").backgroundImage
     );
@@ -25,7 +23,6 @@ test.describe("homepage manifesto scroll effects", () => {
       name: "This is a hobby project",
     });
     await heading.scrollIntoViewIfNeeded();
-    // Allow the CSS transition to complete.
     await expect(heading).toHaveCSS("opacity", "1", { timeout: 2000 });
   });
 
@@ -52,8 +49,7 @@ test.describe("homepage manifesto scroll effects", () => {
     await heading.scrollIntoViewIfNeeded();
     await expect(heading).toHaveCSS("opacity", "1", { timeout: 2000 });
 
-    // Scroll far past it; its reveal must latch, so it stays opaque even
-    // while off-screen (opacity is still computable when scrolled away).
+    // Reveal must latch even while scrolled far off-screen.
     await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
     await page.waitForTimeout(400);
     await expect(heading).toHaveCSS("opacity", "1");
@@ -64,9 +60,6 @@ test.describe("homepage manifesto scroll effects", () => {
   }) => {
     await page.goto("/");
 
-    // The intro is a page in the slider too now (#544's own dot, so it
-    // doesn't look like "that page doesn't exist") — its dot is active
-    // immediately on load, not "nothing active until you scroll."
     const dots = page.locator(".manifesto-dot");
     await expect(dots).toHaveCount(6);
     await expect(dots.first()).toHaveClass(/active/, { timeout: 2000 });
@@ -88,9 +81,6 @@ test.describe("homepage manifesto scroll effects", () => {
     await page.waitForTimeout(300);
     await page.mouse.click(200, 700);
 
-    // Exactly one, ever — tried one per page in #554, but once it's been
-    // used it's implicitly clear scrolling keeps working the same way
-    // elsewhere, so persistent everywhere wasn't wanted after all.
     const hint = page.getByRole("button", { name: "Scroll to the next page" });
     await expect(hint).toHaveCount(1);
     await expect(hint).toBeVisible();
@@ -103,12 +93,30 @@ test.describe("homepage manifesto scroll effects", () => {
     await hint.click();
     await expect(dots.nth(1)).toHaveClass(/active/, { timeout: 3000 });
 
-    // No longer the active page: still fixed and still the only instance,
-    // but hidden via an opacity fade (#558) rather than an instant
-    // visibility cut. aria-hidden now correctly drops it out of the
-    // accessibility tree, so it has to be found by test id, not role.
+    // aria-hidden now, so found by test id rather than role.
     const hiddenHint = page.getByTestId("scroll-hint");
     await expect(hiddenHint).toHaveCSS("opacity", "0", { timeout: 2000 });
     await expect(hiddenHint).toHaveAttribute("aria-hidden", "true");
+  });
+
+  test("scroll-hint button doesn't strand keyboard focus once it's used (#572)", async ({
+    page,
+  }) => {
+    await page.goto("/");
+    await page.waitForTimeout(300);
+    await page.mouse.click(200, 700);
+
+    const hint = page.getByRole("button", { name: "Scroll to the next page" });
+    await hint.focus();
+    await expect(hint).toBeFocused();
+
+    await page.keyboard.press("Enter");
+
+    const dots = page.locator(".manifesto-dot");
+    await expect(dots.nth(1)).toHaveClass(/active/, { timeout: 3000 });
+
+    const hiddenHint = page.getByTestId("scroll-hint");
+    await expect(hiddenHint).toHaveAttribute("aria-hidden", "true");
+    await expect(hiddenHint).not.toBeFocused();
   });
 });

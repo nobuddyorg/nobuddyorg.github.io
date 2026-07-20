@@ -29,12 +29,8 @@ const ideas = [
 
 const sectionCount = ideas.length + 2; // + intro + call-to-action
 
-// One shared observer drives both the reveal animation and the dot rail —
-// `active` tracks whichever section is currently centered (for the dots),
-// while `revealed` latches true the first time a section appears and never
-// clears, so already-seen content stays revealed on scroll-away. Sections
-// receive a `register` callback rather than the ref array itself, so they
-// never mutate a value owned by the parent hook directly.
+// One observer drives both: `active` tracks the centered section (dots),
+// `revealed` latches true once and stays true (reveal animation).
 function useManifesto() {
   const refs = useRef<(HTMLElement | null)[]>([]);
   const [active, setActive] = useState<boolean[]>(() =>
@@ -47,21 +43,27 @@ function useManifesto() {
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
+        // Resolved once, shared by both updates below.
+        const changes = entries
+          .map((entry) => ({
+            index: refs.current.indexOf(entry.target as HTMLElement),
+            isIntersecting: entry.isIntersecting,
+          }))
+          .filter((change) => change.index !== -1);
+
         setActive((prev) => {
           const next = [...prev];
-          for (const entry of entries) {
-            const i = refs.current.indexOf(entry.target as HTMLElement);
-            if (i !== -1) next[i] = entry.isIntersecting;
+          for (const { index, isIntersecting } of changes) {
+            next[index] = isIntersecting;
           }
           return next;
         });
         setRevealed((prev) => {
           let changed = false;
           const next = [...prev];
-          for (const entry of entries) {
-            const i = refs.current.indexOf(entry.target as HTMLElement);
-            if (i !== -1 && entry.isIntersecting && !next[i]) {
-              next[i] = true;
+          for (const { index, isIntersecting } of changes) {
+            if (isIntersecting && !next[index]) {
+              next[index] = true;
               changed = true;
             }
           }
@@ -94,7 +96,7 @@ function ManifestoSection({
   return (
     <section
       ref={register}
-      className={`manifesto-section min-h-dvh snap-center flex flex-col justify-center items-center text-center px-6 pt-16 sm:pt-20 md:pt-20 pb-14 sm:pb-16 md:pb-20 ${revealed ? "in-view" : ""}`}
+      className={`manifesto-section min-h-dvh snap-center flex flex-col justify-center items-center text-center px-6 pt-16 sm:pt-20 pb-14 sm:pb-16 md:pb-20 ${revealed ? "in-view" : ""}`}
     >
       <div className="manifesto-emoji text-6xl mb-6">{emoji}</div>
       <h2 className="text-2xl sm:text-3xl font-bold mb-4">{title}</h2>
@@ -115,7 +117,7 @@ function CallToActionSection({
   return (
     <section
       ref={register}
-      className={`manifesto-section min-h-dvh snap-center flex flex-col justify-center items-center text-center px-10 pt-16 sm:pt-20 md:pt-20 pb-14 sm:pb-16 md:pb-20 ${revealed ? "in-view" : ""}`}
+      className={`manifesto-section min-h-dvh snap-center flex flex-col justify-center items-center text-center px-10 pt-16 sm:pt-20 pb-14 sm:pb-16 md:pb-20 ${revealed ? "in-view" : ""}`}
     >
       <div className="manifesto-cta-text text-xl sm:text-2xl mb-6">
         Explore the tools. Adopt a Buddy.
@@ -131,9 +133,7 @@ function CallToActionSection({
   );
 }
 
-// Purely a visual scroll-position affordance — the section headings already
-// convey where you are, so this stays out of the accessibility tree rather
-// than adding redundant, constantly-changing announcements.
+// Decorative only — headings already convey scroll position.
 function ScrollDots({ active }: { active: boolean[] }) {
   const activeIndex = active.lastIndexOf(true);
   return (
@@ -153,11 +153,8 @@ export default function ManifestoScroll() {
 
   return (
     <>
-      {/* Its own overflow-y scroll container (not the document) is what
-          makes native scroll-snap actually reliable — see globals.css for
-          why. tabIndex + aria-label keep it keyboard-reachable, since a
-          nested scroll container isn't otherwise focusable and none of the
-          idea sections contain a focusable element of their own (#413). */}
+      {/* tabIndex + aria-label: nested scroll containers aren't otherwise
+          keyboard-focusable. */}
       <div
         className="manifesto-slider"
         tabIndex={0}
