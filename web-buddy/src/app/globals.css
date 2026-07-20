@@ -284,28 +284,32 @@ html {
   }
 }
 
-/* Scroll-hint chevron, rendered once per page (intro + each manifesto
-   idea — not the CTA, which has its own action) in that page's own
-   normal flow, not a fixed overlay: it scrolls naturally with whichever
-   page it's on instead of only existing on the intro and blinking away
-   everywhere else (#554). Both hints at and performs the page-by-page
-   snap scroll on click — see NextPageHint.tsx.
+/* Scroll-hint chevron, fixed to the viewport and shown only on the intro
+   page (#556 — tried it on every page in #554, but once it's been used
+   once it's implicitly clear scrolling keeps working the same way on
+   every other page, so persistent everywhere wasn't wanted after all).
+   Both hints at and performs the page-by-page snap scroll on click — see
+   TerminalIntro.tsx.
 
-   Border, not a glow: a previous glow version was nearly invisible
-   against CirclesBackground's amber palette and looked overwrought once
-   actually seen live. border-color matches the icon's own color
-   (--foreground) so it reads as one shape in either theme. */
+   Filled, not transparent: reads as a solid button against the busy
+   amber circles instead of a see-through outline. Both the fill
+   (--background) and the border/icon (--foreground) are theme tokens, so
+   it's a light disc with dark ink in light mode and the reverse in dark
+   mode, rather than a single hardcoded color pair. */
 .scroll-hint {
   display: flex;
   align-items: center;
   justify-content: center;
   width: 2.5rem;
   height: 2.5rem;
-  margin: 0.75rem auto 0;
   border-radius: 999px;
   border: 2px solid var(--foreground);
+  background: var(--background);
   color: var(--foreground);
   cursor: pointer;
+  /* Above Footer's z-50, as a safety margin — the bottom-* offset (JSX)
+     is chosen to already clear the footer without overlapping it. */
+  z-index: 60;
   transition:
     background 0.15s,
     color 0.15s;

@@ -4,7 +4,6 @@ import { useEffect, useLayoutEffect, useState } from "react";
 import type { CSSProperties } from "react";
 import { SITE_NAME, GITHUB_URL, SITE_DESCRIPTION } from "../constants";
 import Link from "next/link";
-import NextPageHint from "./NextPageHint";
 
 const SESSION_KEY = "terminalIntroPlayed";
 
@@ -91,6 +90,21 @@ function buildFrames(): Frame[] {
 const frames = buildFrames();
 const lastFrame = frames.length - 1;
 
+// Both hints at and performs the page-by-page snap scroll, so the
+// paging behavior itself is discoverable (#544) rather than something a
+// visitor has to stumble into via a wheel gesture.
+function scrollToNextPage(button: HTMLElement) {
+  const slider = button.closest<HTMLElement>(".manifesto-slider");
+  if (!slider) return;
+  const reduceMotion = window.matchMedia(
+    "(prefers-reduced-motion: reduce)"
+  ).matches;
+  slider.scrollBy({
+    top: slider.clientHeight,
+    behavior: reduceMotion ? "auto" : "smooth",
+  });
+}
+
 function LineText({ line }: { line: ScriptLine }) {
   return (
     <>
@@ -136,7 +150,7 @@ function Hero() {
   );
 }
 
-export default function TerminalIntro() {
+export default function TerminalIntro({ active }: { active: boolean }) {
   const [frameIndex, setFrameIndex] = useState(0);
 
   // Render the completed terminal instantly on repeat visits within the
@@ -227,7 +241,35 @@ export default function TerminalIntro() {
         </div>
       </div>
 
-      <NextPageHint />
+      {/* Fixed to the viewport (not anchored below the terminal in normal
+          flow) so it costs nothing in the top/bottom padding budget every
+          page here has to fit its content within to clear the fixed
+          header/footer. Gated on `active` (this page is the one
+          currently in view) so it doesn't stay pinned on screen once
+          scrolled past the intro — intro-only was the ask (#556): once
+          used, it's implicitly clear scrolling continues to work the
+          same way on every other page. */}
+      <button
+        type="button"
+        onClick={(e) => scrollToNextPage(e.currentTarget)}
+        aria-label="Scroll to the next page"
+        className={`scroll-hint fixed bottom-14 sm:bottom-16 md:bottom-20 left-1/2 -translate-x-1/2 ${active && isWaiting ? "fade-in-up" : "invisible"}`}
+        style={fadeInStyle}
+      >
+        <svg
+          width="26"
+          height="26"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2.5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          aria-hidden="true"
+        >
+          <path d="M6 9l6 6 6-6" />
+        </svg>
+      </button>
     </div>
   );
 }
