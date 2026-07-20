@@ -221,15 +221,16 @@ export default function TerminalIntro({ active }: { active: boolean }) {
 
   const { lines } = frames[frameIndex];
   const isWaiting = frameIndex === lastFrame;
+  const showHint = active && isWaiting;
 
   // aria-hidden/tabIndex below make the button unreachable the instant
-  // active && isWaiting flips false, but that alone doesn't move focus off
-  // it — a keyboard user who just activated it (scrolling away, which is
-  // what flips it false) would otherwise be left with DOM focus stranded
-  // on a now aria-hidden, unfocusable element.
+  // showHint flips false, but that alone doesn't move focus off it — a
+  // keyboard user who just activated it (scrolling away, which is what
+  // flips it false) would otherwise be left with DOM focus stranded on a
+  // now aria-hidden, unfocusable element.
   useEffect(() => {
-    if (!(active && isWaiting)) scrollHintRef.current?.blur();
-  }, [active, isWaiting]);
+    if (!showHint) scrollHintRef.current?.blur();
+  }, [showHint]);
 
   return (
     <div className="flex flex-col items-center px-4 pt-16 sm:pt-20 md:pt-24 pb-14 sm:pb-16 md:pb-20">
@@ -298,10 +299,10 @@ export default function TerminalIntro({ active }: { active: boolean }) {
         type="button"
         onClick={(e) => scrollToNextPage(e.currentTarget)}
         aria-label="Scroll to the next page"
-        aria-hidden={!(active && isWaiting)}
-        tabIndex={active && isWaiting ? 0 : -1}
+        aria-hidden={!showHint}
+        tabIndex={showHint ? 0 : -1}
         data-testid="scroll-hint"
-        className={`scroll-hint fixed bottom-14 sm:bottom-16 md:bottom-20 left-1/2 -translate-x-1/2 bg-black dark:bg-white text-white dark:text-black shadow-lg hover:bg-gray-900 dark:hover:bg-gray-100 ${active && isWaiting ? "" : "scroll-hint-hidden"}`}
+        className={`scroll-hint fixed bottom-14 sm:bottom-16 md:bottom-20 left-1/2 -translate-x-1/2 bg-black dark:bg-white text-white dark:text-black shadow-lg hover:bg-gray-900 dark:hover:bg-gray-100 ${showHint ? "" : "scroll-hint-hidden"}`}
       >
         <svg
           width="26"
