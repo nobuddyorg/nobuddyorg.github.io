@@ -23,7 +23,7 @@ const ideas = [
   {
     emoji: "🚀",
     title: "This is a hobby project",
-    body: `No big team, no investors, no corporate goals. Just some developers shipping tools out of curiosity and frustration. Some ideas are polished, others are experimental. If something breaks or feels unfinished, it’s probably because it was released too early. That’s part of the fun. This space is intentionally imperfect. It's a sandbox for ideas that might not fit anywhere else. It’s about freedom, creativity, and the joy of building without pressure.`,
+    body: `Started as a handful of fun side projects – now some have grown into tools people actually rely on. No big team, no investors, no corporate goals, just developers building what they wish existed. Still no pressure, still no deadlines. Just less duct tape than it used to be.`,
   },
 ];
 
