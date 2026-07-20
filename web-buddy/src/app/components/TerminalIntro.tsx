@@ -122,14 +122,14 @@ function LineText({ line }: { line: ScriptLine }) {
 function Hero() {
   return (
     <section
-      className="relative pb-3 sm:pb-5 md:pb-4 max-w-4xl mx-auto px-4 md:px-6 text-center"
+      className="relative pb-3 sm:pb-5 md:pb-6 max-w-4xl mx-auto px-4 md:px-6 text-center"
       aria-label="Introduction section"
     >
-      <h1 className="relative z-10 text-3xl sm:text-5xl md:text-6xl font-extrabold tracking-tight leading-tight mb-2 sm:mb-4 md:mb-2 text-black dark:text-white">
+      <h1 className="relative z-10 text-3xl sm:text-5xl md:text-6xl font-extrabold tracking-tight leading-tight mb-2 sm:mb-4 md:mb-3 text-black dark:text-white">
         {SITE_NAME}
       </h1>
 
-      <h2 className="block relative z-10 max-w-3xl mx-auto text-sm sm:text-lg md:text-xl text-neutral-800 dark:text-neutral-100 mb-4 sm:mb-6 md:mb-2">
+      <h2 className="block relative z-10 max-w-3xl mx-auto text-sm sm:text-lg md:text-xl text-neutral-800 dark:text-neutral-100 mb-4 sm:mb-6 md:mb-3">
         {SITE_DESCRIPTION}
       </h2>
 
@@ -194,10 +194,10 @@ export default function TerminalIntro({ active }: { active: boolean }) {
   const isWaiting = frameIndex === lastFrame;
 
   return (
-    <div className="flex flex-col items-center px-4 pt-16 sm:pt-20 md:pt-20 pb-14 sm:pb-16 md:pb-20">
+    <div className="flex flex-col items-center px-4 pt-16 sm:pt-20 md:pt-24 pb-14 sm:pb-16 md:pb-20">
       <Hero />
 
-      <div className="w-full max-w-3xl mb-6 sm:mb-8 md:mb-4 rounded-lg overflow-clip shadow-lg border border-neutral-800 bg-[#1a1a1a]">
+      <div className="w-full max-w-3xl mb-6 sm:mb-8 md:mb-6 rounded-lg overflow-clip shadow-lg border border-neutral-800 bg-[#1a1a1a]">
         <div className="flex items-center space-x-2 px-3 py-2 bg-[#2d2d2d] border-b border-neutral-700">
           <div className="w-3 h-3 rounded-full bg-red-500"></div>
           <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
