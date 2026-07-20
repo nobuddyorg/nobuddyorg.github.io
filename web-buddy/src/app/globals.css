@@ -284,12 +284,14 @@ html {
   }
 }
 
-/* Scroll-hint chevron, fixed to the viewport and shown only on the intro
-   page (#556 — tried it on every page in #554, but once it's been used
-   once it's implicitly clear scrolling keeps working the same way on
-   every other page, so persistent everywhere wasn't wanted after all).
-   Both hints at and performs the page-by-page snap scroll on click — see
-   TerminalIntro.tsx.
+/* Scroll-hint chevron, shown only on the intro page (#556 — tried it on
+   every page in #554, but once it's been used once it's implicitly clear
+   scrolling keeps working the same way on every other page, so persistent
+   everywhere wasn't wanted after all). Sits in normal document flow below
+   the terminal (not fixed to the viewport, per feedback after #556 — it
+   should scroll away with the rest of the intro's content rather than
+   stay pinned in place). Both hints at and performs the page-by-page snap
+   scroll on click — see TerminalIntro.tsx.
 
    Filled, not transparent: reads as a solid button against the busy
    amber circles instead of a see-through outline. Both the fill
@@ -307,9 +309,6 @@ html {
   background: var(--background);
   color: var(--foreground);
   cursor: pointer;
-  /* Above Footer's z-50, as a safety margin — the bottom-* offset (JSX)
-     is chosen to already clear the footer without overlapping it. */
-  z-index: 60;
   transition:
     background 0.15s,
     color 0.15s;
