@@ -81,7 +81,7 @@ test.describe("homepage manifesto scroll effects", () => {
     await expect(page.locator(".manifesto-dot.active")).toHaveCount(1);
   });
 
-  test("scroll-hint arrow is intro-only, fixed to the viewport, and advances one page on click (#544, #556)", async ({
+  test("scroll-hint arrow is intro-only, sits in normal flow, and advances one page on click (#544, #556, #558)", async ({
     page,
   }) => {
     await page.goto("/");
@@ -94,7 +94,11 @@ test.describe("homepage manifesto scroll effects", () => {
     const hint = page.getByRole("button", { name: "Scroll to the next page" });
     await expect(hint).toHaveCount(1);
     await expect(hint).toBeVisible();
-    await expect(hint).toHaveCSS("position", "fixed");
+    // In normal document flow (#558), not pinned to the viewport, so it
+    // scrolls away with the rest of the intro's content instead of
+    // needing its own separate hide/show state.
+    await expect(hint).toHaveCSS("position", "static");
+    await expect(hint).toBeInViewport();
 
     const dots = page.locator(".manifesto-dot");
     await expect(dots.first()).toHaveClass(/active/);
@@ -102,8 +106,7 @@ test.describe("homepage manifesto scroll effects", () => {
     await hint.click();
     await expect(dots.nth(1)).toHaveClass(/active/, { timeout: 3000 });
 
-    // No longer the active page, so the (still fixed, still the only
-    // instance) button is hidden rather than persisting into view.
-    await expect(hint).not.toBeVisible();
+    // Scrolled away along with the rest of the intro page it belongs to.
+    await expect(hint).not.toBeInViewport();
   });
 });

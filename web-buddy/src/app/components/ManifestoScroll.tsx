@@ -165,7 +165,7 @@ export default function ManifestoScroll() {
       >
         <section className="min-h-dvh snap-center" ref={register(0)}>
           <CirclesBackground variant="home" />
-          <TerminalIntro active={active[0]} />
+          <TerminalIntro />
         </section>
         <div className="manifesto-gradient">
           {ideas.map((idea, i) => (
