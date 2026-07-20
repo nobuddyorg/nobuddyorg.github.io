@@ -81,7 +81,7 @@ test.describe("homepage manifesto scroll effects", () => {
     await expect(page.locator(".manifesto-dot.active")).toHaveCount(1);
   });
 
-  test("scroll-hint arrow is intro-only, sits in normal flow, and advances one page on click (#544, #556, #558)", async ({
+  test("scroll-hint arrow is intro-only, fixed to the viewport, and fades (not snaps) out on leaving the intro (#544, #556, #558)", async ({
     page,
   }) => {
     await page.goto("/");
@@ -94,11 +94,8 @@ test.describe("homepage manifesto scroll effects", () => {
     const hint = page.getByRole("button", { name: "Scroll to the next page" });
     await expect(hint).toHaveCount(1);
     await expect(hint).toBeVisible();
-    // In normal document flow (#558), not pinned to the viewport, so it
-    // scrolls away with the rest of the intro's content instead of
-    // needing its own separate hide/show state.
-    await expect(hint).toHaveCSS("position", "static");
-    await expect(hint).toBeInViewport();
+    await expect(hint).toHaveCSS("position", "fixed");
+    await expect(hint).toHaveCSS("opacity", "1");
 
     const dots = page.locator(".manifesto-dot");
     await expect(dots.first()).toHaveClass(/active/);
@@ -106,7 +103,12 @@ test.describe("homepage manifesto scroll effects", () => {
     await hint.click();
     await expect(dots.nth(1)).toHaveClass(/active/, { timeout: 3000 });
 
-    // Scrolled away along with the rest of the intro page it belongs to.
-    await expect(hint).not.toBeInViewport();
+    // No longer the active page: still fixed and still the only instance,
+    // but hidden via an opacity fade (#558) rather than an instant
+    // visibility cut. aria-hidden now correctly drops it out of the
+    // accessibility tree, so it has to be found by test id, not role.
+    const hiddenHint = page.getByTestId("scroll-hint");
+    await expect(hiddenHint).toHaveCSS("opacity", "0", { timeout: 2000 });
+    await expect(hiddenHint).toHaveAttribute("aria-hidden", "true");
   });
 });

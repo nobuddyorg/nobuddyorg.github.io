@@ -150,7 +150,7 @@ function Hero() {
   );
 }
 
-export default function TerminalIntro() {
+export default function TerminalIntro({ active }: { active: boolean }) {
   const [frameIndex, setFrameIndex] = useState(0);
 
   // Render the completed terminal instantly on repeat visits within the
@@ -197,7 +197,7 @@ export default function TerminalIntro() {
     <div className="flex flex-col items-center px-4 pt-16 sm:pt-20 md:pt-20 pb-14 sm:pb-16 md:pb-20">
       <Hero />
 
-      <div className="w-full max-w-3xl mb-4 sm:mb-5 md:mb-3 rounded-lg overflow-clip shadow-lg border border-neutral-800 bg-[#1a1a1a]">
+      <div className="w-full max-w-3xl mb-6 sm:mb-8 md:mb-4 rounded-lg overflow-clip shadow-lg border border-neutral-800 bg-[#1a1a1a]">
         <div className="flex items-center space-x-2 px-3 py-2 bg-[#2d2d2d] border-b border-neutral-700">
           <div className="w-3 h-3 rounded-full bg-red-500"></div>
           <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
@@ -241,19 +241,27 @@ export default function TerminalIntro() {
         </div>
       </div>
 
-      {/* Sits in normal flow, right below the terminal, so it scrolls with
-          the intro's own content instead of staying pinned to the
-          viewport (feedback after #556: felt more natural moving with the
-          page than sitting fixed in place). It only exists on this one
-          page, so there's no separate "hide once scrolled past" state to
-          manage — scrolling to the next page carries it off-screen along
-          with everything else here, same as the terminal box above it. */}
+      {/* Fixed to the viewport, not anchored below the terminal in normal
+          flow, so it costs nothing in the top/bottom padding budget every
+          page here has to fit its content within to clear the fixed
+          header/footer — and so it stays put at the bottom of the screen
+          rather than wherever document flow happens to land it (#558's
+          in-flow version moved with the page, but lost the fixed bottom
+          position; asked back explicitly). Gated on `active` (this page
+          is the one currently in view) so it doesn't stay pinned on
+          screen once scrolled past the intro — intro-only was the ask
+          (#556). Hidden state uses .scroll-hint-hidden's opacity
+          transition rather than `invisible` (an instant visibility cut),
+          so leaving the intro fades the button out instead of just
+          snapping it away. */}
       <button
         type="button"
         onClick={(e) => scrollToNextPage(e.currentTarget)}
         aria-label="Scroll to the next page"
-        className={`scroll-hint ${isWaiting ? "fade-in-up" : "invisible"}`}
-        style={fadeInStyle}
+        aria-hidden={!(active && isWaiting)}
+        tabIndex={active && isWaiting ? 0 : -1}
+        data-testid="scroll-hint"
+        className={`scroll-hint fixed bottom-14 sm:bottom-16 md:bottom-20 left-1/2 -translate-x-1/2 ${active && isWaiting ? "" : "scroll-hint-hidden"}`}
       >
         <svg
           width="26"
