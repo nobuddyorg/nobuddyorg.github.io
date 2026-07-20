@@ -147,6 +147,15 @@ function LineText({ line }: { line: ScriptLine }) {
   );
 }
 
+// sizerLines never changes after module load, so this is built once here
+// rather than being re-mapped on every one of the ~18 frameIndex state
+// updates TerminalIntro goes through during the typing animation.
+const sizerContent = sizerLines.map((line, i) => (
+  <div key={i} className="whitespace-pre-wrap break-words">
+    <LineText line={line} />
+  </div>
+));
+
 function Hero() {
   return (
     <section
@@ -252,11 +261,7 @@ export default function TerminalIntro({ active }: { active: boolean }) {
             final line. */}
         <div className="grid py-5 sm:py-8 md:py-4 px-4 sm:px-5 md:px-6 font-mono text-green-400 text-xs sm:text-base md:text-lg bg-[#1a1a1a] text-left">
           <div aria-hidden="true" className="invisible [grid-area:1/1]">
-            {sizerLines.map((line, i) => (
-              <div key={i} className="whitespace-pre-wrap break-words">
-                <LineText line={line} />
-              </div>
-            ))}
+            {sizerContent}
             <div className="mt-8">Scroll down to continue...</div>
           </div>
 
