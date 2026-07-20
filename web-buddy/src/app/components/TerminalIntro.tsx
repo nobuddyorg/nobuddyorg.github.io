@@ -54,6 +54,20 @@ const moreLoadingMessages = [
 const shuffled = [...moreLoadingMessages].sort(() => 0.5 - Math.random());
 const [loadingMessage, msg1, msg2] = shuffled.slice(0, 3);
 
+// The longest message in the list, picked deterministically (no
+// Math.random) — used only for the ghost sizer below, which must render
+// identical text on the server and the client. Reusing the randomly
+// shuffled msg1/msg2/loadingMessage there would pick a different message
+// in each environment under static export (the server's shuffle runs once
+// at build time; the client re-evaluates the module fresh at hydration),
+// producing a real text mismatch on first paint even though the node is
+// invisible. Picking the single longest message for every slot also keeps
+// the sizer's height a safe upper bound, since no real random pick can be
+// taller than it.
+const maxWidthPlaceholder = moreLoadingMessages.reduce((longest, msg) =>
+  msg.length > longest.length ? msg : longest
+);
+
 type Frame = { lines: ScriptLine[]; delay: number };
 
 // Each frame is a full snapshot of the terminal's lines plus how long to
@@ -89,6 +103,22 @@ function buildFrames(): Frame[] {
 
 const frames = buildFrames();
 const lastFrame = frames.length - 1;
+
+// Same shape as frames[lastFrame].lines, but with maxWidthPlaceholder in
+// place of the randomly-picked msg1/loadingMessage/msg2 slots — see the
+// comment on maxWidthPlaceholder above for why the ghost sizer can't just
+// reuse frames[lastFrame].lines directly.
+const sizerLines: ScriptLine[] = [
+  { role: "cmd", text: "initialize --buddyverse" },
+  { role: "echo", text: maxWidthPlaceholder },
+  {
+    role: "echo",
+    text: `${maxWidthPlaceholder} ${loadingSteps[loadingSteps.length - 1]}`,
+  },
+  { role: "cmd", text: "sync nobuddy.org" },
+  { role: "echo", text: maxWidthPlaceholder },
+  { role: "output", text: "↳ You’ve reached The Buddy Compendium." },
+];
 
 // Both hints at and performs the page-by-page snap scroll, so the
 // paging behavior itself is discoverable (#544) rather than something a
@@ -206,13 +236,14 @@ export default function TerminalIntro({ active }: { active: boolean }) {
 
         {/* grid + the same [grid-area:1/1] on both children stacks them in
             one cell, so the box's height comes from the invisible sizer
-            (always the complete transcript) rather than the real content —
-            which is what's growing line by line. Without this, the box
-            visibly grows throughout the whole typing animation, not just
-            at the final line. */}
+            (a same-shape stand-in for the complete transcript, see
+            sizerLines above) rather than the real content — which is
+            what's growing line by line. Without this, the box visibly
+            grows throughout the whole typing animation, not just at the
+            final line. */}
         <div className="grid py-5 sm:py-8 md:py-4 px-4 sm:px-5 md:px-6 font-mono text-green-400 text-xs sm:text-base md:text-lg bg-[#1a1a1a] text-left">
           <div aria-hidden="true" className="invisible [grid-area:1/1]">
-            {frames[lastFrame].lines.map((line, i) => (
+            {sizerLines.map((line, i) => (
               <div key={i} className="whitespace-pre-wrap break-words">
                 <LineText line={line} />
               </div>
