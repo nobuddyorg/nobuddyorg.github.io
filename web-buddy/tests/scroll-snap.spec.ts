@@ -64,12 +64,13 @@ test.describe("homepage manifesto scroll snap", () => {
     );
   });
 
-  // Footer is fixed site-wide, and unlike every other page here the slider
-  // fills the viewport edge to edge with no bottom padding of its own — a
-  // plain 100dvh page would render its last ~40px under the fixed footer
-  // (#541). Each page sizes off --page-h (globals.css), which reserves
-  // that space; this locks in a real clearance instead of just trusting
-  // the reserved amount matches the footer's actual rendered height.
+  // Header and Footer are both fixed, translucent overlays on every page
+  // here (min-h-dvh, same as everywhere else on the site) — each page's
+  // own pt-*/pb-* padding is what has to actually clear them, not the
+  // section's own box (which deliberately spans the full viewport, so
+  // checking *that* against the footer/header is always trivially near-
+  // zero regardless of whether real content is obscured — checked the
+  // wrong element early in #554 and it silently passed for that reason).
   //
   // 360px (Moto G4/Galaxy S/Pixel-class — Chrome DevTools' own small-phone
   // default) is the realistic floor, not 320px: that's specifically the
@@ -88,21 +89,28 @@ test.describe("homepage manifesto scroll snap", () => {
     { width: 1280, height: 720, label: "desktop (Playwright default)" },
     { width: 1280, height: 800, label: "desktop" },
   ]) {
-    test(`the intro page doesn't render under the fixed footer (${viewport.label})`, async ({
+    test(`intro content clears both the header and footer (${viewport.label})`, async ({
       page,
     }) => {
       await page.setViewportSize(viewport);
       await page.goto("/");
 
+      const headerBottom = await page
+        .locator("header")
+        .evaluate((el) => el.getBoundingClientRect().bottom);
+      const h1Top = await page
+        .locator("h1")
+        .evaluate((el) => el.getBoundingClientRect().top);
+      expect(h1Top - headerBottom).toBeGreaterThanOrEqual(0);
+
       const footerTop = await page
         .locator("footer")
         .evaluate((el) => el.getBoundingClientRect().top);
-      const introBottom = await page
-        .locator(".manifesto-slider section")
+      const hintBottom = await page
+        .locator(".scroll-hint")
         .first()
         .evaluate((el) => el.getBoundingClientRect().bottom);
-
-      expect(footerTop - introBottom).toBeGreaterThanOrEqual(0);
+      expect(footerTop - hintBottom).toBeGreaterThanOrEqual(0);
     });
   }
 
