@@ -1,4 +1,5 @@
 import { test, expect } from "@playwright/test";
+import { terminalOutputText } from "./utils/terminal";
 
 test.describe("prefers-reduced-motion", () => {
   test("emoji background canvas is static", async ({ page }) => {
@@ -25,12 +26,7 @@ test.describe("prefers-reduced-motion", () => {
     await page.emulateMedia({ reducedMotion: "reduce" });
     await page.goto("/");
 
-    // An invisible same-content sizer also contains this text (keeps the
-    // terminal box's height constant throughout the animation — see
-    // TerminalIntro.tsx), so this scopes through the visible output.
-    const pulse = page
-      .getByTestId("terminal-output")
-      .getByText("Scroll down to continue...");
+    const pulse = terminalOutputText(page, "Scroll down to continue...");
     await expect(pulse).toBeVisible({ timeout: 15000 });
     await expect(pulse).toHaveCSS("animation-name", "none");
   });

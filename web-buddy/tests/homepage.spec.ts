@@ -1,4 +1,5 @@
 import { test, expect } from "@playwright/test";
+import { terminalOutputText } from "./utils/terminal";
 
 test.describe("homepage hero and manifesto content", () => {
   test("renders the terminal intro hero", async ({ page }) => {
@@ -13,13 +14,8 @@ test.describe("homepage hero and manifesto content", () => {
   test("terminal intro plays the script lines", async ({ page }) => {
     await page.goto("/");
 
-    // An invisible same-content sizer also contains this text (keeps the
-    // terminal box's height constant throughout the animation — see
-    // TerminalIntro.tsx), so this scopes through the visible output.
     await expect(
-      page
-        .getByTestId("terminal-output")
-        .getByText("You’ve reached The Buddy Compendium.")
+      terminalOutputText(page, "You’ve reached The Buddy Compendium.")
     ).toBeVisible({ timeout: 15000 });
   });
 
