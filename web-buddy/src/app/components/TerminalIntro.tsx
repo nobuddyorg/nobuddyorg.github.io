@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { memo, useEffect, useLayoutEffect, useRef, useState } from "react";
 import type { CSSProperties } from "react";
 import { SITE_NAME, GITHUB_URL, SITE_DESCRIPTION } from "../constants";
 import { prefersReducedMotion } from "../utils";
@@ -187,7 +187,7 @@ function Hero() {
   );
 }
 
-export default function TerminalIntro({ active }: { active: boolean }) {
+function TerminalIntro({ active }: { active: boolean }) {
   const [frameIndex, setFrameIndex] = useState(0);
   const scrollHintRef = useRef<HTMLButtonElement>(null);
 
@@ -321,3 +321,11 @@ export default function TerminalIntro({ active }: { active: boolean }) {
     </div>
   );
 }
+
+// TerminalIntro never unmounts (it's the first section inside the
+// always-mounted .manifesto-slider), and its parent re-renders on every
+// IntersectionObserver update for any of the 6 manifesto sections, not
+// just this one — memo avoids redoing this component's own work
+// (including reconciling the ghost sizer) when its own `active` prop
+// hasn't actually changed.
+export default memo(TerminalIntro);
