@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { prefersReducedMotion } from "../utils";
 
 interface AnimatedClipProps {
   src: string;
@@ -27,7 +28,7 @@ export default function AnimatedClip({
     const video = videoRef.current;
     if (!video) return;
 
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    if (prefersReducedMotion()) {
       return;
     }
 
