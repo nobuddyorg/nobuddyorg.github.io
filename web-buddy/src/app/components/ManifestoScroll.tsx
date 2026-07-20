@@ -47,21 +47,29 @@ function useManifesto() {
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
+        // Each entry's section index is resolved once here, shared by
+        // both updates below, instead of setActive and setRevealed each
+        // independently re-scanning refs.current for the same entries.
+        const changes = entries
+          .map((entry) => ({
+            index: refs.current.indexOf(entry.target as HTMLElement),
+            isIntersecting: entry.isIntersecting,
+          }))
+          .filter((change) => change.index !== -1);
+
         setActive((prev) => {
           const next = [...prev];
-          for (const entry of entries) {
-            const i = refs.current.indexOf(entry.target as HTMLElement);
-            if (i !== -1) next[i] = entry.isIntersecting;
+          for (const { index, isIntersecting } of changes) {
+            next[index] = isIntersecting;
           }
           return next;
         });
         setRevealed((prev) => {
           let changed = false;
           const next = [...prev];
-          for (const entry of entries) {
-            const i = refs.current.indexOf(entry.target as HTMLElement);
-            if (i !== -1 && entry.isIntersecting && !next[i]) {
-              next[i] = true;
+          for (const { index, isIntersecting } of changes) {
+            if (isIntersecting && !next[index]) {
+              next[index] = true;
               changed = true;
             }
           }
