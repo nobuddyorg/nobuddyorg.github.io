@@ -81,21 +81,26 @@ test.describe("homepage manifesto scroll effects", () => {
     await expect(page.locator(".manifesto-dot.active")).toHaveCount(1);
   });
 
-  test("scroll-hint arrow below the terminal advances one page on click (#544)", async ({
+  test("scroll-hint arrow advances one page on click, and is present on every page, not just the intro (#544, #554)", async ({
     page,
   }) => {
     await page.goto("/");
     await page.waitForTimeout(300);
     await page.mouse.click(200, 700);
 
-    const hint = page.getByRole("button", { name: "Scroll to the next page" });
-    await expect(hint).toBeVisible({ timeout: 2000 });
+    // One per page (intro + 4 ideas; not the CTA, which has its own
+    // action) — same aria-label on each, so every locator here is
+    // scoped to a specific instance rather than the ambiguous role query.
+    const hints = page.getByRole("button", { name: "Scroll to the next page" });
+    await expect(hints).toHaveCount(5);
 
     const dots = page.locator(".manifesto-dot");
     await expect(dots.first()).toHaveClass(/active/);
 
-    await hint.click();
-
+    await hints.first().click();
     await expect(dots.nth(1)).toHaveClass(/active/, { timeout: 3000 });
+
+    await hints.nth(1).click();
+    await expect(dots.nth(2)).toHaveClass(/active/, { timeout: 3000 });
   });
 });

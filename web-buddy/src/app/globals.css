@@ -78,19 +78,18 @@ html {
    ManifestoScroll's wrapper div, matching #413's own suggested fix for
    this exact pattern.
 
-   --page-h (not 100dvh directly): Footer is fixed site-wide, and unlike
-   every other page here, the slider fills the viewport edge to edge with
-   no bottom padding of its own — so a plain 100dvh page would render its
-   last ~40px under the fixed footer. --page-h reserves that space, and
-   every page (this section, .manifesto-section, the CTA) sizes off it via
-   min-h-[var(--page-h)]/h-[var(--page-h)] instead of Tailwind's
-   min-h-screen/h-screen (100vh) so they can't independently drift back to
-   the un-reserved viewport height. A custom property, rather than sizing
-   .manifesto-gradient itself, is what lets that inheritance reach the
-   ideas/CTA sections cleanly: .manifesto-gradient has to stay auto-height
-   (it's exactly as tall as its 5 stacked children, which is what makes
-   there something to scroll through), and a percentage height on its
-   children wouldn't resolve against an auto-height ancestor.
+   Each page is a genuine 100dvh (Header and Footer are both fixed,
+   translucent overlays on top of it — same pattern every other route on
+   this site already uses, just with top/bottom padding sized to clear
+   them directly on each page instead of a computed height). An earlier
+   version tried to reserve chrome space via a shrunk --page-h custom
+   property sized only off the footer, on the theory that scroll-snap-
+   align: center only needed bottom clearance — wrong: centering splits
+   whatever headroom a shorter-than-100dvh page has evenly between its
+   top and bottom, so every page needed clearance from the (taller)
+   fixed header too, and never got it. That surfaced as pages overlapping
+   the header, not just the footer, only once actually measured against
+   both (#554) rather than just the one edge that had been checked before.
 
    overflow-x: hidden is required, not cosmetic: per spec, setting only
    overflow-y to a non-visible value promotes the other axis from visible
@@ -100,22 +99,11 @@ html {
    clipped by body's own overflow-x: hidden) as ~600px of scrollable dead
    space — "I can scroll right but there's nothing there" (#546). */
 .manifesto-slider {
-  --page-h: calc(100dvh - 40px);
   height: 100dvh;
   overflow-y: auto;
   overflow-x: hidden;
   scroll-snap-type: y mandatory;
   scrollbar-width: none;
-}
-@media (min-width: 640px) {
-  .manifesto-slider {
-    --page-h: calc(100dvh - 48px);
-  }
-}
-@media (min-width: 768px) {
-  .manifesto-slider {
-    --page-h: calc(100dvh - 68px);
-  }
 }
 .manifesto-slider::-webkit-scrollbar {
   display: none;
@@ -296,76 +284,38 @@ html {
   }
 }
 
-/* Glowing scroll-hint chevron pinned near the bottom of the viewport
-   (position: fixed, applied via a Tailwind class in the JSX — not set
-   here, so it isn't shadowed by this rule's own cascade position) while
-   the intro is the active page: hints at *and* performs the page-by-page
-   snap scroll on click, so the paging behavior itself is discoverable
-   (#544) rather than something a visitor has to stumble into via a wheel
-   gesture. The glow is a blurred radial-gradient pseudo-element behind
-   the icon (not a box-shadow) so it can bloom past the button's own
-   small box without clipping — it needs the button to be a positioned
-   ancestor, which the fixed positioning already provides.
+/* Scroll-hint chevron, rendered once per page (intro + each manifesto
+   idea — not the CTA, which has its own action) in that page's own
+   normal flow, not a fixed overlay: it scrolls naturally with whichever
+   page it's on instead of only existing on the intro and blinking away
+   everywhere else (#554). Both hints at and performs the page-by-page
+   snap scroll on click — see NextPageHint.tsx.
 
-   Cyan-to-violet (not amber): the intro sits on CirclesBackground's warm
-   amber palette, and an amber/yellow glow (matching the terminal's own
-   yellow "Scroll down" text) all but disappears against it — confirmed
-   via a cropped screenshot, not just reasoning about it. A cool-toned
-   glow contrasts regardless of theme, and the icon itself rides on a
-   translucent --background disc so it stays legible over every stop of
-   the amber gradient, not just the ones it happens to contrast with.
-
-   Only the glow pulses (opacity/scale on ::before) — the button itself
-   doesn't bob. A continuously-translating click target never resolves to
-   a stable position, and Playwright's own click-stability wait (a decent
-   proxy for "is this annoying to click precisely") timed out against it;
-   the glow alone still reads as "alive" without moving the target. */
+   Border, not a glow: a previous glow version was nearly invisible
+   against CirclesBackground's amber palette and looked overwrought once
+   actually seen live. border-color matches the icon's own color
+   (--foreground) so it reads as one shape in either theme. */
 .scroll-hint {
   display: flex;
   align-items: center;
   justify-content: center;
   width: 2.5rem;
   height: 2.5rem;
+  margin: 0.75rem auto 0;
   border-radius: 999px;
+  border: 2px solid var(--foreground);
   color: var(--foreground);
-  background: color-mix(in srgb, var(--background) 70%, transparent);
   cursor: pointer;
-  /* Above Footer's z-50, as a safety margin — the bottom-* offset (JSX)
-     is chosen to already clear the footer without overlapping it. */
-  z-index: 60;
+  transition:
+    background 0.15s,
+    color 0.15s;
 }
 .scroll-hint:hover {
-  color: #06b6d4;
-}
-.scroll-hint::before {
-  content: "";
-  position: absolute;
-  inset: -0.5rem;
-  border-radius: 999px;
-  background: radial-gradient(
-    circle,
-    rgba(34, 211, 238, 0.6),
-    rgba(167, 139, 250, 0.4) 55%,
-    transparent 75%
-  );
-  filter: blur(6px);
-  z-index: -1;
-  animation: scroll-hint-glow 1.8s ease-in-out infinite;
-}
-@keyframes scroll-hint-glow {
-  0%,
-  100% {
-    opacity: 0.35;
-    scale: 0.85;
-  }
-  50% {
-    opacity: 0.9;
-    scale: 1.15;
-  }
+  background: var(--foreground);
+  color: var(--background);
 }
 @media (prefers-reduced-motion: reduce) {
-  .scroll-hint,
-  .scroll-hint::before {
-    animation: none;
+  .scroll-hint {
+    transition: none;
   }
 }

@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import CirclesBackground from "./CirclesBackground";
 import TerminalIntro from "./TerminalIntro";
+import NextPageHint from "./NextPageHint";
 
 const ideas = [
   {
@@ -94,13 +95,14 @@ function ManifestoSection({
   return (
     <section
       ref={register}
-      className={`manifesto-section min-h-[var(--page-h)] snap-center flex flex-col justify-center items-center text-center px-6 py-10 ${revealed ? "in-view" : ""}`}
+      className={`manifesto-section min-h-dvh snap-center flex flex-col justify-center items-center text-center px-6 pt-16 sm:pt-20 md:pt-20 pb-14 sm:pb-16 md:pb-20 ${revealed ? "in-view" : ""}`}
     >
       <div className="manifesto-emoji text-6xl mb-6">{emoji}</div>
       <h2 className="text-2xl sm:text-3xl font-bold mb-4">{title}</h2>
       <p className="max-w-xl text-base sm:text-lg text-gray-800 dark:text-gray-200">
         {body}
       </p>
+      <NextPageHint />
     </section>
   );
 }
@@ -115,7 +117,7 @@ function CallToActionSection({
   return (
     <section
       ref={register}
-      className={`manifesto-section h-[var(--page-h)] snap-center flex flex-col justify-center items-center text-center p-10 ${revealed ? "in-view" : ""}`}
+      className={`manifesto-section min-h-dvh snap-center flex flex-col justify-center items-center text-center px-10 pt-16 sm:pt-20 md:pt-20 pb-14 sm:pb-16 md:pb-20 ${revealed ? "in-view" : ""}`}
     >
       <div className="manifesto-cta-text text-xl sm:text-2xl mb-6">
         Explore the tools. Adopt a Buddy.
@@ -163,9 +165,9 @@ export default function ManifestoScroll() {
         tabIndex={0}
         aria-label="Manifesto: what nobuddy.org is about"
       >
-        <section className="min-h-[var(--page-h)] snap-center" ref={register(0)}>
+        <section className="min-h-dvh snap-center" ref={register(0)}>
           <CirclesBackground variant="home" />
-          <TerminalIntro active={active[0]} />
+          <TerminalIntro />
         </section>
         <div className="manifesto-gradient">
           {ideas.map((idea, i) => (
