@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useLayoutEffect, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import type { CSSProperties } from "react";
 import { SITE_NAME, GITHUB_URL, SITE_DESCRIPTION } from "../constants";
 import Link from "next/link";
@@ -182,6 +182,7 @@ function Hero() {
 
 export default function TerminalIntro({ active }: { active: boolean }) {
   const [frameIndex, setFrameIndex] = useState(0);
+  const scrollHintRef = useRef<HTMLButtonElement>(null);
 
   // Render the completed terminal instantly on repeat visits within the
   // same session instead of replaying the ~4s typing animation every time.
@@ -222,6 +223,15 @@ export default function TerminalIntro({ active }: { active: boolean }) {
 
   const { lines } = frames[frameIndex];
   const isWaiting = frameIndex === lastFrame;
+
+  // aria-hidden/tabIndex below make the button unreachable the instant
+  // active && isWaiting flips false, but that alone doesn't move focus off
+  // it — a keyboard user who just activated it (scrolling away, which is
+  // what flips it false) would otherwise be left with DOM focus stranded
+  // on a now aria-hidden, unfocusable element.
+  useEffect(() => {
+    if (!(active && isWaiting)) scrollHintRef.current?.blur();
+  }, [active, isWaiting]);
 
   return (
     <div className="flex flex-col items-center px-4 pt-16 sm:pt-20 md:pt-24 pb-14 sm:pb-16 md:pb-20">
@@ -286,6 +296,7 @@ export default function TerminalIntro({ active }: { active: boolean }) {
           so leaving the intro fades the button out instead of just
           snapping it away. */}
       <button
+        ref={scrollHintRef}
         type="button"
         onClick={(e) => scrollToNextPage(e.currentTarget)}
         aria-label="Scroll to the next page"
