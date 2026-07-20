@@ -3,6 +3,7 @@
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import type { CSSProperties } from "react";
 import { SITE_NAME, GITHUB_URL, SITE_DESCRIPTION } from "../constants";
+import { prefersReducedMotion } from "../utils";
 import Link from "next/link";
 
 const SESSION_KEY = "terminalIntroPlayed";
@@ -126,12 +127,9 @@ const sizerLines: ScriptLine[] = [
 function scrollToNextPage(button: HTMLElement) {
   const slider = button.closest<HTMLElement>(".manifesto-slider");
   if (!slider) return;
-  const reduceMotion = window.matchMedia(
-    "(prefers-reduced-motion: reduce)"
-  ).matches;
   slider.scrollBy({
     top: slider.clientHeight,
-    behavior: reduceMotion ? "auto" : "smooth",
+    behavior: prefersReducedMotion() ? "auto" : "smooth",
   });
 }
 

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { prefersReducedMotion } from "../utils";
 
 type Particle = {
   baseX: number;
@@ -88,9 +89,7 @@ export default function EmojiGridCanvas() {
       ensureGrid(width, height);
     };
 
-    const prefersReducedMotion = window.matchMedia(
-      "(prefers-reduced-motion: reduce)"
-    ).matches;
+    const reduceMotion = prefersReducedMotion();
 
     const render = (animate: boolean) => {
       resizeCanvasIfNeeded();
@@ -122,8 +121,8 @@ export default function EmojiGridCanvas() {
     // Always redraws immediately on resize (rather than only recomputing
     // the grid and waiting for the next animation frame), since resize is
     // rare enough that one extra draw call is free.
-    const handleResize = () => render(!prefersReducedMotion);
-    if (prefersReducedMotion) {
+    const handleResize = () => render(!reduceMotion);
+    if (reduceMotion) {
       render(false);
     } else {
       rafRef.current = requestAnimationFrame(draw);
