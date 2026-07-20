@@ -60,6 +60,9 @@ test.describe("terminal intro skip and session persistence", () => {
 
     const box = page.locator(".font-mono").locator("..");
     await page.waitForTimeout(100); // first paint, before any line appears
+    // boundingBox() returns null for an unrendered element; guard against
+    // that instead of risking a raw TypeError on a slow/flaky first paint.
+    await expect(box).toBeVisible();
     const initialHeight = (await box.boundingBox())!.height;
 
     await expect(
