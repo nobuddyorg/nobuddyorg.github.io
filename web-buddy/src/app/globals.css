@@ -302,37 +302,47 @@ html {
    Hero's "Follow on GitHub" pill (black/white, gray-900/gray-100 hover)
    rather than the site's --background/--foreground tokens, so the two
    fixed on-screen controls read as the same visual language — set via
-   Tailwind utility classes in TerminalIntro.tsx, not here, since this
-   rule's own `background`/`color` would otherwise silently override
-   same-specificity utility classes later.
+   Tailwind utility classes in TerminalIntro.tsx, not here.
 
    opacity lives in this same rule's transition (not a separate Tailwind
    transition-opacity utility) so .scroll-hint-hidden's fade can't be
-   silently dropped by this rule's own `transition` shorthand overriding
-   a same-specificity utility class earlier in the cascade. */
-.scroll-hint {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 2.5rem;
-  height: 2.5rem;
-  border-radius: 999px;
-  cursor: pointer;
-  opacity: 1;
-  /* Above Footer's z-50, as a safety margin — the bottom-* offset (JSX)
-     is chosen to already clear the footer without overlapping it. */
-  z-index: 60;
-  transition:
-    opacity 0.15s ease-out,
-    background 0.15s,
-    color 0.15s;
-}
-.scroll-hint.scroll-hint-hidden {
-  opacity: 0;
-  pointer-events: none;
-}
-@media (prefers-reduced-motion: reduce) {
+   silently dropped by a same-specificity utility class overriding this
+   rule's own `transition` shorthand.
+
+   @layer components (not an unlayered rule) so this rule structurally
+   can't win a cascade fight against the Tailwind utility classes above —
+   @import "tailwindcss" declares `@layer theme, base, components,
+   utilities`, and later-declared layers always beat earlier ones
+   regardless of specificity or source order. Without this, adding so
+   much as a `background` or `border-color` here later would silently
+   and permanently override the button's Tailwind-driven dark-mode
+   colors, the same class of bug this rule already had to work around
+   once (#562). */
+@layer components {
   .scroll-hint {
-    transition: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 999px;
+    cursor: pointer;
+    opacity: 1;
+    /* Above Footer's z-50, as a safety margin — the bottom-* offset (JSX)
+       is chosen to already clear the footer without overlapping it. */
+    z-index: 60;
+    transition:
+      opacity 0.15s ease-out,
+      background 0.15s,
+      color 0.15s;
+  }
+  .scroll-hint.scroll-hint-hidden {
+    opacity: 0;
+    pointer-events: none;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .scroll-hint {
+      transition: none;
+    }
   }
 }
