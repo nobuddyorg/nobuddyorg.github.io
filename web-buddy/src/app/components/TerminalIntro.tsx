@@ -242,6 +242,9 @@ function TerminalIntro({ active }: { active: boolean }) {
   }, [showHint]);
 
   return (
+    // md:pt-24 is intentionally looser than ManifestoSection/
+    // CallToActionSection's md:pt-20 (#552 — desktop felt dense here) —
+    // not a leftover inconsistency to "fix" back to md:pt-20.
     <div className="flex flex-col items-center px-4 pt-16 sm:pt-20 md:pt-24 pb-14 sm:pb-16 md:pb-20">
       <Hero />
 
