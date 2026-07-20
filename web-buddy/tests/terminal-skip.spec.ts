@@ -7,8 +7,6 @@ test.describe("terminal intro skip and session persistence", () => {
   }) => {
     await page.goto("/");
 
-    // Click almost immediately, well before the animation would naturally
-    // finish (measured at ~5s in the issue).
     await page.waitForTimeout(200);
     await page.mouse.click(10, 10);
 
@@ -41,8 +39,6 @@ test.describe("terminal intro skip and session persistence", () => {
     await page.goto("/tools");
     await page.goto("/");
 
-    // On the repeat visit the completed terminal renders immediately,
-    // without waiting for the typing animation to play out again.
     await expect(
       terminalOutputText(page, "Scroll down to continue...")
     ).toBeVisible({ timeout: 500 });

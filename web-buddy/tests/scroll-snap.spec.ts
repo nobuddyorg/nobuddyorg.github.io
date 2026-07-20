@@ -1,14 +1,7 @@
 import { test, expect } from "@playwright/test";
 
-// The manifesto sections live in their own overflow-y:auto scroll
-// container (.manifesto-slider) with native CSS scroll-snap — see
-// globals.css for why this (not a document-level snap, not a JS-driven
-// ease) is the version that's actually reliable. Real wheel/trackpad
-// input isn't something Playwright's synthetic events can reliably
-// exercise in headless Chromium (a known CDP limitation, not a sign the
-// CSS is wrong — see the PR description), so this asserts the CSS is
-// correctly declared plus the keyboard-driven settle, which *is*
-// deterministic and directly observable.
+// Real wheel/trackpad input isn't reliable in headless Chromium, so this
+// asserts the CSS is correctly declared plus the keyboard-driven settle.
 test.describe("homepage manifesto scroll snap", () => {
   test("the intro is the snap container's first page, ideas/CTA follow", async ({
     page,
@@ -64,25 +57,8 @@ test.describe("homepage manifesto scroll snap", () => {
     );
   });
 
-  // Header and Footer are both fixed, translucent overlays on every page
-  // here (min-h-dvh, same as everywhere else on the site) — each page's
-  // own pt-*/pb-* padding is what has to actually clear them, not the
-  // section's own box (which deliberately spans the full viewport, so
-  // checking *that* against the footer/header is always trivially near-
-  // zero regardless of whether real content is obscured — checked the
-  // wrong element early in #554 and it silently passed for that reason).
-  //
-  // 360px (Moto G4/Galaxy S/Pixel-class — Chrome DevTools' own small-phone
-  // default) is the realistic floor, not 320px: that's specifically the
-  // 2016 iPhone SE 1st-gen, long discontinued, and SITE_DESCRIPTION's
-  // fixed length makes an exact fit infeasible there without shrinking
-  // spacing at every more common size to accommodate a legacy outlier.
-  //
-  // 1280x720 specifically: Playwright's own default chromium project
-  // viewport. #544's scroll-hint arrow silently broke this exact size
-  // (never manually checked, since 1280x800 was — a reasonable-looking
-  // choice that happened to have just enough extra height to hide the
-  // gap) until the click-to-advance test below started failing.
+  // Checks actual content (h1, .scroll-hint), not the section's own box —
+  // that always spans the full viewport regardless of content fit.
   for (const viewport of [
     { width: 360, height: 740, label: "small mobile" },
     { width: 375, height: 812, label: "mobile" },
@@ -114,11 +90,6 @@ test.describe("homepage manifesto scroll snap", () => {
     });
   }
 
-  // Only overflow-y was set, and per spec that silently promotes
-  // overflow-x from visible to auto too — turning any oversized
-  // descendant (CirclesBackground's deliberately 100rem-wide decorative
-  // SVG, previously safely clipped by body's own overflow-x: hidden) into
-  // real horizontally-scrollable dead space (#546).
   test("the slider can't be scrolled horizontally", async ({ page }) => {
     await page.setViewportSize({ width: 375, height: 812 });
     await page.goto("/");

@@ -49,55 +49,15 @@ body {
   overflow-x: hidden;
 }
 
-/* Reserve a stable scrollbar gutter regardless of whether a given page
-   actually needs to scroll. Without this, navigating between a short page
-   (no scrollbar) and a tall one (scrollbar present) shifts the effective
-   viewport width on platforms/browsers with classic reserved-space
-   scrollbars (common on Windows/Linux, or macOS set to always show
-   scrollbars) — visibly nudging the fixed header/nav and footer, which are
-   centered via mx-auto. */
+/* Keeps viewport width stable across pages regardless of scrollbar
+   presence, so the fixed header/footer don't visibly shift. */
 html {
   scrollbar-gutter: stable;
 }
 
-/* The manifesto's own scroll container, not the document. scroll-snap only
-   settles reliably when it's set on the actual overflow:auto/scroll box —
-   snapping the whole document (even correctly targeting the real
-   document.scrollingElement) proved flaky across browsers/trackpads in
-   practice. A plain nested overflow-y box needs no sticky positioning or
-   JS to "take over" scrolling: the browser's own scroll-chaining already
-   sends wheel/touch input to whichever scrollable element is under the
-   pointer first, only falling through to the outer page once this
-   container's own scroll is exhausted. The intro/terminal section is this
-   container's first page (native mandatory snap only responds to an
-   actual scroll gesture — it never auto-advances while stationary — so
-   reading it still can't be interrupted mid-read).
-
-   A nested scroll container isn't independently reachable by keyboard
-   scrolling unless it's focusable — see the tabIndex + aria-label on
-   ManifestoScroll's wrapper div, matching #413's own suggested fix for
-   this exact pattern.
-
-   Each page is a genuine 100dvh (Header and Footer are both fixed,
-   translucent overlays on top of it — same pattern every other route on
-   this site already uses, just with top/bottom padding sized to clear
-   them directly on each page instead of a computed height). An earlier
-   version tried to reserve chrome space via a shrunk --page-h custom
-   property sized only off the footer, on the theory that scroll-snap-
-   align: center only needed bottom clearance — wrong: centering splits
-   whatever headroom a shorter-than-100dvh page has evenly between its
-   top and bottom, so every page needed clearance from the (taller)
-   fixed header too, and never got it. That surfaced as pages overlapping
-   the header, not just the footer, only once actually measured against
-   both (#554) rather than just the one edge that had been checked before.
-
-   overflow-x: hidden is required, not cosmetic: per spec, setting only
-   overflow-y to a non-visible value promotes the other axis from visible
-   to auto too, so without this the slider silently becomes its own
-   horizontally-scrollable region. It was carrying CirclesBackground's
-   deliberately oversized decorative SVG (100rem/1600px wide, meant to be
-   clipped by body's own overflow-x: hidden) as ~600px of scrollable dead
-   space — "I can scroll right but there's nothing there" (#546). */
+/* Own scroll container (not the document) for reliable scroll-snap.
+   overflow-x: hidden is required, not cosmetic — overflow-y: auto alone
+   promotes the other axis to auto too. */
 .manifesto-slider {
   height: 100dvh;
   overflow-y: auto;
@@ -139,20 +99,8 @@ html {
   }
 }
 
-/* Homepage manifesto scroll effects: one continuous gradient painted
-   behind all manifesto sections (replacing hard per-section color cuts),
-   plus a progressive reveal driven by an IntersectionObserver + CSS
-   transition rather than animation-timeline — the latter is newer CSS that
-   can silently no-op in some browsers, which a purely decorative reveal
-   effect shouldn't risk.
-
-   The gradient lives on a ::before rather than the element's own
-   background so it can be masked to fade in from transparent over the
-   first ~30vh: that fade lets the fixed EmojiBackground canvas (sitting
-   behind the whole page) stay visible through the intro and into the first
-   bit of scroll, instead of being hard-covered the instant the manifesto
-   starts. Masking the pseudo-element leaves the section content itself
-   fully opaque/readable. */
+/* Gradient lives on ::before so it can be masked to fade in over the
+   first ~30vh without affecting section content's own opacity. */
 .manifesto-gradient {
   position: relative;
 }
@@ -214,10 +162,7 @@ html {
   scale: 1;
 }
 
-/* Parallax drift on the manifesto emoji only — decorative, continuous
-   motion at a different rate than the (steady, readable) text. Only
-   touches `translate`, so it can't fight the opacity transition above.
-   Purely an enhancement: degrades to a static emoji if unsupported. */
+/* Decorative parallax; degrades to a static emoji if unsupported. */
 @supports (animation-timeline: view()) {
   @keyframes manifesto-emoji-drift {
     from {
@@ -247,9 +192,7 @@ html {
   }
 }
 
-/* Right-side rail showing which manifesto section is currently active —
-   reuses --foreground for the active dot since it's already the exact
-   "high-contrast ink" color for both themes. */
+/* Right-side rail showing which manifesto section is active. */
 .manifesto-dots {
   position: fixed;
   right: 18px;
@@ -284,40 +227,17 @@ html {
   }
 }
 
-/* Scroll-hint chevron, fixed to the viewport and shown only on the intro
-   page (#556 — tried it on every page in #554, but once it's been used
-   once it's implicitly clear scrolling keeps working the same way on
-   every other page, so persistent everywhere wasn't wanted after all;
-   #558 tried moving it into normal document flow so it'd scroll away
-   with the page, but that traded away the fixed bottom position — asked
-   back explicitly, so it's fixed again). Both hints at and performs the
-   page-by-page snap scroll on click — see TerminalIntro.tsx.
+/* Scroll-hint chevron: fixed, shown only on the intro page. Advances the
+   snap slider on click — see TerminalIntro.tsx. Colors are Tailwind
+   classes there too (matches the Hero's "Follow on GitHub" pill), not
+   here.
 
-   .scroll-hint-hidden (#560) fades the button out via opacity rather than
-   an instant visibility cut, so leaving the intro fades it away instead
-   of snapping it out of view.
+   opacity lives in this rule's own transition, not a Tailwind utility, so
+   it can't be silently overridden by a later same-specificity rule.
 
-   Filled, not transparent: reads as a solid button against the busy
-   amber circles instead of a see-through outline. Colors match the
-   Hero's "Follow on GitHub" pill (black/white, gray-900/gray-100 hover)
-   rather than the site's --background/--foreground tokens, so the two
-   fixed on-screen controls read as the same visual language — set via
-   Tailwind utility classes in TerminalIntro.tsx, not here.
-
-   opacity lives in this same rule's transition (not a separate Tailwind
-   transition-opacity utility) so .scroll-hint-hidden's fade can't be
-   silently dropped by a same-specificity utility class overriding this
-   rule's own `transition` shorthand.
-
-   @layer components (not an unlayered rule) so this rule structurally
-   can't win a cascade fight against the Tailwind utility classes above —
-   @import "tailwindcss" declares `@layer theme, base, components,
-   utilities`, and later-declared layers always beat earlier ones
-   regardless of specificity or source order. Without this, adding so
-   much as a `background` or `border-color` here later would silently
-   and permanently override the button's Tailwind-driven dark-mode
-   colors, the same class of bug this rule already had to work around
-   once (#562). */
+   @layer components keeps Tailwind's utility classes (a higher layer)
+   always winning here, even if this rule later gains a background/color
+   property. */
 @layer components {
   .scroll-hint {
     display: flex;
@@ -328,8 +248,7 @@ html {
     border-radius: 999px;
     cursor: pointer;
     opacity: 1;
-    /* Above Footer's z-50, as a safety margin — the bottom-* offset (JSX)
-       is chosen to already clear the footer without overlapping it. */
+    /* Above Footer's z-50; bottom-* offset (JSX) already clears it. */
     z-index: 60;
     transition:
       opacity 0.15s ease-out,
