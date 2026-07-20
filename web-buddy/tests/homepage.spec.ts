@@ -31,7 +31,7 @@ test.describe("homepage hero and manifesto content", () => {
 
     await expect(
       page.getByText(
-        "Explore nobuddy.org – a playground of creative tools, weird ideas & useful mini-apps."
+        "Explore nobuddy.org – genuinely useful tools, each built with a bit of personality."
       )
     ).toBeVisible();
     // Hidden on mobile portrait to keep the intro compact (#541) — still
