@@ -111,4 +111,27 @@ test.describe("homepage manifesto scroll effects", () => {
     await expect(hiddenHint).toHaveCSS("opacity", "0", { timeout: 2000 });
     await expect(hiddenHint).toHaveAttribute("aria-hidden", "true");
   });
+
+  test("scroll-hint button doesn't strand keyboard focus once it's used (#572)", async ({
+    page,
+  }) => {
+    await page.goto("/");
+    await page.waitForTimeout(300);
+    await page.mouse.click(200, 700);
+
+    const hint = page.getByRole("button", { name: "Scroll to the next page" });
+    await hint.focus();
+    await expect(hint).toBeFocused();
+
+    await page.keyboard.press("Enter");
+
+    const dots = page.locator(".manifesto-dot");
+    await expect(dots.nth(1)).toHaveClass(/active/, { timeout: 3000 });
+
+    // The button is now aria-hidden/tabIndex=-1; DOM focus must have moved
+    // off it rather than being left stranded on a now-inaccessible element.
+    const hiddenHint = page.getByTestId("scroll-hint");
+    await expect(hiddenHint).toHaveAttribute("aria-hidden", "true");
+    await expect(hiddenHint).not.toBeFocused();
+  });
 });
