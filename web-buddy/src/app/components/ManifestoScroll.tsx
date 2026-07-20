@@ -94,7 +94,7 @@ function ManifestoSection({
   return (
     <section
       ref={register}
-      className={`manifesto-section min-h-dvh snap-center flex flex-col justify-center items-center text-center px-6 pt-16 sm:pt-20 md:pt-20 pb-14 sm:pb-16 md:pb-20 ${revealed ? "in-view" : ""}`}
+      className={`manifesto-section min-h-dvh snap-center flex flex-col justify-center items-center text-center px-6 pt-16 sm:pt-20 pb-14 sm:pb-16 md:pb-20 ${revealed ? "in-view" : ""}`}
     >
       <div className="manifesto-emoji text-6xl mb-6">{emoji}</div>
       <h2 className="text-2xl sm:text-3xl font-bold mb-4">{title}</h2>
@@ -115,7 +115,7 @@ function CallToActionSection({
   return (
     <section
       ref={register}
-      className={`manifesto-section min-h-dvh snap-center flex flex-col justify-center items-center text-center px-10 pt-16 sm:pt-20 md:pt-20 pb-14 sm:pb-16 md:pb-20 ${revealed ? "in-view" : ""}`}
+      className={`manifesto-section min-h-dvh snap-center flex flex-col justify-center items-center text-center px-10 pt-16 sm:pt-20 pb-14 sm:pb-16 md:pb-20 ${revealed ? "in-view" : ""}`}
     >
       <div className="manifesto-cta-text text-xl sm:text-2xl mb-6">
         Explore the tools. Adopt a Buddy.
