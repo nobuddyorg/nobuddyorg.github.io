@@ -81,26 +81,29 @@ test.describe("homepage manifesto scroll effects", () => {
     await expect(page.locator(".manifesto-dot.active")).toHaveCount(1);
   });
 
-  test("scroll-hint arrow advances one page on click, and is present on every page, not just the intro (#544, #554)", async ({
+  test("scroll-hint arrow is intro-only, fixed to the viewport, and advances one page on click (#544, #556)", async ({
     page,
   }) => {
     await page.goto("/");
     await page.waitForTimeout(300);
     await page.mouse.click(200, 700);
 
-    // One per page (intro + 4 ideas; not the CTA, which has its own
-    // action) — same aria-label on each, so every locator here is
-    // scoped to a specific instance rather than the ambiguous role query.
-    const hints = page.getByRole("button", { name: "Scroll to the next page" });
-    await expect(hints).toHaveCount(5);
+    // Exactly one, ever — tried one per page in #554, but once it's been
+    // used it's implicitly clear scrolling keeps working the same way
+    // elsewhere, so persistent everywhere wasn't wanted after all.
+    const hint = page.getByRole("button", { name: "Scroll to the next page" });
+    await expect(hint).toHaveCount(1);
+    await expect(hint).toBeVisible();
+    await expect(hint).toHaveCSS("position", "fixed");
 
     const dots = page.locator(".manifesto-dot");
     await expect(dots.first()).toHaveClass(/active/);
 
-    await hints.first().click();
+    await hint.click();
     await expect(dots.nth(1)).toHaveClass(/active/, { timeout: 3000 });
 
-    await hints.nth(1).click();
-    await expect(dots.nth(2)).toHaveClass(/active/, { timeout: 3000 });
+    // No longer the active page, so the (still fixed, still the only
+    // instance) button is hidden rather than persisting into view.
+    await expect(hint).not.toBeVisible();
   });
 });

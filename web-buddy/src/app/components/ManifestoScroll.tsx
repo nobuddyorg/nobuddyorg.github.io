@@ -3,7 +3,6 @@
 import { useEffect, useRef, useState } from "react";
 import CirclesBackground from "./CirclesBackground";
 import TerminalIntro from "./TerminalIntro";
-import NextPageHint from "./NextPageHint";
 
 const ideas = [
   {
@@ -102,7 +101,6 @@ function ManifestoSection({
       <p className="max-w-xl text-base sm:text-lg text-gray-800 dark:text-gray-200">
         {body}
       </p>
-      <NextPageHint />
     </section>
   );
 }
@@ -167,7 +165,7 @@ export default function ManifestoScroll() {
       >
         <section className="min-h-dvh snap-center" ref={register(0)}>
           <CirclesBackground variant="home" />
-          <TerminalIntro />
+          <TerminalIntro active={active[0]} />
         </section>
         <div className="manifesto-gradient">
           {ideas.map((idea, i) => (
