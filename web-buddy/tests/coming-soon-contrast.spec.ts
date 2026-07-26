@@ -1,5 +1,10 @@
 import { test, expect } from "@playwright/test";
 import { contrastRatio } from "./utils/contrast";
+import { tools } from "../src/app/tools/tools";
+import { ITEMS_PER_PAGE } from "../src/app/components/ToolGrid";
+
+const firstComingSoonIndex = tools.findIndex((t) => t.status !== "ready");
+const comingSoonPage = Math.floor(firstComingSoonIndex / ITEMS_PER_PAGE) + 1;
 
 // CSS `opacity` on an ancestor doesn't change a descendant's computed
 // `color`/`background-color` — it's a paint-time compositing effect: the
@@ -14,8 +19,15 @@ test.describe("coming-soon card text contrast", () => {
     test(`description meets WCAG AA (4.5:1) in ${colorScheme} mode`, async ({
       page,
     }) => {
+      test.skip(firstComingSoonIndex === -1, "no coming-soon tools");
+
       await page.emulateMedia({ colorScheme });
       await page.goto("/tools");
+      if (comingSoonPage > 1) {
+        await page
+          .getByRole("button", { name: `Page ${comingSoonPage}` })
+          .click();
+      }
 
       const card = page.getByTestId("coming_soon").first().locator("..");
       // Cards mount with a fade-in-up entrance animation; wait for it to
