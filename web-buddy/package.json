@@ -16,14 +16,14 @@
     "check:image-budget": "node scripts/check-image-budget.js"
   },
   "dependencies": {
-    "next": "16.2.10",
+    "next": "16.2.11",
     "postcss": "^8.5.19",
     "react": "^19.2.5",
     "react-dom": "^19.2.7"
   },
   "devDependencies": {
     "@playwright/test": "^1.61.1",
-    "@tailwindcss/postcss": "^4.3.2",
+    "@tailwindcss/postcss": "^4.3.3",
     "@types/node": "^26",
     "@types/react": "^19",
     "@types/react-dom": "^19",
@@ -31,7 +31,7 @@
     "eslint-config-next": "16.2.10",
     "image-size": "^2.0.2",
     "serve": "^14.2.6",
-    "tailwindcss": "^4.3.2",
+    "tailwindcss": "^4.3.3",
     "typescript": "6.0.3"
   }
 }
