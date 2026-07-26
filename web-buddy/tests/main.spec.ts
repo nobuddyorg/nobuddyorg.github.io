@@ -46,6 +46,11 @@ test.describe("NoBuddy main page - cards section", () => {
     const disabledCards = page.getByTestId("coming_soon");
     await expect(disabledCards).toHaveCount(pageOneComingSoon.length);
 
+    test.skip(
+      pageOneComingSoon.length === 0,
+      "no coming-soon cards on page one"
+    );
+
     const firstComingSoon = pageOneComingSoon[0];
     const cardLink = disabledCards.first().locator("xpath=ancestor::a");
     await expect(cardLink).toHaveCount(1);
