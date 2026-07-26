@@ -18,7 +18,7 @@ const screenshots: ToolScreenshot[] = [
   {
     src: "detail.webp",
     alt: "Tour Details & Photos",
-    text: "Every tour keeps its date, distance, and a gallery of photos you attach along the way. Drop in JPEGs or PNGs to pin memories to the ride, or edit and delete tours as your archive grows.",
+    text: "Every tour keeps its date, distance, and a gallery of photos you attach along the way. Drop in JPEG or PNG images to pin memories to the ride, or edit and delete tours as your archive grows.",
   },
 ];
 
