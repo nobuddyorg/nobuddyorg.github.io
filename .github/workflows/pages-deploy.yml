@@ -39,7 +39,11 @@ jobs:
       # ci.yml's push-triggered run — which races this workflow — passed.
       # Playwright's webServer config (playwright.config.ts) starts and
       # waits for `serve` itself.
-      - run: npx playwright install --with-deps chromium
+      # Keep this browser list in step with playwright.config.ts's projects
+      # and with ci.yml — a project whose browser isn't installed here fails
+      # the whole deploy, and this workflow only runs on push to main, so a
+      # green PR won't catch the mismatch.
+      - run: npx playwright install --with-deps chromium firefox
       - run: npx playwright test
 
       - run: touch out/.nojekyll
