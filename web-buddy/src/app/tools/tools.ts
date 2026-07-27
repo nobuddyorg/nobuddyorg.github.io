@@ -93,7 +93,7 @@ export const tools: Tool[] = [
     name: "Bike Buddy",
     tagline: "Your ride, your routes, your memories",
     description:
-      "Upload GPX tours from any ride, cycling or motorcycling, visualize them as heatmaps, and attach photos. Powered by Azure Functions and Cosmos DB.",
+      "Upload GPX tours, visualize them as heatmaps, and attach photos. Powered by Azure Functions and Cosmos DB.",
     logo: "/logos/bike.webp",
     previewImage: "/logos/bike_preview.webp",
     previewImageWidth: 1280,
