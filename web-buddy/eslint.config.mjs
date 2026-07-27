@@ -1,5 +1,10 @@
+import { createRequire } from "node:module";
 import * as espree from "espree";
 import nextConfig from "eslint-config-next";
+
+const { version: reactVersion } = createRequire(import.meta.url)(
+  "react/package.json"
+);
 
 const config = [
   ...nextConfig,
@@ -16,10 +21,10 @@ const config = [
   {
     // eslint-config-next ships `react.version: "detect"`, and that detection
     // path in eslint-plugin-react calls `context.getFilename()`, removed in
-    // ESLint 10. Pinning the version skips detection entirely — which the
-    // plugin recommends anyway, since it also avoids a package lookup on
-    // every run. Keep this in step with the react dependency.
-    settings: { react: { version: "19.2" } },
+    // ESLint 10. Supplying the version skips detection entirely. It's read
+    // from the installed react rather than hardcoded so a future React bump
+    // can't leave the linter checking against a stale version.
+    settings: { react: { version: reactVersion } },
   },
 ];
 
