@@ -19,7 +19,7 @@
     "next": "16.2.12",
     "postcss": "^8.5.23",
     "react": "^19.2.8",
-    "react-dom": "^19.2.7"
+    "react-dom": "^19.2.8"
   },
   "devDependencies": {
     "@playwright/test": "^1.61.1",
