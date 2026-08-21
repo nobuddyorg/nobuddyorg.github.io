@@ -47,7 +47,9 @@ export default function CirclesBackground({
   variant = "tools",
 }: CirclesBackgroundProps) {
   return (
-    <div className="w-full relative -z-10 pointer-events-none">
+    // Clips to the positioned parent's own bounds so the oversized
+    // decorative svg below can't inflate the page's scroll height.
+    <div className="absolute inset-0 -z-10 overflow-hidden pointer-events-none">
       <svg
         className="absolute left-1/2 -translate-x-1/2 w-[100rem] h-[80rem] opacity-100"
         style={{ top: "-15rem" }}
