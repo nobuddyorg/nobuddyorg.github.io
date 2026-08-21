@@ -18,12 +18,12 @@ repos:
         args: ["--branch", "main"]
 
   - repo: https://github.com/crate-ci/typos
-    rev: v1.47.2
+    rev: v1.49.0
     hooks:
       - id: typos
 
   - repo: https://github.com/zizmorcore/zizmor-pre-commit
-    rev: v1.26.1
+    rev: v1.29.0
     hooks:
       - id: zizmor
         args: ["--fix"]
@@ -35,12 +35,12 @@ repos:
         args: ["--severity=warning"]
 
   - repo: https://github.com/DavidAnson/markdownlint-cli2
-    rev: v0.22.1
+    rev: v0.23.2
     hooks:
       - id: markdownlint-cli2
 
   - repo: https://github.com/editorconfig-checker/editorconfig-checker.python
-    rev: 3.6.1
+    rev: 3.11.1
     hooks:
       - id: editorconfig-checker
         alias: ec
