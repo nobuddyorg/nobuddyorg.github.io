@@ -43,7 +43,7 @@ export default function HomePage() {
     <>
       <JsonLd id="jsonld-tools" data={jsonLd} />
       <Header />
-      <main>
+      <main className="relative">
         <CirclesBackground variant="tools" />
         <ToolGrid />
       </main>
