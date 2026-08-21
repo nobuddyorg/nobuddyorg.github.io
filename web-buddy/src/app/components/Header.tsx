@@ -11,7 +11,7 @@ export default function Header() {
           className="flex items-center gap-1.5 sm:gap-2 pb-1 text-lg sm:text-2xl font-display font-bold tracking-[-0.02em] text-foreground shrink-0"
         >
           <Image
-            src="/logo-header.webp"
+            src="/logo-header-light.webp"
             // Decorative: the link's visible text ("nobuddy") is already
             // its accessible name. alt="" excludes the image from the
             // accessibility tree; no title either, since that also
@@ -19,7 +19,14 @@ export default function Header() {
             alt=""
             width={25}
             height={25}
-            className="shrink-0"
+            className="shrink-0 dark:hidden"
+          />
+          <Image
+            src="/logo-header-dark.webp"
+            alt=""
+            width={25}
+            height={25}
+            className="shrink-0 hidden dark:block"
           />
           <span className="pb-0.5">
             <span className="border-b-2 border-foreground pb-px">no</span>
