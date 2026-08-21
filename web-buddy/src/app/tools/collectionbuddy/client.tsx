@@ -64,14 +64,14 @@ export default function CollectionBuddyClient({
       preview={{
         src: `${imageDir}/preview.mp4`,
         poster: `${imageDir}/preview-poster.jpg`,
-        label: "Collection Buddy animated preview",
+        label: "CollectionBuddy animated preview",
       }}
       screenshots={screenshots}
       media="video"
       techStack={techStack}
       description={
         <>
-          <p><strong>Collection Buddy</strong> is your elegant solution for cataloging personal collections. Whether you&apos;re organizing stamps, coins, trading cards, or any other collectibles, Collection Buddy provides a beautiful and intuitive interface to keep track of your treasures.</p>
+          <p><strong>CollectionBuddy</strong> is your elegant solution for cataloging personal collections. Whether you&apos;re organizing stamps, coins, trading cards, or any other collectibles, CollectionBuddy provides a beautiful and intuitive interface to keep track of your treasures.</p>
           <p>Built with modern web technologies like Next.js, React, and Supabase, it offers a seamless experience for adding, viewing, and managing your collection items. The responsive design works perfectly on desktop and mobile devices and can even be installed as a PWA app on your phone.</p>
         </>
       }

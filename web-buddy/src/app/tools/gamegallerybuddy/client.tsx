@@ -42,7 +42,7 @@ export default function GameGalleryBuddyClient({
 
       <section className="text-sm leading-relaxed text-gray-700 dark:text-gray-300 space-y-4">
         <p>
-          <strong>Game Gallery Buddy</strong> turns your board game collection
+          <strong>GameGalleryBuddy</strong> turns your board game collection
           into a wallpaper. Just enter your BoardGameGeek username and
           customize the layout: choose cover size, show or hide names, shuffle
           the order, and more.

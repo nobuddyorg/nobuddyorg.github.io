@@ -13,7 +13,7 @@ const screenshots: ToolScreenshot[] = [
   {
     src: "upload.webp",
     alt: "Upload a GPX Tour",
-    text: "Drag and drop a .gpx file straight from your bike computer or phone, give it a name and optional description, and Bike Buddy takes care of the rest, parsing the track and adding it to your heatmap in seconds.",
+    text: "Drag and drop a .gpx file straight from your bike computer or phone, give it a name and optional description, and BikeBuddy takes care of the rest, parsing the track and adding it to your heatmap in seconds.",
   },
   {
     src: "detail.webp",

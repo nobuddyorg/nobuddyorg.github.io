@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { tools } from "../tools/tools";
 import { useState, useEffect } from "react";
+import BuddyName from "./BuddyName";
 
 export const ITEMS_PER_PAGE = 6;
 
@@ -80,7 +81,7 @@ export default function ToolGrid() {
                     )}
                   </div>
                   <h3 className="text-lg font-semibold transition group-hover:text-black dark:group-hover:text-white flex items-center gap-1">
-                    {tool.name}
+                    <BuddyName name={tool.name} />
                     {tool.status !== "ready" && (
                       <span
                         className="grayscale text-lg"

@@ -20,7 +20,7 @@ export interface Tool {
 export const tools: Tool[] = [
   {
     slug: "procrastinationbuddy",
-    name: "Procrastination Buddy",
+    name: "ProcrastinationBuddy",
     tagline: "A tool to help you embrace procrastination",
     description:
       "Avoid productivity with delightfully useless tasks. Built using Streamlit, Ollama AI, and Docker. Perfect for professional procrastinators.",
@@ -34,7 +34,7 @@ export const tools: Tool[] = [
   },
   {
     slug: "thrashbuddy",
-    name: "Thrash Buddy",
+    name: "ThrashBuddy",
     tagline:
       "A tool to push your web api/app to it's limits with load and performance testing",
     description:
@@ -49,7 +49,7 @@ export const tools: Tool[] = [
   },
   {
     slug: "gamegallerybuddy",
-    name: "Game Gallery Buddy",
+    name: "GameGalleryBuddy",
     tagline: "A spring boot app for managing game galleries",
     description:
       "Generates a wallpaper using all board games from a BoardGameGeek user's collection. Customizable layout with many options.",
@@ -70,7 +70,7 @@ export const tools: Tool[] = [
   },
   {
     slug: "collectionbuddy",
-    name: "Collection Buddy",
+    name: "CollectionBuddy",
     tagline: "A tool to organize and track your collected items",
     description:
       "A web-app catalog for your collected items. Organize and track stamps, coins, or any collectibles with an elegant interface.",
@@ -90,7 +90,7 @@ export const tools: Tool[] = [
   },
   {
     slug: "bikebuddy",
-    name: "Bike Buddy",
+    name: "BikeBuddy",
     tagline: "Your ride, your routes, your memories",
     description:
       "Upload GPX tours, visualize them as heatmaps, and attach photos. Powered by Azure Functions and Cosmos DB.",
@@ -104,7 +104,7 @@ export const tools: Tool[] = [
   },
   {
     slug: "ridemergebuddy",
-    name: "Ride Merge Buddy",
+    name: "RideMergeBuddy",
     tagline: "View and merge your Strava activities",
     description:
       "Merge GPX tracks from multiple cycling sessions. Ideal for Strava users, activity aggregators, and route cleanup enthusiasts.",
@@ -118,7 +118,7 @@ export const tools: Tool[] = [
   },
   {
     slug: "powertrailbuddy",
-    name: "Power Trail Buddy",
+    name: "PowerTrailBuddy",
     description:
       "Find and visualize geocaching power trails with ease. Designed for efficiency-focused cachers who love long trails and rapid finds.",
     logo: "/logos/powertrail.webp",
@@ -131,7 +131,7 @@ export const tools: Tool[] = [
   },
   {
     slug: "karmabuddy",
-    name: "Karma Buddy",
+    name: "KarmaBuddy",
     description:
       "Track your karma points with a fun and engaging app. Compete with friends and see who has the highest karma score.",
     logo: "/logos/karma.webp",
@@ -150,7 +150,7 @@ export const tools: Tool[] = [
   },
   {
     slug: "peekbuddy",
-    name: "Peek Buddy",
+    name: "PeekBuddy",
     description:
       "Silently watches your folders and logs every change in real time. This way you detect all changes on your system.",
     logo: "/logos/peek.webp",
@@ -168,7 +168,7 @@ export const tools: Tool[] = [
   },
   {
     slug: "fairbuddy",
-    name: "Fair Buddy",
+    name: "FairBuddy",
     description:
       "Effortlessly split costs with friends. A social-friendly app for fair finance, powered by DynamoDB and designed for group sharing.",
     logo: "/logos/fair.webp",
