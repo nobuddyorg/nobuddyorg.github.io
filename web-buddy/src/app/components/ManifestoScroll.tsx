@@ -160,7 +160,7 @@ export default function ManifestoScroll() {
         tabIndex={0}
         aria-label="Manifesto: what nobuddy.org is about"
       >
-        <section className="min-h-dvh snap-center" ref={register(0)}>
+        <section className="relative min-h-dvh snap-center" ref={register(0)}>
           <CirclesBackground variant="home" />
           <TerminalIntro active={active[0]} />
         </section>
