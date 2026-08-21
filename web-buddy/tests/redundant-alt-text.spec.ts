@@ -9,8 +9,11 @@ test.describe("no redundant accessible-name announcements", () => {
     const homeLink = page.getByRole("banner").getByRole("link").first();
     await expect(homeLink).toHaveAccessibleName("nobuddy");
 
-    const logoImg = homeLink.locator("img");
-    await expect(logoImg).toHaveAttribute("alt", "");
+    const logoImages = await homeLink.locator("img").all();
+    expect(logoImages.length).toBeGreaterThan(0);
+    for (const logoImg of logoImages) {
+      await expect(logoImg).toHaveAttribute("alt", "");
+    }
   });
 
   test("procrastinationbuddy screenshot images are marked decorative", async ({
