@@ -43,7 +43,7 @@ export default function ToolGrid() {
         <br />
         <section
           id="tools"
-          className="relative z-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto px-4 sm:px-6 mb-28"
+          className="relative z-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto px-4 sm:px-6 mb-16"
         >
           {paginatedTools.map((tool, index) => {
             const isReady = tool.status === "ready";
