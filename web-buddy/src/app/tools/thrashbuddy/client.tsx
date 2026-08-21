@@ -13,7 +13,7 @@ const screenshots: ToolScreenshot[] = [
   {
     src: "settings.webp",
     alt: "Distributed Load Testing",
-    text: "Simulate large-scale traffic using k6 across multiple Kubernetes pods of your desired sizes (number of agents, CPU and Memory). Thrash Buddy can create loads on your system that you might not be ready for: take care!.",
+    text: "Simulate large-scale traffic using k6 across multiple Kubernetes pods of your desired sizes (number of agents, CPU and Memory). Thrash​Buddy can create loads on your system that you might not be ready for: take care!.",
   },
   {
     src: "dashboard.webp",
@@ -23,7 +23,7 @@ const screenshots: ToolScreenshot[] = [
   {
     src: "eks.webp",
     alt: "Kubernetes Integration",
-    text: "Thrash Buddy integrates seamlessly with Kubernetes, and thus allowing you to run it on many cloud providers and on-premises. The cloud tools may offer additional support to you.",
+    text: "Thrash​Buddy integrates seamlessly with Kubernetes, and thus allowing you to run it on many cloud providers and on-premises. The cloud tools may offer additional support to you.",
   },
 ];
 
@@ -60,14 +60,14 @@ export default function ThrashBuddyClient({
       preview={{
         src: "/images/thrash-buddy/preview.mp4",
         poster: "/images/thrash-buddy/preview-poster.jpg",
-        label: "Thrash Buddy animated preview",
+        label: "Thrash​Buddy animated preview",
       }}
       screenshots={screenshots}
       media="image"
       techStack={techStack}
       description={
         <>
-          <p><strong>Thrash Buddy</strong> is your go-to solution for cloud-native performance testing. Whether you&apos;re preparing for a product launch or scaling your infrastructure, Thrash Buddy helps you simulate real-world load with confidence.</p>
+          <p><strong>Thrash​Buddy</strong> is your go-to solution for cloud-native performance testing. Whether you&apos;re preparing for a product launch or scaling your infrastructure, Thrash​Buddy helps you simulate real-world load with confidence.</p>
           <p>Built on top of powerful tools like k6, Prometheus, and Grafana, it enables distributed load testing across Kubernetes clusters, giving you deep insights into how your app performs under pressure.</p>
         </>
       }

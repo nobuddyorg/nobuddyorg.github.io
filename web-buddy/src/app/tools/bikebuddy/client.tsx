@@ -13,7 +13,7 @@ const screenshots: ToolScreenshot[] = [
   {
     src: "upload.webp",
     alt: "Upload a GPX Tour",
-    text: "Drag and drop a .gpx file straight from your bike computer or phone, give it a name and optional description, and Bike Buddy takes care of the rest, parsing the track and adding it to your heatmap in seconds.",
+    text: "Drag and drop a .gpx file straight from your bike computer or phone, give it a name and optional description, and Bike​Buddy takes care of the rest, parsing the track and adding it to your heatmap in seconds.",
   },
   {
     src: "detail.webp",
@@ -44,14 +44,14 @@ export default function BikeBuddyClient({
     <ToolClientPage
       title={title}
       githubUrl={githubUrl}
-      githubLabel="BikeBuddy GitHub"
+      githubLabel="Bike​Buddy GitHub"
       githubText="View the repository on GitHub"
       imageDir={imageDir}
       screenshots={screenshots}
       media="image"
       techStack={techStack}
       description={
-        <p><strong>BikeBuddy</strong> turns your GPX tours, cycling or motorcycling, into a living heatmap of every road you&apos;ve ever ridden. Upload a track, attach photos from along the way, and watch your personal riding history build up on the map.</p>
+        <p><strong>Bike​Buddy</strong> turns your GPX tours, cycling or motorcycling, into a living heatmap of every road you&apos;ve ever ridden. Upload a track, attach photos from along the way, and watch your personal riding history build up on the map.</p>
       }
     />
   );
