@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import { AUTHOR_NAME, GITHUB_URL } from "../constants";
+import { GITHUB_URL } from "../constants";
 
 export default function Header() {
   return (
@@ -8,7 +8,7 @@ export default function Header() {
       <nav className="max-w-7xl mx-auto px-4 sm:px-6 flex items-center justify-between h-10 sm:h-12 md:h-16 overflow-hidden">
         <Link
           href="/"
-          className="text-lg sm:text-2xl font-extrabold tracking-tight text-black dark:text-white"
+          className="flex items-center gap-1.5 sm:gap-2 pb-1 text-lg sm:text-2xl font-display font-bold tracking-[-0.02em] text-foreground shrink-0"
         >
           <Image
             src="/logo-header.webp"
@@ -19,9 +19,12 @@ export default function Header() {
             alt=""
             width={25}
             height={25}
-            className="inline-block mr-2"
+            className="shrink-0"
           />
-          {AUTHOR_NAME}
+          <span className="pb-0.5">
+            <span className="border-b-2 border-foreground pb-px">no</span>
+            <span className="text-accent">buddy</span>
+          </span>
         </Link>
         <div className="flex flex-wrap items-center space-x-3 sm:space-x-6 text-sm sm:text-base">
           <Link

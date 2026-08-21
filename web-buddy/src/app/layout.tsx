@@ -1,10 +1,16 @@
 import "./globals.css";
-import { Inter } from "next/font/google";
+import { Inter, Archivo } from "next/font/google";
 import EmojiBackground from "./components/EmojiBackground";
 
 const inter = Inter({
   subsets: ["latin"],
   variable: "--font-inter",
+});
+
+const archivo = Archivo({
+  subsets: ["latin"],
+  weight: "700",
+  variable: "--font-archivo",
 });
 
 export default function RootLayout({
@@ -13,7 +19,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={inter.variable}>
+    <html lang="en" className={`${inter.variable} ${archivo.variable}`}>
       <body className="relative overflow-x-hidden">
         <EmojiBackground />
         <div className="relative">

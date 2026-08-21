@@ -1,5 +1,4 @@
 repos:
-  # Standard file hygiene
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v6.0.0
     hooks:
@@ -8,9 +7,6 @@ repos:
       - id: check-yaml
       - id: check-added-large-files
         args: ["--maxkb=1024"]
-        # Already-tracked media assets are covered separately (see repo issues
-        # about shipping animated WebP recordings); this hook guards against
-        # future accidental large-file commits elsewhere.
         exclude: ^web-buddy/public/
       - id: check-case-conflict
       - id: check-merge-conflict
@@ -21,41 +17,34 @@ repos:
       - id: no-commit-to-branch
         args: ["--branch", "main"]
 
-  # Spell checking
   - repo: https://github.com/crate-ci/typos
     rev: v1.47.2
     hooks:
       - id: typos
 
-  # zizmor: detects security vulnerabilities in GitHub Actions workflows
   - repo: https://github.com/zizmorcore/zizmor-pre-commit
     rev: v1.26.1
     hooks:
       - id: zizmor
         args: ["--fix"]
 
-  # ShellCheck for shell scripts (build.sh)
   - repo: https://github.com/shellcheck-py/shellcheck-py
     rev: v0.11.0.1
     hooks:
       - id: shellcheck
         args: ["--severity=warning"]
 
-  # markdownlint — linter for docs (config: .markdownlint-cli2.jsonc).
   - repo: https://github.com/DavidAnson/markdownlint-cli2
     rev: v0.22.1
     hooks:
       - id: markdownlint-cli2
 
-  # editorconfig-checker — enforce .editorconfig across the repo.
   - repo: https://github.com/editorconfig-checker/editorconfig-checker.python
     rev: 3.6.1
     hooks:
       - id: editorconfig-checker
         alias: ec
 
-  # Guards against re-introducing multi-MB screen recordings as images
-  # (see the issue about animated WebP previews) — no dependencies needed.
   - repo: local
     hooks:
       - id: image-budget
@@ -65,10 +54,6 @@ repos:
         pass_filenames: false
         files: ^web-buddy/public/images/
 
-  # ESLint (web-buddy/): eslint@10 + eslint-config-next@16.2.10 crash on
-  # every file (upstream incompatibility); pinned to eslint@9 as a
-  # workaround (see the tracking issue) until eslint-config-next officially
-  # supports eslint@10.
   - repo: local
     hooks:
       - id: eslint
