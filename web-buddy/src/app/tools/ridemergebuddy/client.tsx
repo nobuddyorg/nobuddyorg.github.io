@@ -42,14 +42,14 @@ export default function RideMergeBuddyClient({
     <ToolClientPage
       title={title}
       githubUrl={githubUrl}
-      githubLabel="RideMerge​Buddy GitHub"
+      githubLabel="RideMergeBuddy GitHub"
       githubText="View the repository on GitHub"
       imageDir={imageDir}
       screenshots={screenshots}
       media="video"
       techStack={techStack}
       description={
-        <p><strong>RideMerge​Buddy</strong> lets you view and merge your Strava activities seamlessly. Select multiple rides or runs, merge them into a new activity, and track everything in one place.</p>
+        <p><strong>RideMergeBuddy</strong> lets you view and merge your Strava activities seamlessly. Select multiple rides or runs, merge them into a new activity, and track everything in one place.</p>
       }
     />
   );

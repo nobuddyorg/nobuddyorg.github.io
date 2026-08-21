@@ -60,14 +60,14 @@ export default function ProcrastinationBuddyClient({
       preview={{
         src: `${imageDir}/buddy-preview.mp4`,
         poster: `${imageDir}/buddy-preview-poster.jpg`,
-        label: "Procrastination​Buddy animated preview",
+        label: "ProcrastinationBuddy animated preview",
       }}
       screenshots={screenshots}
       media="image"
       techStack={techStack}
       description={
         <>
-          <p>Meet <strong>Procrastination​Buddy</strong>, the app that gently encourages you to do absolutely nothing important. Instead of pushing you to focus, it invites you to take a breath, relax, and enjoy the art of doing less.</p>
+          <p>Meet <strong>ProcrastinationBuddy</strong>, the app that gently encourages you to do absolutely nothing important. Instead of pushing you to focus, it invites you to take a breath, relax, and enjoy the art of doing less.</p>
           <p>Feel like slowing down for no good reason? You are in the right place.</p>
         </>
       }

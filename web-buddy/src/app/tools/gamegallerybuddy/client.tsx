@@ -6,7 +6,7 @@ import ToolTechStack, { TechStackItem } from "../../components/ToolTechStack";
 const preview = {
   src: "/images/gamegallery-buddy/preview.webp",
   alt: "Board game wallpaper preview",
-  text: "GameGallery​Buddy creates a beautiful wallpaper using all board games from your BoardGameGeek collection. Just enter your BGG username and enjoy a personalized background!",
+  text: "GameGalleryBuddy creates a beautiful wallpaper using all board games from your BoardGameGeek collection. Just enter your BGG username and enjoy a personalized background!",
 };
 
 const techStack: TechStackItem[] = [
@@ -42,7 +42,7 @@ export default function GameGalleryBuddyClient({
 
       <section className="text-sm leading-relaxed text-gray-700 dark:text-gray-300 space-y-4">
         <p>
-          <strong>GameGallery​Buddy</strong> turns your board game collection
+          <strong>GameGalleryBuddy</strong> turns your board game collection
           into a wallpaper. Just enter your BoardGameGeek username and
           customize the layout: choose cover size, show or hide names, shuffle
           the order, and more.
