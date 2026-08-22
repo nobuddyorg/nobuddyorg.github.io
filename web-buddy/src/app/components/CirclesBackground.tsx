@@ -54,6 +54,7 @@ export default function CirclesBackground({
         className="absolute left-1/2 -translate-x-1/2 w-[100rem] h-[150dvh] opacity-100"
         style={{ top: "-15rem" }}
         viewBox="0 0 528 560"
+        preserveAspectRatio="xMidYMid slice"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
         aria-hidden="true"
