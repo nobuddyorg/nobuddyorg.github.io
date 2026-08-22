@@ -145,11 +145,11 @@ function Hero() {
       className="relative pb-3 sm:pb-5 md:pb-6 max-w-4xl mx-auto px-4 md:px-6 text-center"
       aria-label="Introduction section"
     >
-      <h1 className="relative z-10 text-3xl sm:text-5xl md:text-6xl font-extrabold tracking-tight leading-tight mb-2 sm:mb-4 md:mb-3 text-black dark:text-white dark:[text-shadow:0_0_2px_rgba(0,0,0,0.6),0_0_8px_rgba(0,0,0,0.5)] sm:dark:[text-shadow:0_0_2px_rgba(0,0,0,0.95),0_0_6px_rgba(0,0,0,0.9),0_0_16px_rgba(0,0,0,0.8),0_2px_6px_rgba(0,0,0,0.9)]">
+      <h1 className="relative z-10 text-3xl sm:text-5xl md:text-6xl font-extrabold tracking-tight leading-tight mb-2 sm:mb-4 md:mb-3 text-black dark:text-white">
         {SITE_NAME}
       </h1>
 
-      <h2 className="block relative z-10 max-w-3xl mx-auto text-sm sm:text-lg md:text-xl text-neutral-800 dark:text-neutral-100 mb-4 sm:mb-6 md:mb-3 dark:[text-shadow:0_0_2px_rgba(0,0,0,0.6),0_0_6px_rgba(0,0,0,0.45)] sm:dark:[text-shadow:0_0_1px_rgba(0,0,0,1),0_0_3px_rgba(0,0,0,0.95),0_0_9px_rgba(0,0,0,0.85)]">
+      <h2 className="block relative z-10 max-w-3xl mx-auto text-sm sm:text-lg md:text-xl text-neutral-800 dark:text-neutral-100 mb-4 sm:mb-6 md:mb-3">
         {SITE_DESCRIPTION}
       </h2>
 

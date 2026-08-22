@@ -123,16 +123,18 @@ export default function AboutPage() {
     <>
       <JsonLd id="jsonld-about" data={jsonLd} />
       <Header />
-      <main className="relative min-h-screen pt-20 md:pt-32 pb-16 px-4 md:px-6 max-w-5xl mx-auto">
+      <main className="relative min-h-screen pt-20 md:pt-32 pb-16 px-4 md:px-6">
         <CirclesBackground variant="about" />
-        <h1 className="text-center relative z-10 text-3xl sm:text-5xl md:text-6xl font-extrabold tracking-tight leading-tight mb-4 md:mb-6 text-black dark:text-white">
-          About / Impressum
-        </h1>
-        <br />
-        <section className="grid grid-cols-1 md:grid-cols-2 gap-8 text-sm leading-relaxed">
-          <EnglishSection />
-          <GermanSection />
-        </section>
+        <div className="max-w-5xl mx-auto">
+          <h1 className="text-center relative z-10 text-3xl sm:text-5xl md:text-6xl font-extrabold tracking-tight leading-tight mb-4 md:mb-6 text-black dark:text-white">
+            About / Impressum
+          </h1>
+          <br />
+          <section className="grid grid-cols-1 md:grid-cols-2 gap-8 text-sm leading-relaxed">
+            <EnglishSection />
+            <GermanSection />
+          </section>
+        </div>
       </main>
       <Footer />
     </>
