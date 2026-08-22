@@ -5,11 +5,11 @@ import { test, expect } from "@playwright/test";
 // three repeated switch branches into shared palette + per-variant position
 // data — can't silently drift the visuals it replaced.
 const PALETTE_CLASSES = [
-  "fill-[#FFF7DC] dark:fill-[#92400E] sm:dark:fill-[#FCD34D]",
-  "fill-[#FFE9B8] dark:fill-[#78350F] sm:dark:fill-[#FBBF24]",
-  "fill-[#FFD285] dark:fill-[#451A03] sm:dark:fill-[#F59E0B]",
-  "fill-[#F6B73C] dark:fill-[#451A03] sm:dark:fill-[#D97706]",
-  "fill-[#E09E27] dark:fill-[#2E1002] sm:dark:fill-[#B45309]",
+  "fill-[#FFF7DC] dark:fill-[#E3780D]",
+  "fill-[#FFE9B8] dark:fill-[#C1660B]",
+  "fill-[#FFD285] dark:fill-[#A4570A]",
+  "fill-[#F6B73C] dark:fill-[#874708]",
+  "fill-[#E09E27] dark:fill-[#6F3B06]",
 ];
 
 const expectations = [
