@@ -5,10 +5,6 @@
 // strings (not built from interpolated hex values) so Tailwind's static
 // scanner can still discover and generate them — it can't see through
 // runtime string concatenation.
-//
-// The dark-mode shade is deliberately darker/muted than the original bright
-// amber: on mobile the circles fill most of the viewport behind hero text,
-// and the bright shade didn't leave enough contrast against white text.
 const PALETTE_CLASSES = [
   "fill-[#FFF7DC] dark:fill-[#E3780D]",
   "fill-[#FFE9B8] dark:fill-[#C1660B]",
@@ -55,7 +51,7 @@ export default function CirclesBackground({
     // decorative svg below can't inflate the page's scroll height.
     <div className="absolute inset-0 -z-10 overflow-hidden pointer-events-none">
       <svg
-        className="absolute left-1/2 -translate-x-1/2 w-[100rem] h-[80rem] opacity-100"
+        className="absolute left-1/2 -translate-x-1/2 w-[100rem] h-[150dvh] opacity-100"
         style={{ top: "-15rem" }}
         viewBox="0 0 528 560"
         fill="none"
