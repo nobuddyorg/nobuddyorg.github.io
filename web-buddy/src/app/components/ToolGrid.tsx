@@ -35,10 +35,10 @@ export default function ToolGrid() {
   return (
     <>
       <div className="relative pt-20 md:pt-32 min-h-[60rem]">
-        <h1 className="text-center relative z-10 text-5xl md:text-6xl font-extrabold tracking-tight leading-tight mb-4 md:mb-6 text-black dark:text-white">
+        <h1 className="text-center relative z-10 text-3xl sm:text-5xl md:text-6xl font-extrabold tracking-tight leading-tight mb-4 md:mb-6 text-black dark:text-white">
           The Buddy Compendium
         </h1>
-        <h2 className="text-center relative z-10 max-w-2xl mx-auto text-lg sm:text-xl text-neutral-700 dark:text-neutral-200 mb-4 md:mb-8">
+        <h2 className="text-center relative z-10 max-w-2xl mx-auto text-sm sm:text-lg md:text-xl text-neutral-700 dark:text-neutral-200 mb-4 md:mb-8">
           Blending quirky charm with real-world usefulness for {"'everybuddy'"}
         </h2>
         <br />
