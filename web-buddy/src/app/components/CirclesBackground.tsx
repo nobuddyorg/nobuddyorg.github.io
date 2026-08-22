@@ -6,16 +6,15 @@
 // scanner can still discover and generate them — it can't see through
 // runtime string concatenation.
 //
-// Dark mode uses a darker, muted shade below `sm:` — on mobile the circles
-// fill most of the viewport behind hero text, and the bright desktop shade
-// doesn't leave enough contrast against white text. From `sm:` up, circles
-// are smaller relative to the viewport, so the original bright shade returns.
+// The dark-mode shade is deliberately darker/muted than the original bright
+// amber: on mobile the circles fill most of the viewport behind hero text,
+// and the bright shade didn't leave enough contrast against white text.
 const PALETTE_CLASSES = [
-  "fill-[#FFF7DC] dark:fill-[#92400E] sm:dark:fill-[#FCD34D]",
-  "fill-[#FFE9B8] dark:fill-[#78350F] sm:dark:fill-[#FBBF24]",
-  "fill-[#FFD285] dark:fill-[#451A03] sm:dark:fill-[#F59E0B]",
-  "fill-[#F6B73C] dark:fill-[#451A03] sm:dark:fill-[#D97706]",
-  "fill-[#E09E27] dark:fill-[#2E1002] sm:dark:fill-[#B45309]",
+  "fill-[#FFF7DC] dark:fill-[#E3780D]",
+  "fill-[#FFE9B8] dark:fill-[#C1660B]",
+  "fill-[#FFD285] dark:fill-[#A4570A]",
+  "fill-[#F6B73C] dark:fill-[#874708]",
+  "fill-[#E09E27] dark:fill-[#6F3B06]",
 ];
 
 type Circle = { cx: number; cy: number; r: number };
