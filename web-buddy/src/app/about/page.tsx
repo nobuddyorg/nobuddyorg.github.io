@@ -125,7 +125,7 @@ export default function AboutPage() {
       <Header />
       <main className="relative min-h-screen pt-20 md:pt-32 pb-16 px-4 md:px-6 max-w-5xl mx-auto">
         <CirclesBackground variant="about" />
-        <h1 className="text-center relative z-10 text-5xl md:text-6xl font-extrabold tracking-tight leading-tight mb-4 md:mb-6 text-black dark:text-white">
+        <h1 className="text-center relative z-10 text-3xl sm:text-5xl md:text-6xl font-extrabold tracking-tight leading-tight mb-4 md:mb-6 text-black dark:text-white">
           About / Impressum
         </h1>
         <br />
