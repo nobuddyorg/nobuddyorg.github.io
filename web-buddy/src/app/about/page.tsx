@@ -3,7 +3,6 @@ import Footer from "../components/Footer";
 import { createMetadata } from "../metadata";
 import JsonLd, { type JsonLdData } from "../components/JsonLd";
 import { SITE_URL, LEGAL_AUTHOR, AUTHOR_NAME } from "../constants";
-import CirclesBackground from "../components/CirclesBackground";
 
 const title = "About / Impressum";
 const description =
@@ -123,13 +122,13 @@ export default function AboutPage() {
     <>
       <JsonLd id="jsonld-about" data={jsonLd} />
       <Header />
-      <main className="relative min-h-screen pt-20 md:pt-32 pb-16 px-4 md:px-6">
-        <CirclesBackground variant="about" />
-        <div className="max-w-5xl mx-auto">
-          <h1 className="text-center relative z-10 text-3xl sm:text-5xl md:text-6xl font-extrabold tracking-tight leading-tight mb-4 md:mb-6 text-black dark:text-white">
+      <main className="relative min-h-screen page-band">
+        <div className="pt-20 md:pt-32 px-4 md:px-6">
+          <h1 className="text-center relative z-10 text-3xl sm:text-5xl md:text-6xl font-extrabold tracking-tight leading-tight text-black dark:text-white">
             About / Impressum
           </h1>
-          <br />
+        </div>
+        <div className="max-w-5xl mx-auto px-4 md:px-6 pt-10 md:pt-12 pb-16">
           <section className="grid grid-cols-1 md:grid-cols-2 gap-8 text-sm leading-relaxed">
             <EnglishSection />
             <GermanSection />

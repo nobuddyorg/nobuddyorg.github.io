@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import CirclesBackground from "./CirclesBackground";
 import TerminalIntro from "./TerminalIntro";
 
 const ideas = [
@@ -160,11 +159,14 @@ export default function ManifestoScroll() {
         tabIndex={0}
         aria-label="Manifesto: what nobuddy.org is about"
       >
-        <section className="relative min-h-dvh snap-center" ref={register(0)}>
-          <CirclesBackground variant="home" />
-          <TerminalIntro active={active[0]} />
-        </section>
         <div className="manifesto-gradient">
+          <section
+            className="relative min-h-dvh snap-center hero-glow overflow-hidden"
+            ref={register(0)}
+          >
+            <div className="absolute -z-10 top-[62%] -left-56 -translate-y-1/2 w-[26rem] h-[26rem] rounded-full bg-sky-400/30 dark:bg-violet-500/30 blur-[100px] pointer-events-none" />
+            <TerminalIntro active={active[0]} />
+          </section>
           {ideas.map((idea, i) => (
             <ManifestoSection
               key={idea.title}
