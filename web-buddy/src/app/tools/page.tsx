@@ -4,7 +4,6 @@ import Footer from "../components/Footer";
 import ToolGrid from "../components/ToolGrid";
 import { createMetadata } from "../metadata";
 import JsonLd, { type JsonLdData } from "../components/JsonLd";
-import CirclesBackground from "../components/CirclesBackground";
 import { tools } from "./tools";
 
 const title = "The Buddy Compendium";
@@ -43,8 +42,7 @@ export default function HomePage() {
     <>
       <JsonLd id="jsonld-tools" data={jsonLd} />
       <Header />
-      <main className="relative">
-        <CirclesBackground variant="tools" />
+      <main className="relative min-h-screen page-band">
         <ToolGrid />
       </main>
       <Footer />

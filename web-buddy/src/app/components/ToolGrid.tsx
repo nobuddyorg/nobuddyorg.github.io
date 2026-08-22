@@ -34,7 +34,7 @@ export default function ToolGrid() {
 
   return (
     <>
-      <div className="relative pt-20 md:pt-32 min-h-[60rem]">
+      <div className="relative pt-20 md:pt-32">
         <div className="max-w-6xl mx-auto px-4 sm:px-6">
           <h1 className="text-center relative z-10 text-3xl sm:text-5xl md:text-6xl font-extrabold tracking-tight leading-tight mb-4 md:mb-6 text-black dark:text-white">
             The Buddy Compendium
@@ -43,7 +43,8 @@ export default function ToolGrid() {
             Blending quirky charm with real-world usefulness for {"'everybuddy'"}
           </h2>
         </div>
-        <br />
+      </div>
+      <div className="relative min-h-[40rem] pt-4 md:pt-6">
         <section
           id="tools"
           className="relative z-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto px-4 sm:px-6 mb-16"

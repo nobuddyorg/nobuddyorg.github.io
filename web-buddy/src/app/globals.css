@@ -9,13 +9,15 @@
   --accent: #ad5725;
   --manifesto-gradient: linear-gradient(
     180deg,
-    #fee2e2 0%,
-    #fef9c3 25%,
-    #e0f2fe 50%,
-    #ffe4e6 75%,
+    #ffd580 0%,
+    #fee2e2 16.7%,
+    #ecf5c0 37.5%,
+    #e0f2fe 58.3%,
+    #ffe4e6 79.2%,
     #ecfccb 100%
   );
   --manifesto-dot: #d4d4d8;
+  --page-band-bg: #faf3e7;
 }
 
 @theme inline {
@@ -37,13 +39,15 @@
     --accent: #e0954f;
     --manifesto-gradient: linear-gradient(
       180deg,
-      #7f1d1d 0%,
-      #713f12 25%,
-      #0c4a6e 50%,
-      #4c0519 75%,
+      var(--accent) 0%,
+      #7f1d1d 16.7%,
+      #713f12 37.5%,
+      #0c4a6e 58.3%,
+      #4c0519 79.2%,
       #365314 100%
     );
     --manifesto-dot: #3f3f46;
+    --page-band-bg: #1e1e1e;
   }
 }
 
@@ -108,10 +112,9 @@ html {
   }
 }
 
-/* Gradient lives on ::before so it can be masked to fade in over the
-   first ~30vh without affecting section content's own opacity. */
 .manifesto-gradient {
   position: relative;
+  z-index: 0;
 }
 .manifesto-gradient::before {
   content: "";
@@ -121,8 +124,27 @@ html {
   background-image: var(--manifesto-gradient);
   background-size: 100% 100%;
   background-repeat: no-repeat;
-  -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 30vh);
-  mask-image: linear-gradient(to bottom, transparent 0, #000 30vh);
+}
+
+.page-band {
+  background-color: var(--page-band-bg);
+}
+
+.hero-glow {
+  position: relative;
+  z-index: 0;
+}
+.hero-glow::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: radial-gradient(
+    45% 40% at 70% 38%,
+    rgba(255, 255, 255, 0.2),
+    transparent 70%
+  );
+  pointer-events: none;
 }
 
 .manifesto-section h2,
