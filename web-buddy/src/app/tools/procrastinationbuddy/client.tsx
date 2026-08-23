@@ -21,6 +21,11 @@ const screenshots: ToolScreenshot[] = [
     text: "Play around with switches and sliders. Nothing urgent, nothing life changing, just something to tinker with while avoiding the real stuff.",
   },
   {
+    src: "download-new-model.webp",
+    alt: "Model Selection",
+    text: "Pick any Ollama model to generate your tasks, right down to the exact tag. Don't have it locally yet? ProcrastinationBuddy pulls it for you and shows a live download progress bar, the most productive-looking thing you'll do all day.",
+  },
+  {
     src: "help-light.webp",
     alt: "Help",
     text: "Explore the help section to feel like you are making progress. It may not solve anything, but it feels like a step in the right direction.",
