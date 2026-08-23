@@ -57,10 +57,10 @@ export default function ToolGrid() {
           </h2>
         </div>
       </div>
-      <div className="relative min-h-[40rem] pt-4 md:pt-6">
+      <div className="relative pt-4 md:pt-6 pb-6">
         <section
           id="tools"
-          className="relative z-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto px-4 sm:px-6 mb-16"
+          className="relative z-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto px-4 sm:px-6"
         >
           {paginatedTools.map((tool, index) => {
             const isReady = tool.status === "ready";
@@ -193,14 +193,14 @@ function Pagination({
   return (
     <nav
       aria-label="Tools pagination"
-      className="w-fit mx-auto mt-0 rounded-2xl p-4 border bg-white/60 dark:bg-black/60 border-gray-200 dark:border-gray-800 shadow-sm dark:shadow-[0_2px_8px_rgba(255,255,255,0.05)] backdrop-blur-sm mb-0 md:mb-10"
+      className="w-fit mx-auto rounded-2xl p-4 border bg-white/60 dark:bg-black/60 border-gray-200 dark:border-gray-800 shadow-sm dark:shadow-[0_2px_8px_rgba(255,255,255,0.05)] backdrop-blur-sm"
     >
       <div className="flex justify-center gap-2 items-center text-sm">
         <button
           onClick={() => onPageChange(Math.max(1, currentPage - 1))}
           disabled={currentPage === 1}
           aria-label="Previous page"
-          className="px-2 py-1 rounded hover:bg-gray-200 dark:hover:bg-gray-700 disabled:opacity-40"
+          className="px-2 py-1 rounded hover:bg-gray-200 dark:hover:bg-gray-700 disabled:opacity-40 disabled:pointer-events-none"
         >
           ◀
         </button>
@@ -223,7 +223,7 @@ function Pagination({
           onClick={() => onPageChange(Math.min(totalPages, currentPage + 1))}
           disabled={currentPage === totalPages}
           aria-label="Next page"
-          className="px-2 py-1 rounded hover:bg-gray-200 dark:hover:bg-gray-700 disabled:opacity-40"
+          className="px-2 py-1 rounded hover:bg-gray-200 dark:hover:bg-gray-700 disabled:opacity-40 disabled:pointer-events-none"
         >
           ▶
         </button>

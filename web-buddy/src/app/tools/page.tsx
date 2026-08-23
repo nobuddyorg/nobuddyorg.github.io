@@ -41,7 +41,7 @@ export default function HomePage() {
     <>
       <JsonLd id="jsonld-tools" data={jsonLd} />
       <Header />
-      <main className="relative min-h-screen page-band">
+      <main className="relative">
         <ToolGrid />
       </main>
     </>
