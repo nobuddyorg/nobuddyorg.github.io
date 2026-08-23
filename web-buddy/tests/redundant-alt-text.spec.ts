@@ -30,7 +30,7 @@ test.describe("no redundant accessible-name announcements", () => {
     await expect(screenshotImages.first()).toBeVisible();
   });
 
-  test("collectionbuddy screenshot videos are marked decorative", async ({
+  test("collectionbuddy screenshot images are marked decorative", async ({
     page,
   }) => {
     await page.goto("/tools/collectionbuddy");
@@ -40,7 +40,7 @@ test.describe("no redundant accessible-name announcements", () => {
     });
     await expect(screenshotHeading).toBeVisible();
 
-    const videos = page.locator("video[aria-label='']");
-    await expect(videos.first()).toBeAttached();
+    const screenshotImages = page.locator("section img[alt='']");
+    await expect(screenshotImages.first()).toBeVisible();
   });
 });
