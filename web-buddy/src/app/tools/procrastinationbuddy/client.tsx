@@ -57,11 +57,6 @@ export default function ProcrastinationBuddyClient({
       githubLabel="procrastination github"
       githubText="View the repository on GitHub and try it out on your machine"
       imageDir={imageDir}
-      preview={{
-        src: `${imageDir}/buddy-preview.mp4`,
-        poster: `${imageDir}/buddy-preview-poster.jpg`,
-        label: "ProcrastinationBuddy animated preview",
-      }}
       screenshots={screenshots}
       media="image"
       techStack={techStack}

@@ -1,6 +1,5 @@
 import type { ReactNode } from "react";
 import ToolPageShell from "./ToolPageShell";
-import ToolAnimatedPreview from "./ToolAnimatedPreview";
 import ToolScreenshots, { ToolScreenshot } from "./ToolScreenshots";
 import ToolTechStack, { TechStackItem } from "./ToolTechStack";
 
@@ -10,7 +9,6 @@ interface ToolClientPageProps {
   githubLabel: string;
   githubText: string;
   description: ReactNode;
-  preview?: { src: string; poster: string; label: string };
   imageDir: string;
   screenshots: ToolScreenshot[];
   media: "image" | "video";
@@ -23,7 +21,6 @@ export default function ToolClientPage({
   githubLabel,
   githubText,
   description,
-  preview,
   imageDir,
   screenshots,
   media,
@@ -31,7 +28,6 @@ export default function ToolClientPage({
 }: ToolClientPageProps) {
   return (
     <ToolPageShell title={title}>
-      {preview && <ToolAnimatedPreview {...preview} />}
       <section className="text-sm leading-relaxed text-gray-700 dark:text-gray-300">
         {description}
         <br />

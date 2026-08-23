@@ -61,11 +61,6 @@ export default function CollectionBuddyClient({
       githubLabel="collection github"
       githubText="View the repository on GitHub and start organizing your collection"
       imageDir={imageDir}
-      preview={{
-        src: `${imageDir}/preview.mp4`,
-        poster: `${imageDir}/preview-poster.jpg`,
-        label: "CollectionBuddy animated preview",
-      }}
       screenshots={screenshots}
       media="video"
       techStack={techStack}

@@ -1,13 +1,6 @@
-import type { CSSProperties } from "react";
 import Image from "next/image";
 import ToolPageShell from "../../components/ToolPageShell";
 import ToolTechStack, { TechStackItem } from "../../components/ToolTechStack";
-
-const preview = {
-  src: "/images/gamegallery-buddy/preview.webp",
-  alt: "Board game wallpaper preview",
-  text: "GameGalleryBuddy creates a beautiful wallpaper using all board games from your BoardGameGeek collection. Just enter your BGG username and enjoy a personalized background!",
-};
 
 const techStack: TechStackItem[] = [
   { name: "BoardGameGeek", url: "https://boardgamegeek.com/" },
@@ -25,21 +18,6 @@ export default function GameGalleryBuddyClient({
 }) {
   return (
     <ToolPageShell title={title}>
-      <div
-        className="fade-in-up mb-12 rounded-xl overflow-hidden shadow-lg"
-        style={
-          { animationDuration: "0.8s", "--fade-y": "30px" } as CSSProperties
-        }
-      >
-        <Image
-          src={preview.src}
-          alt={preview.alt}
-          width={1200}
-          height={600}
-          className="w-full h-auto rounded-xl"
-        />
-      </div>
-
       <section className="text-sm leading-relaxed text-gray-700 dark:text-gray-300 space-y-4">
         <p>
           <strong>GameGalleryBuddy</strong> turns your board game collection
