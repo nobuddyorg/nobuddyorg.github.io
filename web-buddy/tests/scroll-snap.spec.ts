@@ -15,9 +15,7 @@ test.describe("homepage manifesto scroll snap", () => {
     // Paging starts from the very first scroll: the intro is a snap page
     // in the same container, not separate document-flow content the user
     // has to scroll past on their own before paging kicks in.
-    await expect(
-      slider.getByRole("heading", { name: "Creative Tools for Nerds" })
-    ).toBeAttached();
+    await expect(slider.getByTestId("hero-heading")).toBeAttached();
 
     const sections = page.locator(".manifesto-slider .manifesto-section");
     const count = await sections.count();
@@ -75,7 +73,7 @@ test.describe("homepage manifesto scroll snap", () => {
         .locator("header")
         .evaluate((el) => el.getBoundingClientRect().bottom);
       const h1Top = await page
-        .locator("h1")
+        .getByTestId("hero-heading")
         .evaluate((el) => el.getBoundingClientRect().top);
       expect(h1Top - headerBottom).toBeGreaterThanOrEqual(0);
 

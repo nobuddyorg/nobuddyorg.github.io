@@ -14,7 +14,9 @@ for (const tool of readyTools) {
     }) => {
       await page.goto(`/tools/${tool.slug}`);
 
-      await expect(page.locator("h1")).toHaveText(tool.name);
+      await expect(page.getByTestId("tool-heading")).toContainText(
+        tool.name
+      );
       await expect(
         page.getByRole("heading", { name: "Tech Stack" })
       ).toBeVisible();

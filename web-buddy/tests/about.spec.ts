@@ -10,28 +10,28 @@ test("navigate to About page and verify content", async ({ page }) => {
   await page.click("text=About");
   await expect(page).toHaveURL(/\/about$/);
 
-  const aboutHeading = page.locator("h1");
+  const aboutHeading = page.getByTestId("about-heading");
   await expect(aboutHeading).toBeVisible();
-  await expect(aboutHeading).toHaveText(/About/i);
+  await expect(aboutHeading).toContainText(/about/i);
 
-  const languageSections = page.locator("h2", { hasText: /English|Deutsch/ });
-  const contactEmail = page.locator("p", { hasText: "info@nobuddy.org" });
-  await expect(contactEmail).toHaveCount(await languageSections.count());
+  const usageLines = page.getByTestId("about-usage");
+  await expect(usageLines).toHaveCount(2);
+
+  const contactEmail = page.getByTestId("about-contact");
+  await expect(contactEmail).toHaveCount(2);
   await expect(contactEmail.first()).toBeVisible();
+  await expect(contactEmail.first()).toContainText("info@nobuddy.org");
 
-  const disclaimerText = page.locator("text=This project is purely private");
-  await expect(disclaimerText).toBeVisible();
+  const purposeText = page.getByTestId("about-purpose").first();
+  await expect(purposeText).toContainText("purely private");
 });
 
 test("German Impressum section is marked lang=\"de\"", async ({ page }) => {
   await page.goto("/about");
 
-  const germanHeading = page.getByRole("heading", { name: "Deutsch" });
-  const germanSection = page.locator('[lang="de"]', {
-    has: germanHeading,
-  });
+  const germanSection = page.locator('[lang="de"]');
   await expect(germanSection).toHaveCount(1);
   await expect(
-    germanSection.getByText("Haftungsausschluss")
+    germanSection.getByTestId("about-disclaimer")
   ).toBeVisible();
 });

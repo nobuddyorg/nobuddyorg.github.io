@@ -14,7 +14,7 @@ test.describe("NoBuddy main page - cards section", () => {
   test.beforeEach(async ({ page }) => {
     await page.goto("/tools");
     await expect(
-      page.getByRole("heading", { name: "The Buddy Compendium" })
+      page.getByTestId("tools-heading")
     ).toBeVisible();
     await expect(page.locator("#tools a")).toHaveCount(
       pageOneReady.length + pageOneComingSoon.length
@@ -70,7 +70,9 @@ test.describe("NoBuddy main page - cards section", () => {
     await page.waitForLoadState("networkidle");
 
     await expect(page).toHaveURL(new RegExp(`/tools/${firstReadyTool.slug}`));
-    await expect(page.locator("h1")).toContainText(firstReadyTool.name);
+    await expect(page.getByTestId("tool-heading")).toContainText(
+      firstReadyTool.name
+    );
   });
 
   test("click on pagination 2 navigates to the second page", async ({

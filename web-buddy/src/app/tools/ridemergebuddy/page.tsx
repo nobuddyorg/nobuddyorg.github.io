@@ -2,7 +2,6 @@ import { getToolPageData } from "../toolPage";
 import RideMergeBuddyClient from "./client";
 import JsonLd from "../../components/JsonLd";
 import Header from "../../components/Header";
-import Footer from "../../components/Footer";
 
 const { title, github, metadata, jsonLd, jsonLdId } =
   getToolPageData("ridemergebuddy");
@@ -15,7 +14,6 @@ export default function RideMergeBuddyPage() {
       <JsonLd id={jsonLdId} data={jsonLd} />
       <Header />
       <RideMergeBuddyClient title={title} githubUrl={github} />
-      <Footer />
     </>
   );
 }

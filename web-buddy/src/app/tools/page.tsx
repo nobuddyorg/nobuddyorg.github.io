@@ -1,6 +1,5 @@
 import { SITE_URL, TOOLS_DESCRIPTION } from "../constants";
 import Header from "../components/Header";
-import Footer from "../components/Footer";
 import ToolGrid from "../components/ToolGrid";
 import { createMetadata } from "../metadata";
 import JsonLd, { type JsonLdData } from "../components/JsonLd";
@@ -45,7 +44,6 @@ export default function HomePage() {
       <main className="relative min-h-screen page-band">
         <ToolGrid />
       </main>
-      <Footer />
     </>
   );
 }

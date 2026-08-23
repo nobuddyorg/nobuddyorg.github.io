@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import Header from "./components/Header";
-import Footer from "./components/Footer";
 
 export const metadata: Metadata = {
   title: "Page Not Found - nobuddy.org",
@@ -39,7 +38,6 @@ export default function NotFound() {
           </Link>
         </div>
       </main>
-      <Footer />
     </>
   );
 }
