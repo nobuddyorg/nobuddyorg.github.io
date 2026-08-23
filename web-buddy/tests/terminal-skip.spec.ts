@@ -50,7 +50,7 @@ test.describe("terminal intro skip and session persistence", () => {
     await page.setViewportSize({ width: 320, height: 568 });
     await page.goto("/");
 
-    const box = page.locator(".font-mono").locator("..");
+    const box = page.getByTestId("terminal-window");
     await page.waitForTimeout(100); // first paint, before any line appears
     // boundingBox() returns null for an unrendered element; guard against
     // that instead of risking a raw TypeError on a slow/flaky first paint.

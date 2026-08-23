@@ -33,14 +33,13 @@ test.describe("coming-soon card text contrast", () => {
       // Cards mount with a fade-in-up entrance animation; wait for it to
       // finish so the styles read below reflect the steady state.
       await page.waitForTimeout(700);
-      const description = card.locator("p").first();
 
-      const { effectiveBg, effectiveText } = await description.evaluate(
-        (node) => {
-          const cardEl = node.parentElement!;
+      const { effectiveBg, effectiveText } = await card.evaluate(
+        (cardEl) => {
+          const node = cardEl.querySelector("p")!;
           let opacity = 1;
           for (
-            let el: Element | null = node;
+            let el: Element | null = cardEl;
             el && el !== document.body;
             el = el.parentElement
           ) {

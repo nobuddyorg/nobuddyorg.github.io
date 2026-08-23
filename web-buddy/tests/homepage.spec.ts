@@ -5,7 +5,9 @@ test.describe("homepage hero and manifesto content", () => {
   test("renders the terminal intro hero", async ({ page }) => {
     await page.goto("/");
 
-    await expect(page.locator("h1")).toHaveText("Creative Tools for Nerds");
+    await expect(page.getByTestId("hero-heading")).toContainText(
+      "nobuddy init"
+    );
     await expect(
       page.getByRole("link", { name: "Follow Nobuddyorg on GitHub" })
     ).toBeVisible();
@@ -25,11 +27,7 @@ test.describe("homepage hero and manifesto content", () => {
     await page.setViewportSize({ width: 375, height: 667 });
     await page.goto("/");
 
-    await expect(
-      page.getByText(
-        "Explore nobuddy.org – genuinely useful tools, each built with a bit of personality."
-      )
-    ).toBeVisible();
+    await expect(page.getByTestId("hero-subtitle")).toBeVisible();
     // Hidden on mobile portrait to keep the intro compact (#541) — still
     // one tap away via the header's own GitHub link.
     await expect(

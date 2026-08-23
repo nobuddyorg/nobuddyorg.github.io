@@ -7,6 +7,7 @@
      buttons/links, since text at this size needs 4.5:1 while UI chrome
      only needs 3:1, and the two thresholds usually want different shades. */
   --accent: #ad5725;
+  --accent-hero: #ad5725;
   --manifesto-gradient: linear-gradient(
     180deg,
     #ffd580 0%,
@@ -26,8 +27,8 @@
   --color-accent: var(--accent);
   --font-sans: var(--font-inter);
   --font-display: var(--font-archivo);
-  --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Consolas,
-    "Liberation Mono", monospace;
+  --font-mono: var(--font-jetbrains-mono), ui-monospace, SFMono-Regular,
+    "SF Mono", Consolas, "Liberation Mono", monospace;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -37,6 +38,7 @@
     /* Lighter than the light-theme shade — #ad5725 falls under 4.5:1 on
        this theme's near-black surfaces. */
     --accent: #e0954f;
+    --accent-hero: #7a4321;
     --manifesto-gradient: linear-gradient(
       180deg,
       var(--accent) 0%,
@@ -128,6 +130,22 @@ html {
 
 .page-band {
   background-color: var(--page-band-bg);
+}
+
+.cmd-cursor {
+  display: inline-block;
+  margin-left: 0.05em;
+  animation: cmd-cursor-blink 1s steps(1, end) infinite;
+}
+@keyframes cmd-cursor-blink {
+  50% {
+    opacity: 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .cmd-cursor {
+    animation: none;
+  }
 }
 
 .hero-glow {

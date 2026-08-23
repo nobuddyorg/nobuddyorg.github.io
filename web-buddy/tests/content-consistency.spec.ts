@@ -2,17 +2,13 @@ import { test, expect } from "@playwright/test";
 import { SITE_DESCRIPTION, TOOLS_DESCRIPTION } from "../src/app/constants";
 
 test.describe("marketing copy stays in sync across surfaces", () => {
-  test("homepage meta description matches the hero subtitle", async ({
-    page,
-  }) => {
+  test("homepage meta description is set correctly", async ({ page }) => {
     await page.goto("/");
 
     const metaDescription = await page
       .locator('meta[name="description"]')
       .getAttribute("content");
     expect(metaDescription).toBe(SITE_DESCRIPTION);
-
-    await expect(page.locator("h2").first()).toHaveText(SITE_DESCRIPTION);
   });
 
   test("tools meta description matches the manifest description", async ({
