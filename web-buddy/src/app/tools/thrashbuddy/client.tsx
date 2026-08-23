@@ -57,11 +57,6 @@ export default function ThrashBuddyClient({
       githubLabel="thrash github"
       githubText="View the repository on GitHub and try it out on your infrastructure"
       imageDir={imageDir}
-      preview={{
-        src: "/images/thrash-buddy/preview.mp4",
-        poster: "/images/thrash-buddy/preview-poster.jpg",
-        label: "ThrashBuddy animated preview",
-      }}
       screenshots={screenshots}
       media="image"
       techStack={techStack}

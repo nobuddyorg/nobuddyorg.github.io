@@ -6,22 +6,17 @@ const imageDir = "/images/collection-buddy";
 
 const screenshots: ToolScreenshot[] = [
   {
-    src: "login",
+    src: "login.webp",
     alt: "Secure Authentication",
     text: "Get started with secure authentication powered by Supabase and Google OAuth. Sign up or log in with ease to access your personal collection catalog. Your data is protected and always available when you need it. No need to share any details, just use your existing Google Account",
   },
   {
-    src: "preview",
+    src: "collection.webp",
     alt: "Collection Overview",
-    text: "View your entire collection at a glance with beautiful card layouts. Each item displays essential information like title, descriptions, location, and images. Perfect for getting a quick overview of your treasures.",
+    text: "View your entire collection at a glance with beautiful card layouts showing title, description, location, and images. Use the search box to instantly filter by any of that, even location and tags, so you can find one item in a collection of hundreds.",
   },
   {
-    src: "pagination",
-    alt: "Smart Navigation",
-    text: "Navigate through large collections effortlessly with smooth pagination. Browse hundreds or thousands of items without performance issues. Find what you're looking for quickly and efficiently. And if you don't find the item you are looking for, just use the search box. You can search for any text on the cards, even location and tags.",
-  },
-  {
-    src: "map",
+    src: "map.webp",
     alt: "Location Mapping",
     text: "Track where your items are located or where you found them with integrated mapping features. Perfect for collectors who want to remember acquisition locations. Especially useful for remembering: 'Hm, I found this at the flea market in 2020.' when you come to the same spot again.",
   },
@@ -61,13 +56,8 @@ export default function CollectionBuddyClient({
       githubLabel="collection github"
       githubText="View the repository on GitHub and start organizing your collection"
       imageDir={imageDir}
-      preview={{
-        src: `${imageDir}/preview.mp4`,
-        poster: `${imageDir}/preview-poster.jpg`,
-        label: "CollectionBuddy animated preview",
-      }}
       screenshots={screenshots}
-      media="video"
+      media="image"
       techStack={techStack}
       description={
         <>

@@ -7,18 +7,18 @@ const imageDir = "/images/bike-buddy";
 const screenshots: ToolScreenshot[] = [
   {
     src: "map.webp",
-    alt: "Heatmap Overview",
-    text: "See every tour you've ever ridden on a single heatmap, with cycling and motorcycling routes color-blended by frequency. Filter to what's currently in view, toggle photo pins, and jump straight into any tour from the sidebar.",
+    alt: "Map Overview",
+    text: "See every tour you've ever ridden drawn as routes on a single map. Filter to what's currently in view, toggle photo pins, and jump straight into any tour from the sidebar.",
   },
   {
     src: "upload.webp",
     alt: "Upload a GPX Tour",
-    text: "Drag and drop a .gpx file straight from your bike computer or phone, give it a name and optional description, and BikeBuddy takes care of the rest, parsing the track and adding it to your heatmap in seconds.",
+    text: "Drag and drop a .gpx file straight from your bike computer or phone, give it a name and optional description, and BikeBuddy takes care of the rest, parsing the track and adding it to your map in seconds.",
   },
   {
     src: "detail.webp",
     alt: "Tour Details & Photos",
-    text: "Every tour keeps its date, distance, and a gallery of photos you attach along the way. Drop in JPEG or PNG images to pin memories to the ride, or edit and delete tours as your archive grows.",
+    text: "Every tour keeps its date, distance, and a gallery of photos you attach along the way. Drop in JPEG or PNG images to pin memories to the ride, fine-tune the route line's color, width, and opacity, or edit and delete tours as your archive grows.",
   },
 ];
 
@@ -51,7 +51,7 @@ export default function BikeBuddyClient({
       media="image"
       techStack={techStack}
       description={
-        <p><strong>BikeBuddy</strong> turns your GPX tours, cycling or motorcycling, into a living heatmap of every road you&apos;ve ever ridden. Upload a track, attach photos from along the way, and watch your personal riding history build up on the map.</p>
+        <p><strong>BikeBuddy</strong> turns your GPX tours, cycling or motorcycling, into a map of every road you&apos;ve ever ridden. Upload a track, attach photos from along the way, and watch your personal riding history build up on the map.</p>
       }
     />
   );
