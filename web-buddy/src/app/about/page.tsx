@@ -157,7 +157,7 @@ export default function AboutPage() {
     <>
       <JsonLd id="jsonld-about" data={jsonLd} />
       <Header />
-      <main className="relative min-h-screen page-band">
+      <main className="relative">
         <div className="pt-20 md:pt-28 px-4 md:px-6">
           <h1
             data-testid="about-heading"
@@ -169,7 +169,7 @@ export default function AboutPage() {
             </span>
           </h1>
         </div>
-        <div className="max-w-5xl mx-auto px-4 md:px-6 pt-10 md:pt-12 pb-16">
+        <div className="max-w-5xl mx-auto px-4 md:px-6 pt-10 md:pt-12 pb-6">
           <section className="grid grid-cols-1 md:grid-cols-2 gap-8 text-sm leading-relaxed">
             <EnglishSection />
             <GermanSection />

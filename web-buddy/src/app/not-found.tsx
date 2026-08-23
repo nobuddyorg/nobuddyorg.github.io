@@ -14,7 +14,7 @@ export default function NotFound() {
   return (
     <>
       <Header />
-      <main className="min-h-screen flex flex-col items-center justify-center text-center px-4 md:px-6 pt-20 md:pt-32 pb-28">
+      <main className="min-h-screen flex flex-col items-center justify-center text-center px-4 md:px-6 pt-20 md:pt-32 pb-16">
         <h1 className="text-5xl md:text-6xl font-extrabold tracking-tight leading-tight mb-4 md:mb-6 text-black dark:text-white">
           404
         </h1>
