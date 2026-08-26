@@ -46,21 +46,21 @@ function ScreenshotRow({
           alt=""
           width={300}
           height={200}
-          className="rounded-xl shadow-md w-full md:w-1/2"
+          className="order-2 md:order-none rounded-xl shadow-md w-full md:w-1/2"
         />
       ) : (
         <AnimatedClip
           src={`${imageDir}/${src}.mp4`}
           poster={`${imageDir}/${src}-poster.jpg`}
           label=""
-          className="rounded-xl shadow-md w-full md:w-1/2"
+          className="order-2 md:order-none rounded-xl shadow-md w-full md:w-1/2"
         />
       )}
-      <div className="text-gray-700 dark:text-gray-300 text-base leading-relaxed md:w-1/2">
-        <h3 className="text-xl font-semibold mb-2 text-black dark:text-white">
+      <div className="contents md:block text-gray-700 dark:text-gray-300 text-base leading-relaxed md:w-1/2">
+        <h3 className="order-1 md:order-none text-xl font-semibold mb-2 text-black dark:text-white">
           {alt}
         </h3>
-        <p className="text-sm leading-relaxed text-gray-700 dark:text-gray-300">
+        <p className="order-3 md:order-none text-sm leading-relaxed text-gray-700 dark:text-gray-300">
           {text}
         </p>
       </div>
