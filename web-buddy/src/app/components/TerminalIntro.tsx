@@ -73,7 +73,7 @@ function buildFrames(): Frame[] {
     frames.push({ lines: [...last(), line], delay });
   const pause = (delay: number) => frames.push({ lines: last(), delay });
 
-  push({ role: "cmd", text: "initialize --buddyverse" }, 700);
+  push({ role: "cmd", text: "nobuddy init" }, 700);
   push({ role: "echo", text: msg1 }, 500);
   push({ role: "echo", text: `${loadingMessage} ${loadingSteps[0]}` }, 0);
   for (let i = 1; i < loadingSteps.length; i++) {
@@ -98,7 +98,7 @@ const lastFrame = frames.length - 1;
 // Same shape as frames[lastFrame].lines, with maxWidthPlaceholder instead
 // of the random text.
 const sizerLines: ScriptLine[] = [
-  { role: "cmd", text: "initialize --buddyverse" },
+  { role: "cmd", text: "nobuddy init" },
   { role: "echo", text: maxWidthPlaceholder },
   {
     role: "echo",
