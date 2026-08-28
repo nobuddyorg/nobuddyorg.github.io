@@ -1,8 +1,8 @@
 import { test, expect } from "@playwright/test";
-import { tools } from "../src/app/tools/tools";
+import { tools, hasOwnPage } from "../src/app/tools/tools";
 import { MAX_TITLE_LENGTH } from "../src/app/metadata";
 
-const readyTools = tools.filter((tool) => tool.status === "ready");
+const readyTools = tools.filter(hasOwnPage);
 const paths = [
   "/",
   "/tools",

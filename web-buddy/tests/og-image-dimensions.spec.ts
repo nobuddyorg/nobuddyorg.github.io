@@ -2,10 +2,10 @@ import { test, expect } from "@playwright/test";
 import { readFileSync } from "fs";
 import path from "path";
 import { imageSize } from "image-size";
-import { tools } from "../src/app/tools/tools";
+import { tools, hasOwnPage } from "../src/app/tools/tools";
 
 const publicDir = path.join(__dirname, "..", "public");
-const readyTools = tools.filter((tool) => tool.status === "ready");
+const readyTools = tools.filter(hasOwnPage);
 const paths = ["/", "/tools", ...readyTools.map((t) => `/tools/${t.slug}`)];
 
 for (const urlPath of paths) {

@@ -14,7 +14,15 @@ export interface Tool {
   previewImageHeight?: number;
   tags: string[];
   github: string;
-  status: "ready" | "coming_soon";
+  status: "ready" | "coming_soon" | "discontinued";
+}
+
+// True for any tool with a real /tools/{slug} page that should be tested,
+// indexed, and linked to internally — "ready" (actively shipped) and
+// "discontinued" (kept visible, no longer maintained) both qualify;
+// "coming_soon" tools have no page yet and only link out to GitHub.
+export function hasOwnPage(tool: Tool): boolean {
+  return tool.status === "ready" || tool.status === "discontinued";
 }
 
 export const tools: Tool[] = [
@@ -114,7 +122,7 @@ export const tools: Tool[] = [
     previewImageHeight: 929,
     tags: ["Cycling", "GPX", "Strava", "Tracking", "Angular", "Tools"],
     github: `${GITHUB_URL}/RideMergeBuddy`,
-    status: "ready",
+    status: "discontinued",
   },
   {
     slug: "powertrailbuddy",

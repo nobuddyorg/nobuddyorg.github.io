@@ -1,7 +1,7 @@
 import { test, expect } from "@playwright/test";
-import { tools } from "../src/app/tools/tools";
+import { tools, hasOwnPage } from "../src/app/tools/tools";
 
-const readyTools = tools.filter((tool) => tool.status === "ready");
+const readyTools = tools.filter(hasOwnPage);
 
 for (const tool of readyTools) {
   test(`/tools/${tool.slug} emits consistent metadata and JSON-LD shape`, async ({

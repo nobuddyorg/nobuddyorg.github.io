@@ -1,7 +1,7 @@
 import { test, expect } from "@playwright/test";
 import { existsSync } from "fs";
 import path from "path";
-import { tools } from "../src/app/tools/tools";
+import { tools, hasOwnPage } from "../src/app/tools/tools";
 
 const publicDir = path.join(__dirname, "..", "public");
 const toolsSrcDir = path.join(__dirname, "..", "src", "app", "tools");
@@ -16,10 +16,10 @@ for (const tool of tools) {
   });
 }
 
-const readyTools = tools.filter((tool) => tool.status === "ready");
+const readyTools = tools.filter(hasOwnPage);
 
 for (const tool of readyTools) {
-  test(`${tool.slug} has a matching route directory (status: ready)`, () => {
+  test(`${tool.slug} has a matching route directory`, () => {
     expect(existsSync(path.join(toolsSrcDir, tool.slug, "page.tsx"))).toBe(
       true
     );

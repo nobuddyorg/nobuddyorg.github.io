@@ -3,7 +3,7 @@ import Header from "../components/Header";
 import ToolGrid from "../components/ToolGrid";
 import { createMetadata } from "../metadata";
 import JsonLd, { type JsonLdData } from "../components/JsonLd";
-import { tools } from "./tools";
+import { tools, hasOwnPage } from "./tools";
 
 const title = "The Buddy Compendium";
 const slug = "/tools";
@@ -17,7 +17,7 @@ export const metadata = createMetadata({
   slug,
 });
 
-const readyTools = tools.filter((tool) => tool.status === "ready");
+const pagedTools = tools.filter(hasOwnPage);
 
 const jsonLd: JsonLdData = {
   "@context": "https://schema.org",
@@ -27,7 +27,7 @@ const jsonLd: JsonLdData = {
   url,
   mainEntity: {
     "@type": "ItemList",
-    itemListElement: readyTools.map((tool, index) => ({
+    itemListElement: pagedTools.map((tool, index) => ({
       "@type": "ListItem",
       position: index + 1,
       url: `${SITE_URL}/tools/${tool.slug}`,

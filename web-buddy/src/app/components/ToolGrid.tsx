@@ -3,7 +3,7 @@
 import type { CSSProperties } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { tools } from "../tools/tools";
+import { tools, hasOwnPage } from "../tools/tools";
 import { useState, useEffect } from "react";
 import BuddyName from "./BuddyName";
 
@@ -64,9 +64,11 @@ export default function ToolGrid() {
         >
           {paginatedTools.map((tool, index) => {
             const isReady = tool.status === "ready";
+            const isDiscontinued = tool.status === "discontinued";
+            const hasPage = hasOwnPage(tool);
 
             const cardClasses = `group flex flex-col h-full rounded-2xl overflow-hidden border ${
-              isReady
+              hasPage
                 ? "bg-white dark:bg-black border-1 border-neutral-400 dark:border-neutral-600 hover:border-black dark:hover:border-white shadow-sm dark:shadow-[0_2px_8px_rgba(255,255,255,0.05)] hover:shadow-md dark:hover:shadow-[0_4px_12px_rgba(255,255,255,0.15)] transition-all duration-300 hover:-translate-y-1 cursor-pointer"
                 : "bg-gray-200 dark:bg-neutral-800 border-neutral-600 border-dashed border-2 dark:border-neutral-400 dark:border-2 dark:border-dashed hover:border-black dark:hover:border-white transition-colors duration-300 cursor-pointer"
             }`;
@@ -82,18 +84,24 @@ export default function ToolGrid() {
                   <span className="w-2.5 h-2.5 rounded-full bg-green-500" />
                   <span
                     className={`ml-auto flex items-center gap-1.5 text-[11px] font-mono uppercase tracking-wide ${
-                      isReady ? "text-emerald-400" : "text-amber-400"
+                      isReady
+                        ? "text-emerald-400"
+                        : isDiscontinued
+                          ? "text-neutral-400"
+                          : "text-amber-400"
                     }`}
                   >
                     <span
                       className={`w-1.5 h-1.5 rounded-full ${
                         isReady
                           ? "bg-emerald-400"
-                          : "bg-amber-400 animate-pulse motion-reduce:animate-none"
+                          : isDiscontinued
+                            ? "bg-neutral-400"
+                            : "bg-amber-400 animate-pulse motion-reduce:animate-none"
                       }`}
                       aria-hidden="true"
                     />
-                    {isReady ? "ready" : "building"}
+                    {isReady ? "ready" : isDiscontinued ? "discontinued" : "building"}
                   </span>
                 </div>
 
@@ -144,7 +152,7 @@ export default function ToolGrid() {
 
             return (
               <div key={tool.slug} className="fade-in-up h-full" style={staggerStyle(index)}>
-                {isReady ? (
+                {hasPage ? (
                   <Link href={`/tools/${tool.slug}`} className={cardClasses}>
                     {cardInner}
                   </Link>

@@ -5,9 +5,10 @@ import { ITEMS_PER_PAGE } from "../src/app/components/ToolGrid";
 const pageOne = tools.slice(0, ITEMS_PER_PAGE);
 const pageTwo = tools.slice(ITEMS_PER_PAGE);
 const pageOneReady = pageOne.filter((t) => t.status === "ready");
-const pageOneComingSoon = pageOne.filter((t) => t.status !== "ready");
+const pageOneComingSoon = pageOne.filter((t) => t.status === "coming_soon");
+const pageOneDiscontinued = pageOne.filter((t) => t.status === "discontinued");
 const pageTwoReady = pageTwo.filter((t) => t.status === "ready");
-const pageTwoComingSoon = pageTwo.filter((t) => t.status !== "ready");
+const pageTwoComingSoon = pageTwo.filter((t) => t.status === "coming_soon");
 const firstReadyTool = pageOneReady[0];
 
 test.describe("NoBuddy main page - cards section", () => {
@@ -16,9 +17,7 @@ test.describe("NoBuddy main page - cards section", () => {
     await expect(
       page.getByTestId("tools-heading")
     ).toBeVisible();
-    await expect(page.locator("#tools a")).toHaveCount(
-      pageOneReady.length + pageOneComingSoon.length
-    );
+    await expect(page.locator("#tools a")).toHaveCount(pageOne.length);
   });
 
   test(`has exactly ${pageOneReady.length} enabled card(s) in #tools`, async ({
@@ -56,6 +55,25 @@ test.describe("NoBuddy main page - cards section", () => {
     await expect(cardLink).toHaveCount(1);
     await expect(cardLink).toHaveAttribute("href", firstComingSoon.github);
     await expect(cardLink).toHaveAttribute("target", "_blank");
+  });
+
+  test("discontinued cards link to their own tool page, not GitHub", async ({
+    page,
+  }) => {
+    const discontinuedCards = page.getByTestId("discontinued");
+    await expect(discontinuedCards).toHaveCount(pageOneDiscontinued.length);
+
+    test.skip(
+      pageOneDiscontinued.length === 0,
+      "no discontinued cards on page one"
+    );
+
+    const firstDiscontinued = pageOneDiscontinued[0];
+    const cardLink = discontinuedCards.first().locator("xpath=ancestor::a");
+    await expect(cardLink).toHaveAttribute(
+      "href",
+      `/tools/${firstDiscontinued.slug}`
+    );
   });
 
   test("clicking the first enabled card navigates and shows content", async ({
