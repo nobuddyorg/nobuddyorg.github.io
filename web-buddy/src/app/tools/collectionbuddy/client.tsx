@@ -45,14 +45,17 @@ const techStack: TechStackItem[] = [
 export default function CollectionBuddyClient({
   title,
   githubUrl,
+  liveUrl,
 }: {
   title: string;
   githubUrl: string;
+  liveUrl?: string;
 }) {
   return (
     <ToolClientPage
       title={title}
       githubUrl={githubUrl}
+      liveUrl={liveUrl}
       githubLabel="collection github"
       githubText="View the repository on GitHub and start organizing your collection"
       imageDir={imageDir}

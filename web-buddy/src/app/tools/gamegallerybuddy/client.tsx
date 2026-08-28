@@ -28,14 +28,17 @@ const techStack: TechStackItem[] = [
 export default function GameGalleryBuddyClient({
   title,
   githubUrl,
+  liveUrl,
 }: {
   title: string;
   githubUrl: string;
+  liveUrl?: string;
 }) {
   return (
     <ToolClientPage
       title={title}
       githubUrl={githubUrl}
+      liveUrl={liveUrl}
       githubLabel="game gallery github"
       githubText="View the code on GitHub or run it locally"
       imageDir={imageDir}
