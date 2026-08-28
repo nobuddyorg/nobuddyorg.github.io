@@ -71,6 +71,7 @@ export const tools: Tool[] = [
       "Wallpapers",
       "Groovy",
       "Spring Boot",
+      "GCP",
       "Tools",
     ],
     github: `${GITHUB_URL}/GameGalleryBuddy`,
