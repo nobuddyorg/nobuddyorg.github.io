@@ -8,6 +8,7 @@ interface ToolClientPageProps {
   githubUrl: string;
   githubLabel: string;
   githubText: string;
+  liveUrl?: string;
   description: ReactNode;
   imageDir: string;
   screenshots: ToolScreenshot[];
@@ -20,6 +21,7 @@ export default function ToolClientPage({
   githubUrl,
   githubLabel,
   githubText,
+  liveUrl,
   description,
   imageDir,
   screenshots,
@@ -31,6 +33,20 @@ export default function ToolClientPage({
       <section className="text-sm leading-relaxed text-gray-700 dark:text-gray-300">
         {description}
         <br />
+        {liveUrl && (
+          <p>
+            🌐{" "}
+            <a
+              href={liveUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="underline hover:text-black dark:hover:text-white"
+              title={`${title} live site`}
+            >
+              Visit the live site
+            </a>
+          </p>
+        )}
         <p>
           🔗{" "}
           <a

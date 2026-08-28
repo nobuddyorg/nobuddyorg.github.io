@@ -3,7 +3,7 @@ import GameGalleryBuddyClient from "./client";
 import JsonLd from "../../components/JsonLd";
 import Header from "../../components/Header";
 
-const { title, github, metadata, jsonLd, jsonLdId } =
+const { title, github, liveUrl, metadata, jsonLd, jsonLdId } =
   getToolPageData("gamegallerybuddy");
 
 export { metadata };
@@ -13,7 +13,7 @@ export default function GameGalleryBuddyPage() {
     <>
       <JsonLd id={jsonLdId} data={jsonLd} />
       <Header />
-      <GameGalleryBuddyClient title={title} githubUrl={github} />
+      <GameGalleryBuddyClient title={title} githubUrl={github} liveUrl={liveUrl} />
     </>
   );
 }

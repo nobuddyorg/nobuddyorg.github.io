@@ -14,6 +14,9 @@ export interface Tool {
   previewImageHeight?: number;
   tags: string[];
   github: string;
+  // The tool's actual hosted app, when it has one - distinct from its
+  // /tools/{slug} page here. Omit rather than link a stale/broken deploy.
+  liveUrl?: string;
   status: "ready" | "coming_soon" | "discontinued";
 }
 
@@ -75,6 +78,7 @@ export const tools: Tool[] = [
       "Tools",
     ],
     github: `${GITHUB_URL}/GameGalleryBuddy`,
+    liveUrl: "https://gamegallerybuddy.nobuddy.org",
     status: "ready",
   },
   {
@@ -95,6 +99,7 @@ export const tools: Tool[] = [
       "Tailwind CSS",
     ],
     github: `${GITHUB_URL}/CollectionBuddy`,
+    liveUrl: "https://nobuddy.org/CollectionBuddy",
     status: "ready",
   },
   {
@@ -109,6 +114,7 @@ export const tools: Tool[] = [
     previewImageHeight: 800,
     tags: ["Cycling", "GPX", "Heatmaps", "Azure", "Serverless"],
     github: `${GITHUB_URL}/BikeBuddy`,
+    liveUrl: "https://nobuddy.org/BikeBuddy",
     status: "ready",
   },
   {

@@ -36,14 +36,17 @@ const techStack: TechStackItem[] = [
 export default function BikeBuddyClient({
   title,
   githubUrl,
+  liveUrl,
 }: {
   title: string;
   githubUrl: string;
+  liveUrl?: string;
 }) {
   return (
     <ToolClientPage
       title={title}
       githubUrl={githubUrl}
+      liveUrl={liveUrl}
       githubLabel="BikeBuddy GitHub"
       githubText="View the repository on GitHub"
       imageDir={imageDir}
