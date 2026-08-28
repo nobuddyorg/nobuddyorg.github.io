@@ -49,7 +49,15 @@ export default function RideMergeBuddyClient({
       media="video"
       techStack={techStack}
       description={
-        <p><strong>RideMergeBuddy</strong> lets you view and merge your Strava activities seamlessly. Select multiple rides or runs, merge them into a new activity, and track everything in one place.</p>
+        <>
+          <p className="mb-3 rounded-lg border border-neutral-400 dark:border-neutral-600 bg-gray-100 dark:bg-neutral-800 px-4 py-3 text-neutral-700 dark:text-neutral-300">
+            <strong>⚠ Discontinued:</strong> Strava restricted API access to
+            subscription accounts, so RideMergeBuddy can no longer
+            authenticate or read activities. Development has stopped and
+            the hosted app is no longer running.
+          </p>
+          <p><strong>RideMergeBuddy</strong> lets you view and merge your Strava activities seamlessly. Select multiple rides or runs, merge them into a new activity, and track everything in one place.</p>
+        </>
       }
     />
   );

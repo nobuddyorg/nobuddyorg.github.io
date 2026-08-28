@@ -1,5 +1,5 @@
 import { test, expect } from "@playwright/test";
-import { tools } from "../src/app/tools/tools";
+import { tools, hasOwnPage } from "../src/app/tools/tools";
 import { SITE_URL } from "../src/app/constants";
 
 test.describe("sitemap.xml", () => {
@@ -14,7 +14,7 @@ test.describe("sitemap.xml", () => {
       `${SITE_URL}/tools`,
       `${SITE_URL}/about`,
       ...tools
-        .filter((tool) => tool.status === "ready")
+        .filter(hasOwnPage)
         .map((tool) => `${SITE_URL}/tools/${tool.slug}`),
     ];
 

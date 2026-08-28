@@ -3,7 +3,7 @@ import { contrastRatio } from "./utils/contrast";
 import { tools } from "../src/app/tools/tools";
 import { ITEMS_PER_PAGE } from "../src/app/components/ToolGrid";
 
-const firstComingSoonIndex = tools.findIndex((t) => t.status !== "ready");
+const firstComingSoonIndex = tools.findIndex((t) => t.status === "coming_soon");
 const comingSoonPage = Math.floor(firstComingSoonIndex / ITEMS_PER_PAGE) + 1;
 
 // CSS `opacity` on an ancestor doesn't change a descendant's computed

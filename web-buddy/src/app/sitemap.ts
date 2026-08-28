@@ -1,5 +1,5 @@
 import { MetadataRoute } from "next";
-import { tools } from "./tools/tools";
+import { tools, hasOwnPage } from "./tools/tools";
 import { SITE_URL } from "./constants";
 
 export const dynamic = "force-static";
@@ -8,7 +8,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const lastModified = new Date().toISOString();
 
   const toolPages = tools
-    .filter((tool) => tool.status === "ready")
+    .filter(hasOwnPage)
     .map((tool) => ({
       url: `${SITE_URL}/tools/${tool.slug}`,
       lastModified,
