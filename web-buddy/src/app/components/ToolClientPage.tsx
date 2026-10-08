@@ -60,11 +60,13 @@ export default function ToolClientPage({
           </a>
         </p>
       </section>
-      <ToolScreenshots
-        screenshots={screenshots}
-        imageDir={imageDir}
-        media={media}
-      />
+      {screenshots.length > 0 && (
+        <ToolScreenshots
+          screenshots={screenshots}
+          imageDir={imageDir}
+          media={media}
+        />
+      )}
       <ToolTechStack items={techStack} />
     </ToolPageShell>
   );

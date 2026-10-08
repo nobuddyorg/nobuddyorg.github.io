@@ -118,6 +118,27 @@ export const tools: Tool[] = [
     status: "ready",
   },
   {
+    slug: "exposurebuddy",
+    name: "ExposureBuddy",
+    tagline: "Long exposures from a burst of phone photos",
+    description:
+      "Aligns a burst of phone photos on the static scene and stacks them into a long exposure with ghosting, motion blur, or light trails. Runs entirely in your browser, no upload and no account.",
+    logo: "/logos/exposure.webp",
+    previewImage: "",
+    tags: [
+      "Photography",
+      "Long Exposure",
+      "PWA",
+      "Web Workers",
+      "Next.js",
+      "TypeScript",
+      "Tools",
+    ],
+    github: `${GITHUB_URL}/ExposureBuddy`,
+    liveUrl: "https://nobuddy.org/ExposureBuddy",
+    status: "ready",
+  },
+  {
     slug: "ridemergebuddy",
     name: "RideMergeBuddy",
     tagline: "View and merge your Strava activities",
