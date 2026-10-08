@@ -1,5 +1,14 @@
 import ToolClientPage from "../../components/ToolClientPage";
+import { ToolScreenshot } from "../../components/ToolScreenshots";
 import { TechStackItem } from "../../components/ToolTechStack";
+
+const screenshots: ToolScreenshot[] = [
+  {
+    src: "main.webp",
+    alt: "Pick Your Burst",
+    text: "Choose a burst of photos shot from one spot, pick an output size, and combine. The scene comes out sharp while whatever moved fades into a ghost, and all of it happens in your browser.",
+  },
+];
 
 const techStack: TechStackItem[] = [
   { name: "Next.js", url: "https://nextjs.org/" },
@@ -30,7 +39,7 @@ export default function ExposureBuddyClient({
       githubLabel="ExposureBuddy GitHub"
       githubText="View the repository on GitHub"
       imageDir="/images/exposure-buddy"
-      screenshots={[]}
+      screenshots={screenshots}
       media="image"
       techStack={techStack}
       description={
