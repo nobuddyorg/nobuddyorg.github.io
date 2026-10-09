@@ -124,7 +124,9 @@ export const tools: Tool[] = [
     description:
       "Aligns a burst of phone photos on the static scene and stacks them into a long exposure with ghosting, motion blur, or light trails. Runs entirely in your browser, no upload and no account.",
     logo: "/logos/exposure.webp",
-    previewImage: "",
+    previewImage: "/logos/exposure_preview.webp",
+    previewImageWidth: 1568,
+    previewImageHeight: 830,
     tags: [
       "Photography",
       "Long Exposure",
