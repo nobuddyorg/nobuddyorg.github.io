@@ -148,8 +148,8 @@ export const tools: Tool[] = [
       "Finds the geocache power trails hiding in your own Pocket Query, ranks them by caches per hour and guides you through one on foot. Installable, works offline, and your data never leaves the device.",
     logo: "/logos/powertrail.webp",
     previewImage: "/logos/powertrail_preview.webp",
-    previewImageWidth: 953,
-    previewImageHeight: 954,
+    previewImageWidth: 1024,
+    previewImageHeight: 1024,
     tags: [
       "Geocaching",
       "Maps",
