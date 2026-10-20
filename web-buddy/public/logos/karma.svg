@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 400 400">
+  <g stroke="#3d2903" stroke-width="10" stroke-linejoin="round" stroke-linecap="round" fill="#fabb31">
+    <rect x="140" y="370" width="120" height="20" rx="6"/>
+    <path d="M182 312 L218 312 L214 372 L186 372 Z"/>
+    <rect x="66" y="294" width="268" height="24" rx="10"/>
+    <path d="M140 140 Q200 120 260 140 Q290 160 296 236 L104 236 Q110 160 140 140 Z"/>
+    <path d="M90 268 Q84 236 140 232 L260 232 Q316 236 310 268 Q300 296 200 294 Q100 296 90 268 Z"/>
+    <path d="M140 190 Q120 220 100 222" fill="none"/>
+    <path d="M260 190 Q280 220 300 222" fill="none"/>
+    <path d="M100 222 Q70 206 62 228 Q60 252 92 246 Z"/>
+    <path d="M300 222 Q330 206 338 228 Q340 252 308 246 Z"/>
+    <path d="M222 136 Q210 196 152 232" fill="none"/>
+    <path d="M164 276 Q170 254 196 252 Q222 252 236 264 Q222 280 190 282 Q170 282 164 276 Z"/>
+    <ellipse cx="146" cy="78" rx="12" ry="20"/>
+    <ellipse cx="248" cy="78" rx="12" ry="20"/>
+    <circle cx="197" cy="68" r="52"/>
+  </g>
+  <g stroke="#3d2903" stroke-width="8" stroke-linecap="round" fill="none">
+    <path d="M168 72 Q178 80 188 72 M206 72 Q216 80 226 72"/>
+    <path d="M184 98 Q197 108 210 98"/>
+  </g>
+</svg>

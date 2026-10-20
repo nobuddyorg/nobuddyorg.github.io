@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 400 400">
+  <g stroke="#262007" stroke-width="13" stroke-linejoin="round" stroke-linecap="round">
+    <path d="M180 14 C208 14 224 36 214 66 C252 74 290 84 288 108 C286 128 252 134 236 142 L262 196 L140 238 L104 254 Q78 262 64 250 Q56 236 72 214 L124 150 C98 140 52 132 54 106 C56 84 110 72 146 66 C136 36 152 14 180 14 Z" fill="#fbb340"/>
+    <path d="M210 166 L320 216 L216 270 L106 220 Z" fill="#f8bc54"/>
+    <path d="M106 220 L216 270 L220 388 L114 342 Z" fill="#f5af3e"/>
+    <path d="M216 270 L320 216 L314 330 L220 388 Z" fill="#eda232"/>
+  </g>
+  <g fill="#262007"><circle cx="0.5" cy="0.5" r="0.12" transform="matrix(110 50 104 -54 106 220)"/><circle cx="0.28" cy="0.28" r="0.095" transform="matrix(110 50 8 122 106 220)"/><circle cx="0.72" cy="0.72" r="0.095" transform="matrix(110 50 8 122 106 220)"/><circle cx="0.25" cy="0.75" r="0.095" transform="matrix(104 -54 4 118 216 270)"/><circle cx="0.5" cy="0.5" r="0.095" transform="matrix(104 -54 4 118 216 270)"/><circle cx="0.75" cy="0.25" r="0.095" transform="matrix(104 -54 4 118 216 270)"/></g>
+</svg>

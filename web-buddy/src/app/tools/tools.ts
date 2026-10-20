@@ -35,7 +35,7 @@ export const tools: Tool[] = [
     tagline: "A tool to help you embrace procrastination",
     description:
       "Avoid productivity with delightfully useless tasks. Built using Streamlit, Ollama AI, and Docker. Perfect for professional procrastinators.",
-    logo: "/logos/procrastination.webp",
+    logo: "/logos/procrastination.svg",
     previewImage: "/logos/procrastination_preview.png",
     previewImageWidth: 640,
     previewImageHeight: 320,
@@ -50,7 +50,7 @@ export const tools: Tool[] = [
       "A tool to push your web api/app to it's limits with load and performance testing",
     description:
       "Load-test your apps at scale using k6, Grafana, Prometheus, and AWS EKS. Fully cloud-native and containerized with Docker and Helm.",
-    logo: "/logos/thrash.webp",
+    logo: "/logos/thrash.svg",
     previewImage: "/logos/thrash_preview.jpg",
     previewImageWidth: 1024,
     previewImageHeight: 1024,
@@ -64,7 +64,7 @@ export const tools: Tool[] = [
     tagline: "A spring boot app for managing game galleries",
     description:
       "Generates a wallpaper using all board games from a BoardGameGeek user's collection. Customizable layout with many options.",
-    logo: "/logos/gamegallery.webp",
+    logo: "/logos/gamegallery.svg",
     previewImage: "/logos/gamegallery_preview.webp",
     previewImageWidth: 1200,
     previewImageHeight: 651,
@@ -87,7 +87,7 @@ export const tools: Tool[] = [
     tagline: "A tool to organize and track your collected items",
     description:
       "A web-app catalog for your collected items. Organize and track stamps, coins, or any collectibles with an elegant interface.",
-    logo: "/logos/collection.webp",
+    logo: "/logos/collection.svg",
     previewImage: "",
     tags: [
       "Collections",
@@ -108,7 +108,7 @@ export const tools: Tool[] = [
     tagline: "Your ride, your routes, your memories",
     description:
       "Upload GPX tours, visualize them on a map, and attach photos. Powered by Azure Functions and Cosmos DB.",
-    logo: "/logos/bike.webp",
+    logo: "/logos/bike.svg",
     previewImage: "/logos/bike_preview.webp",
     previewImageWidth: 1280,
     previewImageHeight: 800,
@@ -169,7 +169,7 @@ export const tools: Tool[] = [
     tagline: "View and merge your Strava activities",
     description:
       "Merge GPX tracks from multiple cycling sessions. Ideal for Strava users, activity aggregators, and route cleanup enthusiasts.",
-    logo: "/logos/ridemerge.webp",
+    logo: "/logos/ridemerge.svg",
     previewImage: "/logos/ridemerge_preview.webp",
     previewImageWidth: 929,
     previewImageHeight: 929,
@@ -182,7 +182,7 @@ export const tools: Tool[] = [
     name: "KarmaBuddy",
     description:
       "Track your karma points with a fun and engaging app. Compete with friends and see who has the highest karma score.",
-    logo: "/logos/karma.webp",
+    logo: "/logos/karma.svg",
     previewImage: "",
     tags: [
       "Social",
@@ -201,7 +201,7 @@ export const tools: Tool[] = [
     name: "PeekBuddy",
     description:
       "Silently watches your folders and logs every change in real time. This way you detect all changes on your system.",
-    logo: "/logos/peek.webp",
+    logo: "/logos/peek.svg",
     previewImage: "",
     tags: [
       "Electron",
@@ -219,7 +219,7 @@ export const tools: Tool[] = [
     name: "FairBuddy",
     description:
       "Effortlessly split costs with friends. A social-friendly app for fair finance, powered by DynamoDB and designed for group sharing.",
-    logo: "/logos/fair.webp",
+    logo: "/logos/fair.svg",
     previewImage: "/logos/fair.png",
     previewImageWidth: 522,
     previewImageHeight: 521,
