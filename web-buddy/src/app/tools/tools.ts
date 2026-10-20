@@ -50,7 +50,7 @@ export const tools: Tool[] = [
       "A tool to push your web api/app to it's limits with load and performance testing",
     description:
       "Load-test your apps at scale using k6, Grafana, Prometheus, and AWS EKS. Fully cloud-native and containerized with Docker and Helm.",
-    logo: "/logos/thrash.webp",
+    logo: "/logos/thrash.svg",
     previewImage: "/logos/thrash_preview.jpg",
     previewImageWidth: 1024,
     previewImageHeight: 1024,
@@ -64,7 +64,7 @@ export const tools: Tool[] = [
     tagline: "A spring boot app for managing game galleries",
     description:
       "Generates a wallpaper using all board games from a BoardGameGeek user's collection. Customizable layout with many options.",
-    logo: "/logos/gamegallery.webp",
+    logo: "/logos/gamegallery.svg",
     previewImage: "/logos/gamegallery_preview.webp",
     previewImageWidth: 1200,
     previewImageHeight: 651,
