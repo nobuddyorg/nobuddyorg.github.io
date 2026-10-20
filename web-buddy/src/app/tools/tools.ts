@@ -35,7 +35,7 @@ export const tools: Tool[] = [
     tagline: "A tool to help you embrace procrastination",
     description:
       "Avoid productivity with delightfully useless tasks. Built using Streamlit, Ollama AI, and Docker. Perfect for professional procrastinators.",
-    logo: "/logos/procrastination.webp",
+    logo: "/logos/procrastination.svg",
     previewImage: "/logos/procrastination_preview.png",
     previewImageWidth: 640,
     previewImageHeight: 320,
@@ -169,7 +169,7 @@ export const tools: Tool[] = [
     tagline: "View and merge your Strava activities",
     description:
       "Merge GPX tracks from multiple cycling sessions. Ideal for Strava users, activity aggregators, and route cleanup enthusiasts.",
-    logo: "/logos/ridemerge.webp",
+    logo: "/logos/ridemerge.svg",
     previewImage: "/logos/ridemerge_preview.webp",
     previewImageWidth: 929,
     previewImageHeight: 929,
@@ -182,7 +182,7 @@ export const tools: Tool[] = [
     name: "KarmaBuddy",
     description:
       "Track your karma points with a fun and engaging app. Compete with friends and see who has the highest karma score.",
-    logo: "/logos/karma.webp",
+    logo: "/logos/karma.svg",
     previewImage: "",
     tags: [
       "Social",
@@ -201,7 +201,7 @@ export const tools: Tool[] = [
     name: "PeekBuddy",
     description:
       "Silently watches your folders and logs every change in real time. This way you detect all changes on your system.",
-    logo: "/logos/peek.webp",
+    logo: "/logos/peek.svg",
     previewImage: "",
     tags: [
       "Electron",
@@ -219,7 +219,7 @@ export const tools: Tool[] = [
     name: "FairBuddy",
     description:
       "Effortlessly split costs with friends. A social-friendly app for fair finance, powered by DynamoDB and designed for group sharing.",
-    logo: "/logos/fair.webp",
+    logo: "/logos/fair.svg",
     previewImage: "/logos/fair.png",
     previewImageWidth: 522,
     previewImageHeight: 521,
