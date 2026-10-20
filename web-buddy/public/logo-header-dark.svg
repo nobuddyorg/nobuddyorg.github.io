@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 400 400">
+  <defs>
+    <mask id="cut"><rect width="400" height="400" fill="#fff"/><path d="M84 92 L316 324" stroke="#000" stroke-width="50"/></mask>
+  </defs>
+  <g fill="#c68447">
+    <g mask="url(#cut)">
+      <circle cx="202" cy="148" r="54"/>
+      <path d="M96 300 C96 236 150 212 200 212 C250 212 304 236 304 300 Q304 320 284 320 L116 320 Q96 320 96 300 Z"/>
+    </g>
+  </g>
+  <circle cx="200" cy="200" r="176" fill="none" stroke="#c68447" stroke-width="27"/>
+  <path d="M84 92 L316 324" stroke="#c68447" stroke-width="27"/>
+</svg>
