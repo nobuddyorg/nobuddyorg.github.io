@@ -108,7 +108,7 @@ export const tools: Tool[] = [
     tagline: "Your ride, your routes, your memories",
     description:
       "Upload GPX tours, visualize them on a map, and attach photos. Powered by Azure Functions and Cosmos DB.",
-    logo: "/logos/bike.webp",
+    logo: "/logos/bike.svg",
     previewImage: "/logos/bike_preview.webp",
     previewImageWidth: 1280,
     previewImageHeight: 800,
