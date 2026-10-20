@@ -87,7 +87,7 @@ export const tools: Tool[] = [
     tagline: "A tool to organize and track your collected items",
     description:
       "A web-app catalog for your collected items. Organize and track stamps, coins, or any collectibles with an elegant interface.",
-    logo: "/logos/collection.webp",
+    logo: "/logos/collection.svg",
     previewImage: "",
     tags: [
       "Collections",
