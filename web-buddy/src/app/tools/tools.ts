@@ -217,7 +217,7 @@ export const tools: Tool[] = [
       "Tools",
     ],
     github: `${GITHUB_URL}/PeekBuddy`,
-    status: "coming_soon",
+    status: "ready",
   },
   {
     slug: "fairbuddy",
